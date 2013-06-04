@@ -16,8 +16,8 @@ gem 'omniauth'
 gem 'omniauth-twitter'
 
 # Component requirements
-gem 'slim'
-gem 'haml'
+gem 'bcrypt-ruby', :require => 'bcrypt'
+gem 'erubis', '~> 2.7.0'
 gem 'pg', :group => 'production'
 gem 'dm-mysql-adapter'
 gem 'dm-postgres-adapter', :group => 'production'

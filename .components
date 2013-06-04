@@ -1,0 +1,9 @@
+---
+:orm: datamapper
+:test: cucumber
+:mock: none
+:script: jquery
+:renderer: erb
+:stylesheet: none
+:namespace: Alfred
+:migration_format: number

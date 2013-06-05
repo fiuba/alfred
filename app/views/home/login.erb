@@ -1,20 +1,25 @@
+    <% form_tag url(:login), :class=>"login form-horizontal" do %>
+      <div class="login-body modal-body">
 
-<form method='get' action='/auth/developer/callback' noValidate='noValidate'>
-	    <%= csrf_token_field %>
+        <%= [:error, :warning, :success, :notice].map { |type| flash_tag(type, :class => "alert alert-#{type} fade in", :bootstrap => true) }.join.html_safe %>
 
-<div class="control-group">
-            <label class="control-label" for="input01">Nombre</label>
-            <div class="controls">
-              <input type="text" class="account[name]" id="input01">
-              <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
-            </div>
+        <fieldset class="control-group">
+          <label for="email" class="login-input-label control-label"><%= pat('login.email') %></label>
+          <div class="login-controls controls"><%= email_field_tag :email, :value => params[:email], :autofocus => true %></div>
+        </fieldset>
+
+        <fieldset class="control-group">
+          <label for="password" class="login-input-label control-label"><%= pat('login.password') %></label>
+          <div class="login-controls controls"><%= password_field_tag :password, :value => params[:password] %></div>        
+        </fieldset>
+
+        <fieldset class="control-group">
+          <div class="login-controls controls"><%= submit_tag(pat('login.sign_in'), :class => "btn btn-primary") %></div>
+        </fieldset>
+        <fieldset class="control-group">
+          <div class="login-controls controls">
+            <a href="/register">Crear cuenta</a>
           </div>
-
-
-<label for='name'>Name:</label>
-<input type='text' id='name' name='name' value="somebody"/>
-<label for='email'>Email:</label>
-<input type='text' id='email' name='email' value="somebody@someplace.com"/>
-<button type='submit' id="submit">Sign In</button>      
-
-</form>
+        </fieldset>
+      </div>
+    <% end %>

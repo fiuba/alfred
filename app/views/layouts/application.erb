@@ -43,9 +43,11 @@
 
           <li><a rel="tooltip" href="/" title="Inicio">Inicio</a></li>
           <% if current_account %>
-          <li><a rel="tooltip" href="/" title="Profile"><%= current_account.friendly_name %></a></li>
+          <li><a rel="tooltip" href="/" title="Profile"><%= current_account.email %></a></li>
+          <li><a rel="tooltip" href="/logout" title="Salir">Salir</a><li>
+          <% else %>
+          <li><a rel="tooltip" href="/login" title="Entrar">Entrar</a><li>
           <% end %>
-
         </ul>
       </div>
     </div>

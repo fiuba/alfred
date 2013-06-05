@@ -73,8 +73,48 @@ module Alfred
       render 'home/index'      
     end
 
+
+    get '/logout' do
+      set_current_account(nil)
+      redirect '/'      
+    end
+
     get :login do
       render '/home/login'
+    end
+
+    post :login do
+      if account = Account.authenticate(params[:email], params[:password])
+        set_current_account(account)
+        redirect '/'
+      #elsif Padrino.env == :development && params[:bypass]
+      #  account = Account.first
+      #  set_current_account(account)
+      #  redirect url(:base, :index)
+      else
+        params[:email], params[:password] = h(params[:email]), h(params[:password])
+        flash[:error] = pat('login.error')
+        redirect url(:login)
+      end
+    end
+
+    get :register do
+      @title = pat(:new_title, :model => 'account')
+      @account = Account.new
+      render 'home/register'
+    end
+
+    post :register do
+      @account = Account.new(params[:account])
+      if @account.save
+        @title = pat(:create_title, :model => "account #{@account.id}")
+        flash[:success] = pat(:create_success, :model => 'Account')
+        redirect(url(:index))
+      else
+        @title = pat(:create_title, :model => 'account')
+        flash.now[:error] = pat(:create_error, :model => 'account')
+        render 'home/register'
+      end
     end
 
     get '/proc' do

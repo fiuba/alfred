@@ -7,18 +7,20 @@ class Account
   property :id,               Serial
   property :name,             String
   property :surname,          String
+  property :buid,             String
   property :email,            String
   property :crypted_password, String, :length => 70
   property :role,             String
 
   # Validations
-  validates_presence_of      :email, :role
+  validates_presence_of      :email, :role, :buid
   validates_presence_of      :password,                          :if => :password_required
   validates_presence_of      :password_confirmation,             :if => :password_required
   validates_length_of        :password, :min => 4, :max => 40,   :if => :password_required
   validates_confirmation_of  :password,                          :if => :password_required
   validates_length_of        :email,    :min => 3, :max => 100
   validates_uniqueness_of    :email,    :case_sensitive => false
+  validates_uniqueness_of    :buid,    :case_sensitive => false
   validates_format_of        :email,    :with => :email_address
   validates_format_of        :role,     :with => /[A-Za-z]/
 

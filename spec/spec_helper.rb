@@ -9,5 +9,5 @@ def app
   ##
   # You can handle all padrino applications using instead:
   #   Padrino.application
-  Camilo::App.tap { |app|  }
+  Alfred::App.tap { |app|  }
 end

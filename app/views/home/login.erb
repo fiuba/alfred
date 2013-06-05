@@ -2,6 +2,15 @@
 <form method='get' action='/auth/developer/callback' noValidate='noValidate'>
 	    <%= csrf_token_field %>
 
+<div class="control-group">
+            <label class="control-label" for="input01">Nombre</label>
+            <div class="controls">
+              <input type="text" class="account[name]" id="input01">
+              <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
+            </div>
+          </div>
+
+
 <label for='name'>Name:</label>
 <input type='text' id='name' name='name' value="somebody"/>
 <label for='email'>Email:</label>

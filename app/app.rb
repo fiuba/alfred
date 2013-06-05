@@ -63,12 +63,22 @@ module Alfred
       
     set :login_page, "/login"
 
+
+    access_control.roles_for :any do |role|
+      role.protect '/proc'
+    end
+
+
     get '/' do
       render 'home/index'      
     end
 
     get :login do
       render '/home/login'
+    end
+
+    get '/proc' do
+        'ok'
     end
 
   end

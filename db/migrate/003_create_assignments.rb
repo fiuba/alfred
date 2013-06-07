@@ -6,6 +6,7 @@ migration 3, :create_assignments do
       column :files, String, :length => 255
       column :test_script, String, :length => 255
       column :deadline, DateTime
+      column :course_id, Integer
     end
   end
 

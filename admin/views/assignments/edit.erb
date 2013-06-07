@@ -5,6 +5,6 @@
 </ul>
 <div class="tabs-content">
   <% form_for :assignment, url(:assignments, :update, :id => @assignment.id), :method => :put, :class => 'form-horizontal' do |f| %>
-    <%= partial 'assignments/form', :locals => { :f => f } %>
+    <%= partial 'assignments/form', :locals => { :f => f, :courses => @courses } %>
   <% end %>
 </div>

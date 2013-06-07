@@ -18,7 +18,7 @@
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :test_script, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.text_field :test_script, :class => 'input-xlarge input-with-feedback' %>
+    <%= f.text_area :test_script, :class => 'input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? f.error_message_on(:test_script) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
@@ -26,7 +26,7 @@
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :deadline, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.text_field :deadline, :class => 'input-xlarge input-with-feedback' %>
+    <%= f.text_field :deadline, { :class => 'input-xlarge input-with-feedback', :type => 'datetime-local' } %>
     <span class='help-inline'><%= error ? f.error_message_on(:deadline) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
@@ -34,7 +34,7 @@
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :course_id, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.text_field :course_id, :class => 'input-xlarge input-with-feedback' %>
+    <%= f.select :course_id, :collection => courses, :fields => [:name, :id] %>
     <span class='help-inline'><%= error ? f.error_message_on(:course_id) : "Ex: a simple text" %></span>
   </div>
 </fieldset>

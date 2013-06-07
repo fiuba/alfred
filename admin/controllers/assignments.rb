@@ -8,6 +8,7 @@ Alfred::Admin.controllers :assignments do
   get :new do
     @title = pat(:new_title, :model => 'assignment')
     @assignment = Assignment.new
+    @courses = Course.all(:active => true)
     render 'assignments/new'
   end
 
@@ -28,6 +29,7 @@ Alfred::Admin.controllers :assignments do
     @title = pat(:edit_title, :model => "assignment #{params[:id]}")
     @assignment = Assignment.get(params[:id].to_i)
     if @assignment
+      @courses = Course.all(:active => true)
       render 'assignments/edit'
     else
       flash[:warning] = pat(:create_error, :model => 'assignment', :id => "#{params[:id]}")

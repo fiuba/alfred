@@ -55,7 +55,7 @@
           <td class=list-column> <%= assignment.name %> </td>
           <td class=list-column> <%= assignment.files %> </td>
           <td class=list-column> <%= assignment.test_script %> </td>
-          <td class=list-column> <%= assignment.deadline %> </td>
+          <td class=list-column> <%= l assignment.deadline.to_date %> </td>
           <td class=list-column> <%= assignment.course_id %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>

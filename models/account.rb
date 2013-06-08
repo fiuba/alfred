@@ -42,6 +42,12 @@ class Account
     get(id) rescue nil
   end
 
+  def self.new_student(params)
+    account = Account.new(params)
+    account.role = :student
+    account
+  end
+
   def has_password?(password)
     ::BCrypt::Password.new(crypted_password) == password
   end

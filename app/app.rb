@@ -105,11 +105,11 @@ module Alfred
     end
 
     post :register do
-      @account = Account.new(params[:account])
+      @account = Account.new_student(params[:account])
       if @account.save
         @title = pat(:create_title, :model => "account #{@account.id}")
         flash[:success] = pat(:create_success, :model => 'Account')
-        redirect(url(:index))
+        redirect('/login')
       else
         @title = pat(:create_title, :model => 'account')
         flash.now[:error] = pat(:create_error, :model => 'account')

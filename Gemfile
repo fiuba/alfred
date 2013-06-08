@@ -20,7 +20,6 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'erubis', '~> 2.7.0'
 gem 'pg', :group => 'production'
 gem 'dm-mysql-adapter'
-gem 'dm-postgres-adapter', :group => 'production'
 gem 'dm-validations'
 gem 'dm-timestamps'
 gem 'dm-migrations'
@@ -31,21 +30,30 @@ gem 'dm-core'
 gem 'dm-ar-finders'
 gem 'tilt', '1.3.7'
 
-# Test requirements
-gem 'dm-sqlite-adapter', :group => 'test' 
-gem 'rspec', :group => 'test'
-gem 'capybara', :group => 'test'
-gem 'selenium-webdriver', :group => 'test'
-gem 'cucumber', :group => 'test'
-gem 'rack-test', :require => 'rack/test', :group => 'test'
-gem 'debugger'
 
 # Padrino Stable Gem
 gem 'padrino', '0.11.1'
 
-# Guard gem eases running spec automatically
-gem 'guard', :group => 'test'
-gem 'guard-rspec', :group => 'test'
+group :production do
+	gem 'dm-postgres-adapter'
+end
+
+group :development do
+	gem 'debugger'
+end
+
+group :test do
+	# Guard gem eases running spec automatically
+	gem 'guard'
+	gem 'guard-rspec'
+
+	gem 'dm-sqlite-adapter'
+	gem 'rspec'
+	gem 'capybara'
+	gem 'selenium-webdriver'
+	gem 'cucumber'
+	gem 'rack-test', :require => 'rack/test'
+end
 
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'

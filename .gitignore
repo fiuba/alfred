@@ -1,7 +1,7 @@
 *.my
 .idea
 .DS_Store
-log/**/*
+log/*
 tmp/**/*
 bin/*
 vendor/gems/*
@@ -21,6 +21,7 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+:memory
 
 # YARD artifacts
 .yardoc

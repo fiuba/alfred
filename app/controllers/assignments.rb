@@ -1,4 +1,4 @@
-Alfred::Admin.controllers :assignments do
+Alfred::App.controllers :assignments do
   get :index do
     @title = "Assignments"
     @assignments = Assignment.all

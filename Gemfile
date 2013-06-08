@@ -43,6 +43,10 @@ gem 'debugger'
 # Padrino Stable Gem
 gem 'padrino', '0.11.1'
 
+# Guard gem eases running spec automatically
+gem 'guard', :group => 'test'
+gem 'guard-rspec', :group => 'test'
+
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
 

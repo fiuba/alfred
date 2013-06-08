@@ -75,10 +75,14 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="/javascripts/jquery.smooth-scroll.min.js"></script>
 <script src="/javascripts/jquery.validate.js"></script>
-<script src="/javascripts/bootstrap.min.js"></script>
+<% if Padrino.env == :production %>
+  <%= javascript_include_tag 'jquery-1.9.0.min', 'bootstrap/bootstrap.min' %>
+<% else %>
+  <%= javascript_include_tag %w[jquery-1.9.0.js bootstrap/bootstrap-affix bootstrap/bootstrap-alert bootstrap/bootstrap-button bootstrap/bootstrap-carousel bootstrap/bootstrap-collapse bootstrap/bootstrap-dropdown bootstrap/bootstrap-tooltip bootstrap/bootstrap-transition bootstrap/bootstrap-typeahead bootstrap/bootstrap-modal bootstrap/bootstrap-popover bootstrap/bootstrap-scrollspy bootstrap/bootstrap-tab] %>
+<% end %>
+
 <script src="/javascripts/bootswatch.js"></script>
  <%= yield_content :additional_js %>
 </body>

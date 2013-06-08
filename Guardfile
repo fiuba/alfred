@@ -5,6 +5,9 @@ guard :rspec, :cli => '--color' do
 	# Model sources	
   watch(%r{^models/(.+)\.rb$})     { |m| "spec/models/#{m[1]}_spec.rb" }
 
+	# Controllers
+  watch(%r{^(app/controllers)/(.+)\.rb$}) { |m| "spec/#{m[1]}/#{m[2]}_controller_spec.rb" }
+
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }

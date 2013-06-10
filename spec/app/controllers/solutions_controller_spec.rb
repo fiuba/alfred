@@ -32,10 +32,10 @@ describe "SolutionsController" do
 			end
 
 
-			describe "when requests index" do
+			describe "when user requests index" do
 				before { visit '/solutions' }
 
-				it "should responses solutions already hung in" do
+				it "should responses solutions already handed in" do
 					Solution.all.each { |s| should have_content(s.file) }
 				end
 			end

@@ -1,19 +1,20 @@
 require 'spec_helper'
 
 describe Solution do
-	let(:course) { Course.new( :name => "AlgoIII", :active => true ) }
-	let(:account) do
-		Account.create( :email => "x@x.com", :password => "foobar",
+
+	before (:all) do
+		DataMapper.auto_migrate!
+		course = Course.new( :name => "AlgoIII", :active => true )
+		@account = Account.create( :email => "x@x.com", :password => "foobar",
 								:password_confirmation => "foobar",
 								:role => "student", :buid => "?"	)
-	end
-	let(:assignment) { Assignment.create( :course => course ) }
+		assignment = Assignment.create( :course => course )
 
-	before do
 		@solution =
 			Solution.new( :assignment => assignment, 
-										 :account => account ) 
+										 :account => @account ) 
 	end
+
 	subject { @solution }
 
 	it { should respond_to( :file ) }
@@ -21,7 +22,7 @@ describe Solution do
 	it { should respond_to( :assignment) }
 
 	describe "should belongs to student" do
-		it { @solution.account.should == account }
+		it { @solution.account.should == @account }
 	end
 
 	describe "without file" do

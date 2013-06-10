@@ -3,11 +3,11 @@ require 'spec_helper'
 describe Solution do
 	let(:course) { Course.new( :name => "AlgoIII", :active => true ) }
 	let(:account) do
-		Account.new( :email => "x@x.com", :password => "foobar",
+		Account.create( :email => "x@x.com", :password => "foobar",
 								:password_confirmation => "foobar",
 								:role => "student", :buid => "?"	)
 	end
-	let(:assignment) { Assignment.new( :course => course ) }
+	let(:assignment) { Assignment.create( :course => course ) }
 
 	before do
 		@solution =

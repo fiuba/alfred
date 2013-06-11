@@ -14,8 +14,8 @@ Bundler.require(:default, PADRINO_ENV)
 # Padrino::Logger::Config[:development][:log_static] = true
 #
 # ## Configure your I18n
-#
-# I18n.default_locale = :en
+I18n.default_locale = :es
+
 #
 # ## Configure your HTML5 data helpers
 #

@@ -23,12 +23,29 @@ describe "SolutionsController" do
 	describe "/solutions" do
 		subject { page }
 
+		describe "not logged in user" do
+			before { visit '/solutions' }
+
+			it "should redirects to login page" do
+				should have_content( I18n.translate('padrino.admin.login.email') )
+				should have_content( I18n.translate('padrino.admin.login.password') )
+			end
+
+			describe "once logged in" do
+				before do
+					login
+				end
+
+				it "should redirects to solutions" do
+					Solution.all.each { |s| should have_content(s.file) }
+				end
+			end
+
+		end
+
 		describe "logged in user" do
 			before do
-				visit '/login' 
-				fill_in :email, :with => "x@x.com"
-				fill_in :password, :with => "foobar"
-				click_button(I18n.translate('padrino.admin.login.sign_in'))
+				login
 			end
 
 
@@ -42,3 +59,4 @@ describe "SolutionsController" do
 		end
 	end
 end
+

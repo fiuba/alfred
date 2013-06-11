@@ -86,7 +86,7 @@ module Alfred
     post :login do
       if account = Account.authenticate(params[:email], params[:password])
         set_current_account(account)
-        redirect '/'
+				redirect_back_or_default('/')
       #elsif Padrino.env == :development && params[:bypass]
       #  account = Account.first
       #  set_current_account(account)
@@ -120,6 +120,10 @@ module Alfred
     get '/proc' do
         'ok'
     end
+
+		def store_location
+			session[:return_to] = request.url
+		end
 
   end
 end

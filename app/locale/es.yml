@@ -1,1 +1,99 @@
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 es:
+  failed_payment_email_subject: "Error: Tu donación mensual a {MOVEMENT_NAME} no fue procesada."
+  date:
+    abbr_day_names:
+    - dom
+    - lun
+    - mar
+    - mié
+    - jue
+    - vie
+    - sáb
+    abbr_month_names:
+    -
+    - ene
+    - feb
+    - mar
+    - abr
+    - may
+    - jun
+    - jul
+    - ago
+    - sep
+    - oct
+    - nov
+    - dic
+    day_names:
+    - domingo
+    - lunes
+    - martes
+    - miércoles
+    - jueves
+    - viernes
+    - sábado
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%d de %B de %Y'
+      short: ! '%d de %b'
+    month_names:
+    -
+    - enero
+    - marzo
+    - febrero
+    - abril
+    - mayo
+    - junio
+    - julio
+    - agosto
+    - septiembre
+    - octubre
+    - noviembre
+    - diciembre
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: "hace una hora"
+        other: "hace %{count} horas"
+      about_x_months:
+        one: "hace aproximadamente un mes"
+        other: "hace aproximadamente %{count} meses"
+      about_x_years:
+        one: "hace aproximadamente un año"
+        other: "hace aproximadamente %{count} años"
+      almost_x_years:
+        one: "hace casi un año"
+        other: "hace casi %{count} años"
+      half_a_minute: "hace menos de un minuto"
+      less_than_x_minutes:
+        one: "hace menos de un minuto"
+        other: "hace menos de %{count} minutos"
+      less_than_x_seconds:
+        one: "hace menos de un segundo"
+        other: "hace menos de %{count} segundos"
+      over_x_years:
+        one: "hace más de un año"
+        other: "hace más de %{count} años"
+      x_days:
+        one: "hace un día"
+        other: "hace %{count} días"
+      x_minutes:
+        one: "hace un minuto"
+        other: "hace %{count} minutos"
+      x_months:
+        one: "hace un mes"
+        other: "hace %{count} meses"
+      x_seconds:
+        one: "hace un segundo"
+        other: "hace %{count} segundos"
+    prompts:
+      day: Día
+      hour: Hora
+      minute: Minutos
+      month: Mes
+      second: Segundos
+      year: Año

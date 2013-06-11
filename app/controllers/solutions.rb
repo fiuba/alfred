@@ -1,6 +1,11 @@
 Alfred::App.controllers :solutions do
 
-	before { redirect url( :login ) unless logged_in? }
+	before do
+		unless logged_in?
+			store_location
+			redirect url( :login )
+		end
+	end
 	
   get :index do
     @title = "Solutions"

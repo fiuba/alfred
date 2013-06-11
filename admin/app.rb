@@ -25,7 +25,7 @@ module Alfred
     set :login_page,  '/admin/sessions/new'
 
     enable  :sessions
-    disable :store_location
+    enable 	:store_location
 
     access_control.roles_for :any do |role|
       role.protect '/'

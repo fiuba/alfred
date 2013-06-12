@@ -36,6 +36,20 @@
       <div class="nav-collapse collapse" id="main-menu">
         <ul class="nav" id="main-menu-left">
           <!--<li><a onclick="pageTracker._link(this.href); return false;" href="http://news.bootswatch.com">News</a></li>-->
+          <% if (current_account) %>            
+            
+          <li>
+            <a data-toggle="dropdown" href="#"><%= current_course.name %><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            <% current_account.courses.each do |course| %>
+            <li>
+              <a tabindex="-1" href="/courses/<%= course.name %>"><%= course.name %></a>
+            </li>
+            <% end %>
+          <% end %>
+          </ul>
+        
+          </li>
         </ul>
 
         <ul class="nav pull-right" id="main-menu-right">

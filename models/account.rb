@@ -11,6 +11,8 @@ class Account
   property :email,            String
   property :crypted_password, String, :length => 70
   property :role,             String
+  property :tag,             String
+  has n, :courses, :through => Resource
 
   # Validations
   validates_presence_of      :email, :role, :buid
@@ -44,7 +46,7 @@ class Account
 
   def self.new_student(params)
     account = Account.new(params)
-    account.role = :student
+    account.role = :student    
     account
   end
 

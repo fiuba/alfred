@@ -1,6 +1,15 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 es:
-  failed_payment_email_subject: "Error: Tu donación mensual a {MOVEMENT_NAME} no fue procesada."
+  registration: 'registración'
+  name: 'nombre'
+  surname: 'apellido'
+  buid: 'padrón'
+  tag: 'turno'
+  password: 'contraseña'
+  password_confirmation: 'confirmación de contraseña'
+  account_created: 'cuenta creada'
+  sign_in: 'iniciar sesión'
+  create_account: 'crear cuenta'
   date:
     abbr_day_names:
     - dom

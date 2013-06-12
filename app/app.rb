@@ -63,11 +63,11 @@ module Alfred
       
     set :login_page, "/login"
 
-
+=begin
     access_control.roles_for :any do |role|
-      role.protect '/proc'
+      role.protect '/solutions'
     end
-
+=end
 
     get '/' do
       render 'home/index'      
@@ -106,19 +106,14 @@ module Alfred
 
     post :register do
       @account = Account.new_student(params[:account])
+      @account.courses << Course.active
       if @account.save
-        @title = pat(:create_title, :model => "account #{@account.id}")
-        flash[:success] = pat(:create_success, :model => 'Account')
+        flash[:success] = t(:account_created)
         redirect('/login')
       else
-        @title = pat(:create_title, :model => 'account')
         flash.now[:error] = pat(:create_error, :model => 'account')
         render 'home/register'
       end
-    end
-
-    get '/proc' do
-        'ok'
     end
 
 		def store_location

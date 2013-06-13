@@ -18,7 +18,6 @@ gem 'omniauth-twitter'
 # Component requirements
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'erubis', '~> 2.7.0'
-gem 'pg', :group => 'production'
 gem 'dm-mysql-adapter'
 gem 'dm-validations'
 gem 'dm-timestamps'
@@ -29,13 +28,18 @@ gem 'dm-types'
 gem 'dm-core'
 gem 'dm-ar-finders'
 gem 'tilt', '1.3.7'
-
+gem 'dropbox-sdk', :require => 'dropbox_sdk'
 
 # Padrino Stable Gem
 gem 'padrino', '0.11.1'
 
 group :production do
+	gem 'pg'
 	gem 'dm-postgres-adapter'
+end
+
+group :development, :test do
+	gem 'foreman'
 end
 
 group :development do

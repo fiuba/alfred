@@ -10,8 +10,9 @@ Bundler.require(:default, PADRINO_ENV)
 ##
 # ## Enable devel logging
 #
-# Padrino::Logger::Config[:development][:log_level]  = :devel
-# Padrino::Logger::Config[:development][:log_static] = true
+Padrino::Logger::Config[:development][:log_level]  = :devel
+Padrino::Logger::Config[:development][:log_static] = true
+
 #
 # ## Configure your I18n
 I18n.default_locale = :es
@@ -42,5 +43,9 @@ end
 Padrino.after_load do
   DataMapper.finalize
 end
+
+# Dropbox initialization
+ACCESS_TYPE = :app_folder
+session = DropboxSession.new(ENV['DROPBOX_APP_KEY'], ENV['DROPBOX_APP_SECRET'])
 
 Padrino.load!

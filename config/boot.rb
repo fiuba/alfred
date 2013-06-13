@@ -44,8 +44,5 @@ Padrino.after_load do
   DataMapper.finalize
 end
 
-# Dropbox initialization
-ACCESS_TYPE = :app_folder
-session = DropboxSession.new(ENV['DROPBOX_APP_KEY'], ENV['DROPBOX_APP_SECRET'])
 
 Padrino.load!

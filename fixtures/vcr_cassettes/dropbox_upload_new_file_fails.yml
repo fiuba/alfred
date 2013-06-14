@@ -1,0 +1,41 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://api-content.dropbox.com/1/files_put/sandbox/fail_when_uploading_this_file.txt?overwrite=true
+    body:
+      encoding: US-ASCII
+      string: /my_files/fail_when_uploading_this_file.txt
+    headers:
+      Content-Type:
+      - application/octet-stream
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - OfficialDropboxRubySDK/1.5.1
+      Content-Length:
+      - 29
+      Authorization:
+      - OAuth oauth_version="1.0", oauth_signature_method="PLAINTEXT", oauth_consumer_key="1234567890abcde",
+        oauth_token="1234567890abcde", oauth_signature="abcdef1234567890abcdef123456789"
+  response:
+    status:
+      code: 411
+      message: Length Required
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 01 Jun 2013 00:00:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"error": "Missing Content-Length header (this endpoint doesn''t support HTTP chunked transfer encoding)."}'
+    http_version: 
+  recorded_at: Fri, 14 Jun 2013 16:56:56 GMT
+recorded_with: VCR 2.5.0

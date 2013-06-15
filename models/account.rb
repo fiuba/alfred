@@ -3,6 +3,11 @@ class Account
   include DataMapper::Validate
   attr_accessor :password, :password_confirmation
 
+  # Available roles
+  TEACHER = 'teacher'
+  STUDENT = 'student'
+  ADMIN = 'admin'
+
   # Properties
   property :id,               Serial
   property :name,             String
@@ -26,8 +31,6 @@ class Account
   validates_format_of        :email,    :with => :email_address
   validates_format_of        :role,     :with => /[A-Za-z]/
 
-  TEACHER = 'teacher'
-  STUDENT = 'student'
   # Callbacks
   before :save, :encrypt_password
 
@@ -69,6 +72,10 @@ class Account
   def is_teacher?
     puts role
     self.role == TEACHER
+  end
+
+  def self.available_roles
+    return [ STUDENT, TEACHER, ADMIN ]
   end
 
   private

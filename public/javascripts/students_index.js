@@ -3,7 +3,7 @@ window.onload = function() {
 
 				// we build and load the metadata in Javascript
 				editableGrid.load({ metadata: [
-					{ name: "Padron", datatype: "string" },
+					{ name: "Padron", datatype: "html" },
 					{ name: "Nombre", datatype: "string" },
 					{ name: "Apellido", datatype: "string" },
 					{ name: "Email", datatype: "string" },

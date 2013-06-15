@@ -12,7 +12,7 @@
 	</tr>
 	<% @students.each do |s|%>
 	<tr id="<%= s.id %>">
-		<td><%= s.buid %></td>
+		<td><a href="/students/<%= s.id %>"><%= s.buid %></a></td>
 		<td><%= s.name %></td>
 		<td><%= s.surname %></td>
 		<td><%= s.email %></td>

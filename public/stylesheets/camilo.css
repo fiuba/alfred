@@ -14,6 +14,10 @@ footer {
     text-align: center;
 }
 
+.form-search {
+    text-align: right;
+}
+
 .large{
     width: 400px;
 }

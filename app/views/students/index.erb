@@ -1,0 +1,27 @@
+<div class="well form-search">
+  <input type="text" class="input-medium search-query" id="filter">
+</div>
+
+<table id="studentsGrid" class="table table-bordered table-striped table-hover"">
+	<tr>
+		<th>Padron</th>
+		<th>nombre</th>
+		<th>apellido</th>
+		<th>Email</th>
+		<th>Turno</th>
+	</tr>
+	<% @students.each do |s|%>
+	<tr id="<%= s.id %>">
+		<td><%= s.buid %></td>
+		<td><%= s.name %></td>
+		<td><%= s.surname %></td>
+		<td><%= s.email %></td>
+		<td><%= s.tag %></td>
+	</tr>
+	<% end %>
+</table>
+
+<% content_for :additional_js do %>
+	<%= javascript_include_tag 'editablegrid-2.0.1.js' %>
+  <%= javascript_include_tag 'students_index.js' %>
+<% end %>

@@ -9,4 +9,7 @@ class Course
   	Course.find_by_active(true)
   end
   
+  def students
+  	self.accounts.select { |a| a.is_student? }
+  end
 end

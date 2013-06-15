@@ -26,6 +26,8 @@ class Account
   validates_format_of        :email,    :with => :email_address
   validates_format_of        :role,     :with => /[A-Za-z]/
 
+  TEACHER = 'teacher'
+  STUDENT = 'student'
   # Callbacks
   before :save, :encrypt_password
 
@@ -46,12 +48,27 @@ class Account
 
   def self.new_student(params)
     account = Account.new(params)
-    account.role = :student    
+    account.role = STUDENT 
+    account
+  end
+
+  def self.new_teacher(params)
+    account = Account.new(params)
+    account.role = TEACHER
     account
   end
 
   def has_password?(password)
     ::BCrypt::Password.new(crypted_password) == password
+  end
+
+  def is_student?
+    @role == STUDENT
+  end
+
+  def is_teacher?
+    puts role
+    self.role == TEACHER
   end
 
   private
@@ -62,4 +79,5 @@ class Account
   def encrypt_password
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
   end
+
 end

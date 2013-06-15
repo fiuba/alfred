@@ -10,6 +10,9 @@ es:
   account_created: 'cuenta creada'
   sign_in: 'iniciar sesión'
   create_account: 'crear cuenta'
+  menu:
+    assigments: 'Trabajos prácticos'
+    students: 'Alumnos'
   date:
     abbr_day_names:
     - dom

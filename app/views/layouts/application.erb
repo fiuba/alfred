@@ -34,35 +34,9 @@
       </a>
       <a class="brand" href="../">Alfred</a>
       <div class="nav-collapse collapse" id="main-menu">
-        <ul class="nav" id="main-menu-left">
-          <!--<li><a onclick="pageTracker._link(this.href); return false;" href="http://news.bootswatch.com">News</a></li>-->
-          <% if (current_account) %>            
-            
-          <li>
-            <a data-toggle="dropdown" href="#"><%= current_course.name %><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-            <% current_account.courses.each do |course| %>
-            <li>
-              <a tabindex="-1" href="/courses/<%= course.name %>"><%= course.name %></a>
-            </li>
-            <% end %>
-          <% end %>
-          </ul>
-        
-          </li>
-        </ul>
 
-        <ul class="nav pull-right" id="main-menu-right">
+        <%= partial 'layouts/menu' %>
 
-
-          <li><a rel="tooltip" href="/" title="Inicio">Inicio</a></li>
-          <% if current_account %>
-          <li><a rel="tooltip" href="/" title="Profile"><%= current_account.email %></a></li>
-          <li><a rel="tooltip" href="/logout" title="Salir">Salir</a><li>
-          <% else %>
-          <li><a rel="tooltip" href="/login" title="Entrar">Entrar</a><li>
-          <% end %>
-        </ul>
       </div>
     </div>
   </div>

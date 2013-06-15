@@ -51,6 +51,7 @@ group :test do
 	gem 'guard'
 	gem 'guard-rspec'
 
+	gem 'simplecov'
 	gem 'dm-sqlite-adapter'
 	gem 'rspec'
 	gem 'capybara'

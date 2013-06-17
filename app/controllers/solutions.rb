@@ -2,7 +2,7 @@ Alfred::App.controllers :solutions do
 	
   get :index do
     @title = "Solutions"
-		@solutions = Solution.all
+		@solutions = Solution.all( :account => current_account )
     render 'solutions/index'
   end
 

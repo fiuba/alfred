@@ -13,6 +13,14 @@ es:
   menu:
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'
+    submissions: 'Mis entregas'
+  solutions:
+    form:
+      file: 'Archivo a entregar'
+      assignment: 'Trabajo práctico'
+    grid:
+      file: 'Archivo entregado'
+      assignment: 'Trabajo práctico'
   date:
     abbr_day_names:
     - dom

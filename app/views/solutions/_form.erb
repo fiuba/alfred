@@ -1,6 +1,6 @@
 <% error = @solution.errors.key?(:file) && @solution.errors[:file].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :file, :class => 'control-label' %>
+  <%= f.label I18n.translate('solutions.form.file'), :class => 'control-label' %>
   <div class='controls'>
     <%= f.text_field :file, :class => 'input-xlarge input-with-feedback', :autofocus => true %>
     <span class='help-inline'><%= error ? f.error_message_on(:file) : "Ex: a simple text" %></span>
@@ -9,7 +9,7 @@
 <%= f.hidden_field :account_id %>
 <% error = @solution.errors.key?(:assignment_id) && @solution.errors[:assignment_id].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :assignment_id, :class => 'control-label' %>
+  <%= f.label I18n.translate('solutions.form.assignment'), :class => 'control-label' %>
   <div class='controls'>
     <%= f.select :assignment_id, :collection => assignments, :fields => [ :name, :id ], :class => 'input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? f.error_message_on(:assignment_id) : "Ex: a simple text" %></span>

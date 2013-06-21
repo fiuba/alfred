@@ -45,6 +45,8 @@ GEM
     dm-do-adapter (1.2.0)
       data_objects (~> 0.10.6)
       dm-core (~> 1.2.0)
+    dm-is-remixable (1.2.0)
+      dm-core (~> 1.2.0)
     dm-migrations (1.2.0)
       dm-core (~> 1.2.0)
     dm-mysql-adapter (1.2.0)
@@ -228,6 +230,7 @@ DEPENDENCIES
   dm-ar-finders
   dm-constraints
   dm-core
+  dm-is-remixable
   dm-migrations
   dm-mysql-adapter
   dm-postgres-adapter

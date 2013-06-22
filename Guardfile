@@ -1,7 +1,7 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 
-guard :rspec, :cli => '--color' do
+guard :rspec, :cli => '--color --fail-fast -d' do
 	# Model sources	
   watch(%r{^models/(.+)\.rb$})     { |m| "spec/models/#{m[1]}_spec.rb" }
 

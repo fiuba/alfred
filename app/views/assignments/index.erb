@@ -36,12 +36,9 @@
             </ul>
           </div>
         </th>
-                <th class=header> <%= :id %></th>
-                <th class=header> <%= :name %></th>
-                <th class=header> <%= :files %></th>
-                <th class=header> <%= :test_script %></th>
-                <th class=header> <%= :deadline %></th>
-                <th class=header> <%= :course_id %></th>
+                <th class=header> <%= t('assignments.name') %></th>
+                <th class=header> <%= t('assignments.deadline') %></th>
+                <th class=header> <%= t('assignments.course') %></th>
                 <th class="header list-row-action-header"></th>
     </thead>
 
@@ -51,15 +48,13 @@
           <td class="list-column list-selectable">
             <%= check_box_tag 'assignment_ids[]', :value => assignment.id, :class => 'list-selectable-checkbox' %>
            </td>
-          <td class=list-column> <%= assignment.id %> </td>
           <td class=list-column> <%= assignment.name %> </td>
-          <td class=list-column> <%= assignment.files %> </td>
-          <td class=list-column> <%= assignment.test_script %> </td>
           <td class=list-column> <%= l assignment.deadline.to_date %> </td>
-          <td class=list-column> <%= assignment.course_id %> </td>
+          <td class=list-column> <%= assignment.course.name %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:assignments, :edit, :id => assignment.id), :rel => :tooltip, :title => "#{pat(:edit)} assignment", :class => 'list-row-action-wrapper-link' %>
+               <%= link_to t('assignments.edit_files'), url(:assignment, :generic, :file, :index, :assignment_id => assignment.id), :class => 'list-row-action-wrapper-link' %>
                <%= link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} assignment", :class => 'list-row-action-delete-one list-row-action-wrapper-link' %>
                <div class="popover list-row-action-popover-delete-one left">
                  <div class=arrow> </div>

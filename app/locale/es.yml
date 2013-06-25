@@ -117,3 +117,14 @@ es:
       month: Mes
       second: Segundos
       year: Año
+  assignments:
+    name: Nombre
+    deadline: Fecha límite
+    course: Curso
+    edit_files: Archivos
+    files: 
+      title: Archivos asociados
+      name: Nombre
+      download_link: Descargar
+      new:
+        title: Nuevo Archivo

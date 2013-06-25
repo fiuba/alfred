@@ -6,14 +6,6 @@
     <span class='help-inline'><%= error ? f.error_message_on(:name) : "Ex: a simple text" %></span>
   </div>
 </fieldset>
-<% error = @assignment.errors.key?(:files) && @assignment.errors[:files].count > 0 %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label :files, :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :files, :class => 'input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:files) : "Ex: a simple text" %></span>
-  </div>
-</fieldset>
 <% error = @assignment.errors.key?(:test_script) && @assignment.errors[:test_script].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :test_script, :class => 'control-label' %>

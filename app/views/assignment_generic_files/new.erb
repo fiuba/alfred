@@ -1,0 +1,9 @@
+<ul class="nav nav-tabs">
+  <li> <%= link_to tag_icon(:list, pat(:list)), url(:assignment, :generic, :file, :index, :assignment_id => @assignment.id) %></li>
+  <li class="active"> <%= link_to tag_icon(:plus, pat(:new)), url(:assignment, :generic, :file, :new, :assignment_id => @assignment.id) %></li>
+</ul>
+<div class="tabs-content">
+  <% form_for :file, url(:assignment, :generic, :file, :create, :assignment_id => @assignment.id), :class => 'form-horizontal', :multipart => true do |f| %>
+    <%= partial 'assignment_generic_files/form', :locals => { :f => f } %>
+ <% end %>
+</div>

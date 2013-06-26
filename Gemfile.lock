@@ -181,6 +181,9 @@ GEM
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.13.1)
+    rspec_junit_formatter (0.1.1)
+      builder
+      rspec (~> 2.0)
     rubyzip (0.9.9)
     safe_yaml (0.9.3)
     selenium-webdriver (2.32.1)
@@ -250,6 +253,7 @@ DEPENDENCIES
   rack-test
   rake
   rspec
+  rspec_junit_formatter
   selenium-webdriver
   simplecov
   thin

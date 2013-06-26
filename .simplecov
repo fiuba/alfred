@@ -1,6 +1,8 @@
 SimpleCov.start do
   root(File.join(File.dirname(__FILE__)))
 
+  coverage_dir 'reports/coverage'
+
   add_filter '/spec/'
   add_filter '/features/'
   add_filter '/admin/'

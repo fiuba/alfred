@@ -6,7 +6,7 @@ begin
   spec_tasks.each do |folder|
     RSpec::Core::RakeTask.new("spec:#{folder}") do |t|
       t.pattern = "./spec/#{folder}/**/*_spec.rb"
-      t.rspec_opts = %w(-fs --color)
+      t.rspec_opts = %w(-fs --color --format progress --format RspecJunitFormatter --out reports/spec/spec.xml)
     end
   end
 

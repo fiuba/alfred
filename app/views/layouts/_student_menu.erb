@@ -1,8 +1,14 @@
 <li>
-  <a href="/assignments"><%= t('menu.assigments')%></a>
+	<a href='<%= "/courses/#{current_course.name}/students/me" %>'>
+		<%= t('menu.assigments')%>
+	</a>
 </li>
+
 <li>
   <a href="<%= url_for(:solutions, :index, :account_id => current_account.id)%>">
         <%= t('menu.submissions')%>
   </a>
 </li>
+
+
+

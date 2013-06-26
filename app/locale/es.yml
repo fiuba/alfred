@@ -21,6 +21,8 @@ es:
     grid:
       file: 'Archivo entregado'
       assignment: 'Trabajo práctico'
+  my_assigments: 'Mis trabajos prácticos'
+  my_solutions: 'Mis entregas'
   date:
     abbr_day_names:
     - dom

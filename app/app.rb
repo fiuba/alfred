@@ -86,7 +86,12 @@ module Alfred
     post :login do
       if account = Account.authenticate(params[:email], params[:password])
         set_current_account(account)
-				redirect_back_or_default('/')
+        if account.is_student?
+				  redirect_back_or_default("courses/#{current_course.name}/students/me")
+        else
+          redirect_back_or_default('/')
+        end
+
       #elsif Padrino.env == :development && params[:bypass]
       #  account = Account.first
       #  set_current_account(account)

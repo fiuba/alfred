@@ -1,4 +1,5 @@
 Alfred::App.controllers :students, :parent => :courses do
+
   get :index do
     @title = "Students"    
     course = Course.find_by_name(params[:course_id])

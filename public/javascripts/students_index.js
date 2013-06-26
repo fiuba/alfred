@@ -3,7 +3,7 @@ window.onload = function() {
 
 				// we build and load the metadata in Javascript
 				editableGrid.load({ metadata: [
-					{ name: "Padron", datatype: "html" },
+					{ name: "Padron", datatype: "string" },
 					{ name: "Nombre", datatype: "string" },
 					{ name: "Apellido", datatype: "string" },
 					{ name: "Email", datatype: "string" },
@@ -17,7 +17,5 @@ window.onload = function() {
 
 		    // filter when something is typed into filter
 		    _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); };
-
-
 				
 			} 

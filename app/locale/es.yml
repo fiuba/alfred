@@ -24,6 +24,12 @@ es:
       assignment: 'Trabajo práctico'
   my_assigments: 'Mis trabajos prácticos'
   my_solutions: 'Mis entregas'
+  assignment: 'Trabajo práctico'
+  status: 'Estado'
+  solutions: 'soluciones'
+  lastest_solution_date: 'Ultima entrega'
+  corrector: 'Corrector'
+  actions: 'acciones'
   date:
     abbr_day_names:
     - dom

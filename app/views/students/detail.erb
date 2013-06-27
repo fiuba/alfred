@@ -1,15 +1,20 @@
-<h2>Juan Perez (84998)</h2>
-<p> jperez@fi.uba.ar | Turno Jueves Tarde </p>
+<h2>
+	<%= @student.name %> <%= @student.surname %> (<%= @student.buid %>)
+</h2>
+<p> <%= @student.email %> | <%= t('tag') %> <%= @student.tag %> </p>
+
 
 <table id="studentsGrid" class="table table-bordered table-striped table-hover"">
+
 	<tr>
-		<th>Trabajo Práctico</th>
-		<th>Estado</th>
-		<th>Entregas</th>
-		<th>Ultima entrega</th>
-		<th>Corrector</th>
-		<th>Acciones</th>
+		<th><%= t('assignment').capitalize %></th>
+		<th><%= t('status').capitalize %></th>
+		<th><%= t('solutions').capitalize %></th>
+		<th><%= t('lastest_solution_date').capitalize %></th>
+		<th><%= t('corrector').capitalize %></th>
+		<th><%= t('actions').capitalize %></th>
 	</tr>
+	<% @student.each do |s|%>
 	<tr>
 		<td>Tp N1</td>
 		<td>Aprobado</td>
@@ -18,6 +23,7 @@
 		<td>NicoPaez</td>
 		<td><a href="/students/xxxx">ver_última</a> | <a href="/students/xxxx">ver_todas</a></td>
 	</tr>
+	<% end %>
 		<tr>
 		<td>Tp N2</td>
 		<td>test fallidos</td>

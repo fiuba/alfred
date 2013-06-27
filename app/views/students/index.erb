@@ -1,5 +1,5 @@
 <div class="well form-search">
-  <input type="text" class="input-medium search-query" id="filter">
+  <input type="text" class="input-medium search-query" id="filter" placeholder="tipea para filtrar">
 </div>
 
 <table id="studentsGrid" class="table table-bordered table-striped table-hover"">
@@ -9,6 +9,7 @@
 		<th><%= t('surname').capitalize %></th>
 		<th><%= t('email').capitalize %></th>
 		<th><%= t('tag').capitalize %></th>
+		<th><%= t('actions').capitalize %></th>
 	</tr>
 	<% @students.each do |s|%>
 	<tr id="<%= s.id %>">
@@ -17,6 +18,10 @@
 		<td><%= s.surname %></td>
 		<td><%= s.email %></td>
 		<td><%= s.tag %></td>
+		<td>
+			<a href="/courses/<%= current_course.name %>/students/<%= s.id %>/detail">
+				<i class="icon-zoom-in"></i>
+		</td>
 	</tr>
 	<% end %>
 </table>

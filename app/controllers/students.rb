@@ -7,7 +7,8 @@ Alfred::App.controllers :students, :parent => :courses do
     render 'students/index'
   end
 
-  get :detail do
+  get ':student_id/detail' do
+    @student = Account.get(params[:student_id])
   	render 'students/detail'
   end
 

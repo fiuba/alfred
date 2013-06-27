@@ -32,4 +32,24 @@ describe Account do
 
 	end
 
+	describe 'status_for_assignment' do
+
+		it 'should return :solution_pending when there are no solutions submitted' do
+			pending
+		end
+
+		it 'should return :correction_pending when when a solution was submitted but was not corrected yet' do
+			pending
+		end
+
+		it 'should return :approved when a solution was submitted, corrected and graded as passed' do
+			pending
+		end
+
+		it 'should return :failed when a solution was submitted, corrected and graded as failed' do
+			pending
+		end
+
+	end
+	
 end

@@ -26,7 +26,8 @@ es:
   my_solutions: 'Mis entregas'
   assignment: 'Trabajo práctico'
   status: 'Estado'
-  solutions: 'soluciones'
+  students:
+    solutions: 'soluciones'
   lastest_solution_date: 'Ultima entrega'
   corrector: 'Corrector'
   actions: 'acciones'

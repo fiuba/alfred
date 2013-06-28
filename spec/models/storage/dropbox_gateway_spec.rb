@@ -58,10 +58,10 @@ describe Storage::DropboxGateway do
 
 	it "should create share link" do
 	  VCR.use_cassette('dropbox_create_share_link') do
-	  	share_link, expiration = dropbox_gateway.share('test.txt')
+	  	share = dropbox_gateway.share('test.txt')
 
-	  	share_link.should =~ /http:\/\/www\.dropbox\.com\/.*\/test.txt/
-	  	expiration.should == DateTime.parse('Fri, 01 Jul 2013 00:00:00 +0000')
+	  	share[:url].should =~ /http:\/\/www\.dropbox\.com\/.*\/test.txt/
+	  	share[:expiration_date].should == DateTime.parse('Fri, 01 Jul 2013 00:00:00 +0000')
 	  end
 	end
 

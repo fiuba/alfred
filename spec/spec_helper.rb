@@ -28,4 +28,5 @@ def app
   # You can handle all padrino applications using instead:
   #   Padrino.application
   Alfred::App.tap { |app|  }
+  Alfred::App.set :protect_from_csrf, false
 end

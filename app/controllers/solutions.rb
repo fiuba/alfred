@@ -84,7 +84,6 @@ Alfred::App.controllers :solutions do
   end
 
   delete :destroy_many do
-		puts "destroy_many"
     @title = "Solutions"
     unless params[:solution_ids]
       flash[:error] = pat(:destroy_many_error, :model => 'solution')

@@ -38,7 +38,7 @@ class SolutionGenericFile
 	end
 
 	def complete_path
-		if self.path =~ /^\/solution\/temp\/.*/ && !self.solution.nil?
+		if self.path =~ /^\/solutions\/temp\/.*/ && !self.solution.nil?
 			self.inner_path = calculate_path(self.name)
 		end
 	end
@@ -46,9 +46,9 @@ class SolutionGenericFile
 	def calculate_path(file_name)
 		path = ''
 		if !self.solution || self.solution.id.blank?
-			path = "/solution/temp/#{file_name}"
+			path = "/solutions/temp/#{file_name}"
 		else
-			path = "/solution/#{solution.id}/#{file_name}"
+			path = "/solutions/#{solution.id}/#{file_name}"
 		end
 
 		return path

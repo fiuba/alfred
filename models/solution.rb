@@ -10,6 +10,7 @@ class Solution
   # property <name>, <type>
   property :id, Serial
   property :file, String
+  property :created_at, DateTime  
 
   validates_presence_of      :file
 

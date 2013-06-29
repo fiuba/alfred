@@ -78,6 +78,31 @@ class Account
     return [ STUDENT, TEACHER, ADMIN ]
   end
 
+  def status_for_assignment(assignment)
+    solutions = Solution.find_by_account_and_assignment(self, assignment)        
+    assignment_status = AssignmentStatus.new 
+    if solutions.nil?
+      assignment_status.status = :solution_pending 
+      assignment_status.solution_count = 0
+      #assignment_status.latest_solution_date = nil
+      return assignment_status
+    end
+    solutions.sort_by! { |s| s.created_at}
+    assignment_status.solution_count = solutions.size
+    assignment_status.status = :correction_pending
+    assignment_status.latest_solution_date = solutions.last.created_at
+    solutions.each do | s |
+      if s.correction
+        if s.correction.approved?
+          assignment_status.status = :correction_passed
+          return assignment_status
+        end
+        assignment_status.status = :correction_failed
+      end
+    end
+    assignment_status
+  end
+  
   private
   def password_required
     crypted_password.blank? || password.present?

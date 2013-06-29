@@ -8,15 +8,23 @@ Alfred::App.controllers :solutions do
 
   get :new do
     @title = pat(:new_title, :model => 'solution')
-    @solution =	Solution.new( :account => current_account )
+    @solution =	Solution.new
     @assignments = Assignment.all
     render 'solutions/new'
   end
 
   post :create do
-    puts params[:solution]
+		input_file = params[:solution][:file]
     @solution= Solution.new(params[:solution])
+		@solution.file = input_file[:filename]
+
     if @solution.save
+			@solution_generic_file = 
+				SolutionGenericFile.create( :solution => @solution, :name => input_file[:filename] )
+
+    	storage_gateway = Storage::StorageGateways.get_gateway
+   	 	storage_gateway.upload(@solution_generic_file.path, input_file[:tempfile])
+
       @title = pat(:create_title, :model => "solution #{@solution.id}")
       flash[:success] = pat(:create_success, :model => 'Solution')
       params[:save_and_continue] ? redirect(url(:solutions, :index)) : redirect(url(:solutions, :edit, :id => @solution.id))
@@ -91,5 +99,18 @@ Alfred::App.controllers :solutions do
     end
     redirect url(:solutions, :index)
   end
+
+	get :file, :with => :solution_id do
+		solution = Solution.find( params[:solution_id] )
+		halt 404 if solution.nil?	
+
+		files = solution.solution_generic_files
+		halt 404 if files.nil?
+
+		file = files.first
+		
+    storage_gateway = Storage::StorageGateways.get_gateway
+		storage_gateway.download( file.path )
+	end
 
 end

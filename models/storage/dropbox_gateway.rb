@@ -60,7 +60,7 @@ class Storage::DropboxGateway
 		begin
 			share = @client.shares(file_path)
 
-			[ share['url'], DateTime.parse(share['expires']) ]
+			{ :url => share['url'], :expiration_date => DateTime.parse(share['expires']) }
 		rescue DropboxError => de
 			raise Storage::FileShareError.new(de)
 		end

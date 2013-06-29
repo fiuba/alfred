@@ -5,10 +5,12 @@ class Solution
 	belongs_to :account
 	belongs_to :assignment
 	has 1, :correction
+  has n, :solution_generic_files
 
   # property <name>, <type>
   property :id, Serial
   property :file, String
+  property :created_at, DateTime  
 
   validates_presence_of      :file
 

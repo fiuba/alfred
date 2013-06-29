@@ -7,7 +7,7 @@
 	  <thead>
 	    <tr>
 	      <th class=header> <%= t('assignments.files.name') %></th>
-	      <th class=header> <%= t('assignments.files.download_link') %></th>
+	      <th class=header></th>
 	      <th class="header list-row-action-header"></th>
 	    </tr>
 	  </thead>
@@ -15,7 +15,15 @@
 	    <% @files.each do |file| %>
 	      <tr class=list-row>
 	      	<td class=list-column> <%= file.name %> </td>
-	        <td class=list-column> download link (TBD) <%#= assignment.course.name %> </td>
+	        <td class=list-column> 
+		        <a href="<%=file_download_link(file.path)%>" title="<%= t('assignments.files.download_link')%>">
+		        	<i class='icon-download'></i>
+		        </a>
+		        <%#= TODO: Link is not working (won't make request with DELETE verb) %>
+		        <a href="<%= url(:assignment, :generic, :file, :destroy, :assignment_id => @assignment.id, :id => file.id)%>" title="<%= t('assignments.files.delete')%>">
+		        	<i class='icon-trash'></i>
+		        </a>
+        	</td>
 	        <td class="list-column list-row-action">
 	          <div class='list-row-action-wrapper'>
 	        	</div>

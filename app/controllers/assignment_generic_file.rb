@@ -3,7 +3,7 @@ Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
   get :index do
     @title = t('assignments.files.title')
     @assignment = Assignment.find(params[:assignment_id])
-    @files = AssignmentGenericFile.all(:assignment_id => params[:assignment_id]) || []
+    @files = @assignment.assignment_generic_files || [ ]
     render 'assignment_generic_files/index'
   end
 
@@ -21,17 +21,31 @@ Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
 
     storage_gateway = Storage::StorageGateways.get_gateway
     storage_gateway.upload(@assignment_generic_file.path, file_io[:tempfile].read)
-    @assignment_generic_file.save
     
-    # if @assignment.save
-    #   @title = pat(:create_title, :model => "assignment #{@assignment.id}")
-    #   flash[:success] = pat(:create_success, :model => 'Assignment')
-    #   params[:save_and_continue] ? redirect(url(:assignments, :index)) : redirect(url(:assignments, :edit, :id => @assignment.id))
-    # else
-    #   @title = pat(:create_title, :model => 'assignment')
-    #   flash.now[:error] = pat(:create_error, :model => 'assignment')
-    #   render 'assignments/new'
-    # end
+    
+    if @assignment_generic_file.save
+      redirect(url(:assignments, :index))
+    else
+      @title = t('assignments.files.new.title')
+      flash.now[:error] = pat(:create_error, :model => 'assignment_generic_file')
+      render 'assignment_generic_files/new'
+    end
+  end
+
+  delete :destroy, :with => :id do
+    @title = "Assignments"
+    assignment_generic_file = AssignmentGenericFile.get(params[:id].to_i)
+    if assignment_generic_file
+      if assignment_generic_file.destroy
+        flash[:success] = pat(:delete_success, :model => 'AssignmentGenericFile', :id => "#{params[:id]}")
+      else
+        flash[:error] = pat(:delete_error, :model => 'AssignmentGenericFile')
+      end
+      redirect url(:AssignmentGenericFile, :index, :assignment_id => params[:assignment_id])
+    else
+      flash[:warning] = pat(:delete_warning, :model => 'AssignmentGenericFile', :id => "#{params[:id]}")
+      halt 404
+    end
   end
 
   # get :index, :map => '/foo/bar' do

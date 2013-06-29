@@ -9,7 +9,7 @@
 	</tr>
 	<% @solutions.each do |s| %>
 		<tr> 
-			<td><%= s.file %></td>
+			<td><a href="<%= url_for(:solutions, :file, :solution_id => s.id ) %>"><%= s.file %></a></td>
 			<td><a href="<%= url_for(:assignments, :index) %>"><%= s.assignment.name %></a></td>
 		</tr>
 	<% end %>

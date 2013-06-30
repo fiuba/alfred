@@ -1,8 +1,8 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://api.dropbox.com/1/shares/sandbox/test.txt
+    method: post
+    uri: https://api.dropbox.com/1/fileops/delete?path=/test.txt&root=sandbox
     body:
       encoding: US-ASCII
       string: ''
@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       X-Server-Response-Time:
-      - '130'
+      - '148'
       X-Dropbox-Request-Id:
       - 1234567890abcdef
       Pragma:
@@ -45,8 +45,11 @@ http_interactions:
       - abcdef1234567890abcdef1234567890
     body:
       encoding: US-ASCII
-      string: ! '{"url": "http://www.dropbox.com/s/12345/test.txt", "expires": "Tue, 01 Jul 2013 00:00:00
-        +0000"}'
+      string: ! '{"is_deleted": true, "revision": 16, "rev": "101157d138", "thumb_exists":
+        false, "bytes": 0, "modified": "Fri, 01 Jun 2013 00:00:00 +0000", "client_mtime":
+        "Fri, 01 Jun 2013 00:00:00 +0000", "path": "/test.txt", "is_dir": false, "icon":
+        "page_white_text", "root": "app_folder", "mime_type": "text/plain", "size":
+        "0 bytes"}'
     http_version: 
-  recorded_at: Fri, 14 Jun 2013 18:10:54 GMT
+  recorded_at: Sun, 30 Jun 2013 18:43:24 GMT
 recorded_with: VCR 2.5.0

@@ -70,4 +70,16 @@ describe Storage::DropboxGateway do
 	  	expect { dropbox_gateway.share('foo.bar') }.to raise_error(Storage::FileShareError)
 	  end
 	end
+
+	it "should delete an existing file" do
+	  VCR.use_cassette('dropbox_delete_file') do
+	  	dropbox_gateway.delete('test.txt').should be_true
+	  end
+	end
+
+	it "should raise an error if file cannot be found when deleting" do
+	  VCR.use_cassette('dropbox_delete_inexistent_file') do
+	  	expect { dropbox_gateway.delete('foo.bar') }.to raise_error(Storage::FileShareError)
+	  end
+	end
 end

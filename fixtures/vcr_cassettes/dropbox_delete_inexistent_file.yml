@@ -1,8 +1,8 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://api.dropbox.com/1/shares/sandbox/test.txt
+    method: post
+    uri: https://api.dropbox.com/1/fileops/delete?path=/foo.bar&root=sandbox
     body:
       encoding: US-ASCII
       string: ''
@@ -16,37 +16,22 @@ http_interactions:
         oauth_token="1234567890abcde", oauth_signature="abcdef1234567890abcdef123456789"
   response:
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
     headers:
       Server:
       - nginx
       Date:
       - Fri, 01 Jun 2013 00:00:00 GMT
       Content-Type:
-      - text/javascript
+      - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      X-Server-Response-Time:
-      - '130'
-      X-Dropbox-Request-Id:
-      - 1234567890abcdef
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache
-      X-Dropbox-Http-Protocol:
-      - None
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Requestid:
-      - abcdef1234567890abcdef1234567890
     body:
       encoding: US-ASCII
-      string: ! '{"url": "http://www.dropbox.com/s/12345/test.txt", "expires": "Tue, 01 Jul 2013 00:00:00
-        +0000"}'
+      string: ! '{"error": "Path ''/foo.bar'' not found"}'
     http_version: 
-  recorded_at: Fri, 14 Jun 2013 18:10:54 GMT
+  recorded_at: Sun, 30 Jun 2013 18:47:18 GMT
 recorded_with: VCR 2.5.0

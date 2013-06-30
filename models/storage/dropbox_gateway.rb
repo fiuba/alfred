@@ -65,4 +65,12 @@ class Storage::DropboxGateway
 			raise Storage::FileShareError.new(de)
 		end
 	end
+
+	def delete(file_path)
+		begin
+			@client.file_delete(file_path)
+		rescue DropboxError => de
+			raise Storage::FileShareError.new(de)
+		end
+	end
 end

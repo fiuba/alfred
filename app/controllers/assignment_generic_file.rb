@@ -20,8 +20,7 @@ Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
     @assignment_generic_file = AssignmentGenericFile.new(:assignment => @assignment, :name => file_io[:filename])
 
     storage_gateway = Storage::StorageGateways.get_gateway
-    storage_gateway.upload(@assignment_generic_file.path, file_io[:tempfile].read)
-    
+    storage_gateway.upload(@assignment_generic_file.path, file_io[:tempfile])    
     
     if @assignment_generic_file.save
       redirect(url(:assignments, :index))
@@ -36,11 +35,24 @@ Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
     @title = "Assignments"
     assignment_generic_file = AssignmentGenericFile.get(params[:id].to_i)
     if assignment_generic_file
-      if assignment_generic_file.destroy
-        flash[:success] = pat(:delete_success, :model => 'AssignmentGenericFile', :id => "#{params[:id]}")
-      else
-        flash[:error] = pat(:delete_error, :model => 'AssignmentGenericFile')
+      assignment_generic_file.transaction do |t|
+        begin
+          file_path = assignment_generic_file.path
+          record_deleted = assignment_generic_file.destroy
+
+          if record_deleted
+            storage_gateway = Storage::StorageGateways.get_gateway
+            storage_gateway.delete(file_path)
+            
+            flash[:success] = pat(:delete_success, :model => 'AssignmentGenericFile', :id => "#{params[:id]}")
+          else
+            flash[:error] = pat(:delete_error, :model => 'AssignmentGenericFile')
+          end
+        rescue Storage::FileDeleteError => e
+          t.rollback
+        end
       end
+      
       redirect url(:assignment, :generic, :file, :index, :assignment_id => params[:assignment_id])
     else
       flash[:warning] = pat(:delete_warning, :model => 'AssignmentGenericFile', :id => "#{params[:id]}")

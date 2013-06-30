@@ -10,13 +10,10 @@ describe "AssignmentGenericFileController" do
 		get "/assignment/#{assignment_id}/assignment_generic_file"
 	end
 
-	# TODO: Review test! Request is not being processed
-	xit "should destroy AssignmentGenericFile and delete file from storage" do
+	it "should destroy AssignmentGenericFile and delete file from storage" do
 		assignment_file = double(AssignmentGenericFile, :path => '/my_files/99')
 		AssignmentGenericFile.should_receive(:get).with(99).and_return(assignment_file)
-		gateway = double(Storage::DropboxGateway)
-		gateway.should_receive(:delete).with('/my_files/99')
-		Storage::StorageGateways.should_receive(:get_gateway).and_return(gateway)
+		assignment_file.should_receive(:destroy)
 
 	  delete "/assignment/1234/assignment_generic_file/destroy/99"
 	end

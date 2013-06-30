@@ -41,31 +41,10 @@ Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
       else
         flash[:error] = pat(:delete_error, :model => 'AssignmentGenericFile')
       end
-      redirect url(:AssignmentGenericFile, :index, :assignment_id => params[:assignment_id])
+      redirect url(:assignment, :generic, :file, :index, :assignment_id => params[:assignment_id])
     else
       flash[:warning] = pat(:delete_warning, :model => 'AssignmentGenericFile', :id => "#{params[:id]}")
       halt 404
     end
   end
-
-  # get :index, :map => '/foo/bar' do
-  #   session[:foo] = 'bar'
-  #   render 'index'
-  # end
-
-  # get :sample, :map => '/sample/url', :provides => [:any, :js] do
-  #   case content_type
-  #     when :js then ...
-  #     else ...
-  # end
-
-  # get :foo, :with => :id do
-  #   'Maps to url '/foo/#{params[:id]}''
-  # end
-
-  # get '/example' do
-  #   'Hello world!'
-  # end
-  
-
 end

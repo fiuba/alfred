@@ -28,6 +28,7 @@ gem 'dm-types'
 gem 'dm-core'
 gem 'dm-is-remixable'
 gem 'dm-ar-finders'
+gem 'dm-transactions'
 gem 'tilt', '1.3.7'
 gem 'dropbox-sdk', :require => 'dropbox_sdk'
 
@@ -43,9 +44,9 @@ group :development, :test do
 	gem 'foreman'
 end
 
-#group :development do
-#	gem 'debugger'
-#end
+# group :development do
+# 	gem 'debugger'
+# end
 
 group :test do
 	# Guard gem eases running spec automatically

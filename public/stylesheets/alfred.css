@@ -37,3 +37,6 @@ form h1 {
 .container {
     width: 950px;
 }
+a i {
+    text-decoration:none !important;
+}

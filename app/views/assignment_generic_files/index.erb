@@ -19,10 +19,11 @@
 		        <a href="<%=file_download_link(file.path)%>" title="<%= t('assignments.files.download_link')%>">
 		        	<i class='icon-download'></i>
 		        </a>
-		        <%#= TODO: Link is not working (won't make request with DELETE verb) %>
-		        <a href="<%= url(:assignment, :generic, :file, :destroy, :assignment_id => @assignment.id, :id => file.id)%>" title="<%= t('assignments.files.delete')%>">
-		        	<i class='icon-trash'></i>
-		        </a>
+		        <%- form_tag url(:assignment, :generic, :file, :destroy, :assignment_id => @assignment.id, :id => file.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.files.delete.confirm') }, :style => 'display:inline' do %>
+		        	<button type='submit' title="<%= t('assignments.files.delete.title') %>" rel='tooltip' class="btn btn-danger">
+		        		<i class='icon-white icon-trash'></i>
+		        	</button>
+		        <% end %>
         	</td>
 	        <td class="list-column list-row-action">
 	          <div class='list-row-action-wrapper'>
@@ -33,3 +34,7 @@
 	 	</tbody>
 	</table>
 </div>
+
+<% content_for :additional_js do %>
+  <%= javascript_include_tag 'assignment_files_index.js' %>
+<% end %>

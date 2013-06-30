@@ -32,10 +32,10 @@ Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
   end
 
   delete :destroy, :with => :id do
-    @title = "Assignments"
+    @title = t('assignments.files.title')
     assignment_generic_file = AssignmentGenericFile.get(params[:id].to_i)
     if assignment_generic_file
-      assignment_generic_file.transaction do |t|
+      assignment_generic_file.transaction do |tx|
         begin
           file_path = assignment_generic_file.path
           record_deleted = assignment_generic_file.destroy
@@ -43,13 +43,13 @@ Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
           if record_deleted
             storage_gateway = Storage::StorageGateways.get_gateway
             storage_gateway.delete(file_path)
-            
+
             flash[:success] = pat(:delete_success, :model => 'AssignmentGenericFile', :id => "#{params[:id]}")
           else
             flash[:error] = pat(:delete_error, :model => 'AssignmentGenericFile')
           end
         rescue Storage::FileDeleteError => e
-          t.rollback
+          tx.rollback
         end
       end
       

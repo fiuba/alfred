@@ -1,24 +1,36 @@
-class Storage::FileUploadFailedError < StandardError
+class Storage::Error < StandardError
 	def initialize(dropbox_error)
 		super(dropbox_error.message)
 	end
 end
 
-class Storage::FileMetadataError < StandardError
+class Storage::FileUploadFailedError < Storage::Error
 	def initialize(dropbox_error)
-		super(dropbox_error.message)
+		super(dropbox_error)
 	end
 end
 
-class Storage::FileDownloadError < StandardError
+class Storage::FileMetadataError < Storage::Error
 	def initialize(dropbox_error)
-		super(dropbox_error.message)
+		super(dropbox_error)
 	end
 end
 
-class Storage::FileShareError < StandardError
+class Storage::FileDownloadError < Storage::Error
 	def initialize(dropbox_error)
-		super(dropbox_error.message)
+		super(dropbox_error)
+	end
+end
+
+class Storage::FileShareError < Storage::Error
+	def initialize(dropbox_error)
+		super(dropbox_error)
+	end
+end
+
+class Storage::FileDeleteError < Storage::Error
+	def initialize(dropbox_error)
+		super(dropbox_error)
 	end
 end
 
@@ -70,7 +82,7 @@ class Storage::DropboxGateway
 		begin
 			@client.file_delete(file_path)
 		rescue DropboxError => de
-			raise Storage::FileShareError.new(de)
+			raise Storage::FileDeleteError.new(de)
 		end
 	end
 end

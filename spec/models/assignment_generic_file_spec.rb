@@ -84,8 +84,4 @@ describe AssignmentGenericFile do
 
 		expect { file.name = 'MYFILE' }.not_to raise_error(CannotUpdateNameError)
 	end
-
-	it "should delete physical file on destroy" do
-	  
-	end
 end

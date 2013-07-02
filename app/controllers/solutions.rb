@@ -5,7 +5,6 @@ Alfred::App.controllers :solutions do
 		@solutions = Solution.all( :account => current_account )
     render 'solutions/index'
   end
-
   get :new do
     @title = pat(:new_title, :model => 'solution')
     @solution =	Solution.new
@@ -14,25 +13,39 @@ Alfred::App.controllers :solutions do
   end
 
   post :create do
+		errors = []
 		input_file = params[:solution][:file]
     @solution= Solution.new(params[:solution])
 		@solution.file = input_file[:filename]
 
-    if @solution.save
-			@solution_generic_file = 
-				SolutionGenericFile.create( :solution => @solution, :name => input_file[:filename] )
+		Database::Transaction.within do |tx, tx_errors|
+      if @solution.save
+				@solution_generic_file = 
+					SolutionGenericFile.create( :solution => @solution, :name => input_file[:filename] )
+				begin
+		    	storage_gateway = Storage::StorageGateways.get_gateway
+ 	 	  	 	storage_gateway.upload(@solution_generic_file.path, input_file[:tempfile])
+				rescue Storage::FileUploadFailedError => e
+					# TODO Add error information for user to know what it has happened
+					tx_errors << t('solutions.errors.upload_failed')
+				end
+			else
+				tx_errors << @solutions.errors
+			end
+			errors = tx_errors
+		end # End of transaction
 
-    	storage_gateway = Storage::StorageGateways.get_gateway
-   	 	storage_gateway.upload(@solution_generic_file.path, input_file[:tempfile])
-
-      @title = pat(:create_title, :model => "solution #{@solution.id}")
-      flash[:success] = pat(:create_success, :model => 'Solution')
-      params[:save_and_continue] ? redirect(url(:solutions, :index)) : redirect(url(:solutions, :edit, :id => @solution.id))
-    else
-      @title = pat(:create_title, :model => 'solution')
-      flash.now[:error] = pat(:create_error, :model => 'solution')
-      @assignments = Assignment.all
-      render 'solutions/new'
+		if errors.empty?
+    	@title = pat(:create_title, :model => "solution #{@solution.id}")
+    	flash[:success] = pat(:create_success, :model => 'Solution')
+    	params[:save_and_continue] ? \
+							redirect(url(:solutions, :index)) : \
+							redirect(url(:solutions, :edit, :id => @solution.id))
+		else
+    	@title = pat(:create_title, :model => 'solution')
+    	flash.now[:error] = pat(:create_error, :model => 'solution')
+    	@assignments = Assignment.all
+    	render 'solutions/new'
     end
   end
 
@@ -107,8 +120,8 @@ Alfred::App.controllers :solutions do
 		halt 404 if files.nil?
 
 		file = files.first
-		
-    storage_gateway = Storage::StorageGateways.get_gateway
+
+		storage_gateway = Storage::StorageGateways.get_gateway
 		storage_gateway.download( file.path )
 	end
 

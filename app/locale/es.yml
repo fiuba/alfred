@@ -16,6 +16,8 @@ es:
     students: 'Alumnos'
     submissions: 'Mis entregas'
   solutions:
+    errors:
+      upload_failed: 'Error al intentar subir el archivo'
     form:
       file: 'Archivo a entregar'
       assignment: 'Trabajo práctico'

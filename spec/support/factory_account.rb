@@ -1,15 +1,15 @@
 module Factories
   module Account
-    def self.student
+    def self.student(name = "Alfred", email = "al@d.com")
       params = {
-        :name => 'Alfred',
+        :name => name,
         :buid => 'Al',
-        :email => 'al@d.com',
+        :email => email,
         :password => 'foobar',
         :password_confirmation => 'foobar',
         :role => Alfred::Admin::Account::STUDENT
       }
-      Alfred::Admin::Account.create( params )
+      Alfred::Admin::Account.create!( params )
     end
   end
 end

@@ -100,7 +100,6 @@ describe "SolutionsController" do
       describe "unauthorized student tries to download other's solution" do
         before do
           @another_student = Factories::Account.student( "Bruce", "b@d.com" )
-          puts @another_student.inspect()
 				  Alfred::App.any_instance.stub(:current_account)
             .and_return(@another_student)
         end

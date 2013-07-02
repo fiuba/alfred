@@ -69,4 +69,56 @@ describe "SolutionsController" do
 
 		end
 	end
+
+	describe "file" do 
+		describe "with an existing solution" do
+			before do
+				@new_solution = Factories::Solution.for( assignment )
+				@file_name = @new_solution.file
+        @owner = @new_solution.account
+
+      	@gateway = double(Storage::DropboxGateway)
+      	Storage::StorageGateways.stub(:get_gateway)
+          .and_return(@gateway)
+
+				Alfred::App.any_instance.stub(:current_account)
+          .and_return(@owner)
+			end
+
+			it "should respond solution's file" do
+        Solution.should_receive(:find)
+          .with(@new_solution.id.to_s)
+          .and_return(@new_solution)
+
+      	@gateway.should_receive(:download)
+          .with("/solutions/#{@new_solution.id}/#{@file_name}")
+
+				get "/solutions/file/#{@new_solution.id}"
+        last_response.status.should == 200
+			end
+
+      describe "unauthorized student tries to download other's solution" do
+        before do
+          @another_student = Factories::Account.student( "Bruce", "b@d.com" )
+          puts @another_student.inspect()
+				  Alfred::App.any_instance.stub(:current_account)
+            .and_return(@another_student)
+        end
+
+        it "should not respond solution belonging to other student" do
+          get "/solutions/file/#{@new_solution.id}"
+          last_response.status.should == 404
+        end
+      end
+    end
+
+		describe "with an solution which doesn't exist" do
+      it "should respond with error 404" do
+				get "/solutions/file/999999"
+        last_response.status.should == 404
+      end
+    end
+
+	end
+
 end

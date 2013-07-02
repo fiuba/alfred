@@ -5,6 +5,7 @@ Alfred::App.controllers :solutions do
 		@solutions = Solution.all( :account => current_account )
     render 'solutions/index'
   end
+
   get :new do
     @title = pat(:new_title, :model => 'solution')
     @solution =	Solution.new
@@ -97,8 +98,10 @@ Alfred::App.controllers :solutions do
 		solution = Solution.find( params[:solution_id] )
 		halt 404 if solution.nil?	
 
+    halt 404 if solution.account != current_account
+
 		files = solution.solution_generic_files
-		halt 404 if files.nil?
+		halt 404 if files.nil? or files.empty?
 
 		file = files.first
 

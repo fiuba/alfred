@@ -1,71 +1,57 @@
+<% content_for :additional_css do %>
+  <%= stylesheet_link_tag 'editablegrid-2.0.1' %>
+<% end %>
+
 <ul class="nav nav-tabs">
   <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index) %></li>
   <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new) %></li>
 </ul>
 <div class=tabs-content>
-  <table id=list class="table table-striped table-hover table-condensed">
+  <table id="assigmentsGrid" class="table table-bordered table-striped table-hover"">
     <thead>
       <tr>
-        <th class="header list-menu">
-          <div class=dropdown>
-            <a href="#" class="list-menu-toggle dropdown-toggle" data-toggle='dropdown'>
-              <%= tag_icon :magic %> <span class=caret></span>
-            </a>
-            <ul class="list-menu dropdown-menu" role=menu>
-              <li class=ist-menu-wrapper>
-                <%= link_to tag_icon(:check, pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link' %>
-              </li>
-              <li class=list-menu-wrapper.list-menu-wrapper-disabled>
-                <%= link_to tag_icon('check-empty', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled' %>
-              </li>
-              <li class="list-menu-divider divider"></li>
-              <li class=list-menu-wrapper.list-menu-wrapper-disabled>
-                <%=link_to tag_icon(:trash, pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled' %>
-                <div class='list-menu-popover-delete-selected popover right'>
-                  <div class=arrow></div>
-                  <h3 class=popover-title><%= pat(:delete_selected_title) %></h3>
-                  <div class=popover-content>
-                    <% form_tag url(:assignments, :destroy_many), :method => :delete do %>
-                      <%=hidden_field_tag :assignment_ids, :'data-delete-many-ids' => true %>
-                      <%=submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small' %>
-                      <div class='btn btn-small cancel'><%= pat(:cancel) %></div>
-                    <% end %>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </th>
-                <th class=header> <%= t('assignments.name') %></th>
-                <th class=header> <%= t('assignments.deadline') %></th>
-                <th class="header list-row-action-header"></th>
+        <th class=header> <%= t('assignments.name').capitalize %></th>
+        <th class=header> <%= t('assignments.deadline').capitalize %></th>
+        <th class="header list-row-action-header"></th>
+      </tr>
     </thead>
 
     <tbody>
       <% @assignments.each do |assignment| %>
         <tr class=list-row>
-          <td class="list-column list-selectable">
-            <%= check_box_tag 'assignment_ids[]', :value => assignment.id, :class => 'list-selectable-checkbox' %>
-           </td>
-          <td class=list-column> <%= assignment.name %> </td>
-          <td class=list-column> <%= l assignment.deadline.to_date %> </td>
+          <td> <%= assignment.name %> </td>
+          <td> <%= l assignment.deadline.to_date %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:assignments, :edit, :id => assignment.id), :rel => :tooltip, :title => "#{pat(:edit)} assignment", :class => 'list-row-action-wrapper-link' %>
-               <%= link_to t('assignments.edit_files'), url(:assignment, :generic, :file, :index, :assignment_id => assignment.id), :class => 'list-row-action-wrapper-link' %>
-               <%= link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} assignment", :class => 'list-row-action-delete-one list-row-action-wrapper-link' %>
-               <div class="popover list-row-action-popover-delete-one left">
-                 <div class=arrow> </div>
-                 <h3 class=popover-title><%= pat(:delete, :model => "assignment") %></h3>
-                 <div class=popover-content>
-                   <%- form_tag url(:assignments, :destroy, :id => assignment.id), :method => :delete do %>
-                     <%= submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small' %>
-                     <div class="btn btn-small cancel"><%= pat(:cancel) %></div>
-                   <% end %>
-               </div>
+               <%- link_to :href => url(:assignment, :generic, :file, :index, :assignment_id => assignment.id), :rel => :tooltip, :title => t('assignments.edit_files'), :class => 'list-row-action-wrapper-link' do %>
+                <i class='icon-file'></i>
+               <% end %>
+               <%= link_to tag_icon(:trash), :href => url(:assignments, :destroy, :id => assignment.id), :rel => :tooltip, :title => "#{pat(:delete)} assignment", :class => 'list-row-action-delete-one list-row-action-wrapper-link', :method => :delete %>
              </div>
           </td>
       <% end %>
     </tbody>
   </table>
 </div>
+
+<% content_for :additional_js do %>
+  <%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
+  <script type='text/javascript'>
+    $(document).ready(function() {
+        editableGrid = new EditableGrid('assignmentsGrid', {
+          shortMonthNames: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+        }); 
+
+        // we build and load the metadata in Javascript
+        editableGrid.load({ metadata: [
+          { name: "Nombre", datatype: "string" },
+          { name: "Fecha Límite", datatype: "date", formattedDate: 'dd/mm/YYYY' }]});
+
+        // then we attach to the HTML table and render it
+        editableGrid.attachToHTMLTable('assigmentsGrid');
+
+        editableGrid.renderGrid();        
+      });
+  </script>
+<% end %>

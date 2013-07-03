@@ -13,7 +13,7 @@ Alfred::App.controllers :assignments do
   end
 
   post :create do
-    @assignment = Assignment.new(params[:assignment])
+    @assignment = Assignment.new(params[:assignment].merge({ :course_id => current_course.id }))
     if @assignment.save
       @title = pat(:create_title, :model => "assignment #{@assignment.id}")
       flash[:success] = pat(:create_success, :model => 'Assignment')

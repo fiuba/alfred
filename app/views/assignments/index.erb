@@ -38,7 +38,6 @@
         </th>
                 <th class=header> <%= t('assignments.name') %></th>
                 <th class=header> <%= t('assignments.deadline') %></th>
-                <th class=header> <%= t('assignments.course') %></th>
                 <th class="header list-row-action-header"></th>
     </thead>
 
@@ -50,7 +49,6 @@
            </td>
           <td class=list-column> <%= assignment.name %> </td>
           <td class=list-column> <%= l assignment.deadline.to_date %> </td>
-          <td class=list-column> <%= assignment.course.name %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
                <%= link_to tag_icon(:edit), :href => url(:assignments, :edit, :id => assignment.id), :rel => :tooltip, :title => "#{pat(:edit)} assignment", :class => 'list-row-action-wrapper-link' %>

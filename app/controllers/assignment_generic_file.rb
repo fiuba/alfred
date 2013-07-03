@@ -23,7 +23,7 @@ Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
     storage_gateway.upload(@assignment_generic_file.path, file_io[:tempfile])    
     
     if @assignment_generic_file.save
-      redirect(url(:assignments, :index))
+      redirect url(:assignment, :generic, :file, :index, :assignment_id => params[:assignment_id])
     else
       @title = t('assignments.files.new.title')
       flash.now[:error] = pat(:create_error, :model => 'assignment_generic_file')

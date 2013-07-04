@@ -18,6 +18,7 @@ es:
   solutions:
     errors:
       upload_failed: 'Error al intentar subir el archivo'
+      delete_failed: 'Error al intentar borrar el archivo'
     form:
       file: 'Archivo a entregar'
       assignment: 'Trabajo práctico'

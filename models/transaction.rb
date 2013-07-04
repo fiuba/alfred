@@ -20,6 +20,7 @@ module Database
 		#
 		def self.within(*block) 
 			errors = []
+			to_raise = nil
 			repository = DataMapper.repository(:default)
 			tx = DataMapper::Transaction.new( repository )
 			tx.begin()
@@ -28,6 +29,7 @@ module Database
 			begin
 				yield tx, errors
 			rescue Exception => e
+				to_raise = e
 				errors << e
 			end
 
@@ -38,6 +40,8 @@ module Database
 			end
 
 			tx = repository.adapter.pop_transaction
+
+			raise to_raise if to_raise
 		end
 	end
 end

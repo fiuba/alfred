@@ -4,11 +4,11 @@ module Factories
       account = Factories::Account.student
       file_name = 'solution.st'
 
-      new_solution = Alfred::App::Solution.create( 
+      new_solution = Alfred::App::Solution.create!( 
         :file => file_name, :account => account,
         :assignment => anAssignment )
 
-			Alfred::App::SolutionGenericFile.create( 
+			Alfred::App::SolutionGenericFile.create!( 
         :solution => new_solution, :name => file_name )
 
       new_solution

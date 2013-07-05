@@ -9,6 +9,11 @@ Alfred::App.controllers :students, :parent => :courses do
 
   get ':student_id/detail' do
     @student = Account.get(params[:student_id])
+    assignments = Assignment.find_by_course(current_course)
+    @assignment_status = []
+    assignments.each do | assignment |
+      @assignment_status << @student.status_for_assignment(assignment)
+    end
   	render 'students/detail'
   end
 

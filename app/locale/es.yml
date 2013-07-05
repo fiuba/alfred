@@ -34,6 +34,10 @@ es:
   lastest_solution_date: 'Ultima entrega'
   corrector: 'Corrector'
   actions: 'acciones'
+  solution_pending: 'Entrega pendiente'
+  correction_pending: 'Corrección pendiente'
+  correction_passed: 'Aprobado'
+  correction_failed: 'Desaprobado'
   date:
     abbr_day_names:
     - dom

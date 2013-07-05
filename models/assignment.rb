@@ -8,4 +8,8 @@ class Assignment
   property :name, String
   property :test_script, String
   property :deadline, DateTime
+
+  def self.find_by_course (course)
+  	Assignment.all(:course => course)
+  end
 end

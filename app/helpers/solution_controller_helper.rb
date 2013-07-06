@@ -11,4 +11,8 @@ Alfred::App.helpers do
   	flash[:warning] = msg
   	halt warning_code
 	end
+
+  def formats_date( date )
+    date.strftime("%Y-%m-%d %H:%M:%S")
+  end
 end

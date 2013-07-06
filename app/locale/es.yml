@@ -25,6 +25,7 @@ es:
     grid:
       file: 'Archivo entregado'
       assignment: 'Trabajo práctico'
+      submission_date: 'Fecha de la entrega'
   my_assigments: 'Mis trabajos prácticos'
   my_solutions: 'Mis entregas'
   assignment: 'Trabajo práctico'

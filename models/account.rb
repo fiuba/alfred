@@ -81,6 +81,7 @@ class Account
   def status_for_assignment(assignment)
     solutions = Solution.find_by_account_and_assignment(self, assignment)        
     assignment_status = AssignmentStatus.new 
+    assignment_status.name = assignment.name
     if solutions.nil?
       assignment_status.status = :solution_pending 
       assignment_status.solution_count = 0

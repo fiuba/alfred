@@ -57,51 +57,73 @@ Alfred::App.controllers :solutions do
       @assignments = Assignment.all
       render 'solutions/edit'
     else
-      flash[:warning] = pat(:create_error, :model => 'solution', :id => "#{params[:id]}")
-      halt 404
+			conveys_warning( 
+				pat(:create_error, :model => 'solution', :id => "#{params[:id]}"),
+				404 )
     end
   end
 
   delete :destroy, :with => :id do
     @title = "Solutions"
     solution = Solution.get(params[:id].to_i)
-    if solution
-      if solution.destroy
-        flash[:success] = pat(:delete_success, :model => 'Solution', :id => "#{params[:id]}")
-      else
-        flash[:error] = pat(:delete_error, :model => 'solution')
-      end
-      redirect url(:solutions, :index)
-    else
-      flash[:warning] = pat(:delete_warning, :model => 'solution', :id => "#{params[:id]}")
-      halt 404
-    end
-  end
 
-  delete :destroy_many do
-    @title = "Solutions"
-    unless params[:solution_ids]
-      flash[:error] = pat(:destroy_many_error, :model => 'solution')
-      redirect(url(:solutions, :index))
+		# Check existence
+    if solution.nil?
+			conveys_warning( 
+				pat(:delete_warning, :model => 'solution', :id => "#{params[:id]}"),
+				404 )
     end
-    ids = params[:solution_ids].split(',').map(&:strip).map(&:to_i)
-    solutions = Solution.all(:id => ids)
-    
-    if solutions.destroy
-    
-      flash[:success] = pat(:destroy_many_success, :model => 'Solutions', :ids => "#{ids.to_sentence}")
-    end
+
+		# Check ownership
+		if not solution.account == current_account
+			conveys_warning( 
+				pat(:delete_warning, :model => 'solution', :id => "#{params[:id]}"),
+				403 )
+		end
+
+		# Check associated files
+		if solution.solution_generic_files.empty?
+			conveys_warning( 
+				pat(:delete_warning, :model => 'solution', :id => "#{params[:id]}"),
+				404 )
+		end
+
+		store_file = solution.solution_generic_files.first
+		Database::Transaction.within do |tx, tx_errors|
+			solution_deleted = solution.destroy
+
+			if solution_deleted
+      	flash[:success] = pat(:delete_success, :model => 'Solution', :id => "#{params[:id]}")
+
+				begin
+			  	storage_gateway = Storage::StorageGateways.get_gateway
+ 	 	 	  	storage_gateway.delete( store_file.path() )
+				rescue Storage::FileDeleteError => e
+					tx_errors << t('solutions.errors.delete_failed')
+				end
+      else
+				flash[:error] = pat(:delete_error, :model => 'solution')
+      end
+		end	# Transaction end
+
     redirect url(:solutions, :index)
   end
 
 	get :file, :with => :solution_id do
 		solution = Solution.find( params[:solution_id] )
-		halt 404 if solution.nil?	
 
-    halt 404 if solution.account != current_account
+		if solution.nil?	
+			conveys_warning( params[:id], 404 )
+		end
+
+		if solution.account != current_account
+			conveys_warning( params[:id], 404 )
+		end
 
 		files = solution.solution_generic_files
-		halt 404 if files.nil? or files.empty?
+		if files.nil? or files.empty?
+			conveys_warning( params[:id], 404 )
+		end
 
 		file = files.first
 

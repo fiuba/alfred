@@ -4,11 +4,13 @@
 </ul>
 <table id="solutionsGrid" class="table table-bordered table-striped table-hover">
 	<tr>
+		<th><%= I18n.translate('solutions.grid.submission_date') %></th>
 		<th><%= I18n.translate('solutions.grid.file') %></th>
 		<th><%= I18n.translate('solutions.grid.assignment') %></th>
 	</tr>
 	<% @solutions.each do |s| %>
 		<tr> 
+      <td><%= formats_date( s.created_at ) %></td>
 			<td><a href="<%= url_for(:solutions, :file, :solution_id => s.id ) %>"><%= s.file %></a></td>
 			<td><a href="<%= url_for(:assignments, :index) %>"><%= s.assignment.name %></a></td>
 		</tr>

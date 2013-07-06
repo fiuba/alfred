@@ -18,12 +18,14 @@ es:
   solutions:
     errors:
       upload_failed: 'Error al intentar subir el archivo'
+      delete_failed: 'Error al intentar borrar el archivo'
     form:
       file: 'Archivo a entregar'
       assignment: 'Trabajo práctico'
     grid:
       file: 'Archivo entregado'
       assignment: 'Trabajo práctico'
+      submission_date: 'Fecha de la entrega'
   my_assigments: 'Mis trabajos prácticos'
   my_solutions: 'Mis entregas'
   assignment: 'Trabajo práctico'
@@ -33,6 +35,10 @@ es:
   lastest_solution_date: 'Ultima entrega'
   corrector: 'Corrector'
   actions: 'acciones'
+  solution_pending: 'Entrega pendiente'
+  correction_pending: 'Corrección pendiente'
+  correction_passed: 'Aprobado'
+  correction_failed: 'Desaprobado'
   date:
     abbr_day_names:
     - dom

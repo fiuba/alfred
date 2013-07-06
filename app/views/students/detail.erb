@@ -14,22 +14,14 @@
 		<th><%= t('corrector').capitalize %></th>
 		<th><%= t('actions').capitalize %></th>
 	</tr>
-	<% @student.each do |s|%>
+	<% @assignment_status.each do | as|%>
 	<tr>
-		<td>Tp N1</td>
-		<td>Aprobado</td>
-		<td>3</td>
-		<td>2013-03-12</td>
-		<td>NicoPaez</td>
-		<td><a href="/students/xxxx">ver_última</a> | <a href="/students/xxxx">ver_todas</a></td>
+		<td><%= as.name %></td>
+		<td><%= t(as.status) %></td>
+		<td><%= as.solution_count %></td>
+		<td><%= as.latest_solution_date %></td>
+		<td><%= as.corrector_name %></td>
+		<td><a href="/students/">ver_última</a> | <a href="/students/xxxx">ver_todas</a></td>
 	</tr>
 	<% end %>
-		<tr>
-		<td>Tp N2</td>
-		<td>test fallidos</td>
-		<td>6</td>
-		<td>2013-07-12</td>
-		<td>No asignado</td>
-		<td><a href="/students/xxxx">ver_última</a> | <a href="/students/xxxx">ver_todas</a></td>
-	</tr>
 </table>

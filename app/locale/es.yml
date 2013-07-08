@@ -15,6 +15,7 @@ es:
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'
     submissions: 'Mis entregas'
+    corrections: 'Mis correcciones'
   solutions:
     errors:
       upload_failed: 'Error al intentar subir el archivo'
@@ -26,6 +27,12 @@ es:
       file: 'Archivo entregado'
       assignment: 'Trabajo práctico'
       submission_date: 'Fecha de la entrega'
+  corrections:
+    grid:
+      last_update: 'Última actualización'
+      public_comment: 'Comentario público'
+      private_comment: 'Comentario privado'
+      grade: 'Calificación'
   my_assigments: 'Mis trabajos prácticos'
   my_solutions: 'Mis entregas'
   assignment: 'Trabajo práctico'

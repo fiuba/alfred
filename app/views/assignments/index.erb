@@ -23,11 +23,15 @@
           <td> <%= l assignment.deadline.to_date %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
-               <%= link_to tag_icon(:edit), :href => url(:assignments, :edit, :id => assignment.id), :rel => :tooltip, :title => "#{pat(:edit)} assignment", :class => 'list-row-action-wrapper-link' %>
-               <%- link_to :href => url(:assignment, :generic, :file, :index, :assignment_id => assignment.id), :rel => :tooltip, :title => t('assignments.edit_files'), :class => 'list-row-action-wrapper-link' do %>
+              <%= link_to tag_icon(:edit), :href => url(:assignments, :edit, :id => assignment.id), :rel => :tooltip, :title => "#{pat(:edit)} assignment", :class => 'list-row-action-wrapper-link' %>
+              <%- link_to :href => url(:assignment, :generic, :file, :index, :assignment_id => assignment.id), :rel => :tooltip, :title => t('assignments.edit_files'), :class => 'list-row-action-wrapper-link' do %>
                 <i class='icon-file'></i>
-               <% end %>
-               <%#= link_to tag_icon(:trash), :href => url(:assignments, :destroy, :id => assignment.id), :rel => :tooltip, :title => "#{pat(:delete)} assignment", :class => 'list-row-action-delete-one list-row-action-wrapper-link', :method => :delete %>
+              <% end %>
+              <%- form_tag url(:assignments, :destroy, :id => assignment.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.delete.confirm') }, :style => 'display:inline' do %>
+                <button type='submit' title="<%= t('assignments.delete.title') %>" rel='tooltip' class="btn btn-mini btn-danger">
+                  <i class='icon-white icon-trash'></i>
+                </button>
+              <% end %>
              </div>
           </td>
       <% end %>
@@ -37,21 +41,5 @@
 
 <% content_for :additional_js do %>
   <%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
-  <script type='text/javascript'>
-    $(document).ready(function() {
-        editableGrid = new EditableGrid('assignmentsGrid', {
-          shortMonthNames: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
-        }); 
-
-        // we build and load the metadata in Javascript
-        editableGrid.load({ metadata: [
-          { name: "Nombre", datatype: "string" },
-          { name: "Fecha Límite", datatype: "date", formattedDate: 'dd/mm/YYYY' }]});
-
-        // then we attach to the HTML table and render it
-        editableGrid.attachToHTMLTable('assigmentsGrid');
-
-        editableGrid.renderGrid();        
-      });
-  </script>
+  <%= javascript_include_tag 'assignments_index.js' %>
 <% end %>

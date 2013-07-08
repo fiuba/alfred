@@ -4,6 +4,14 @@ module Factories
 	    course = Alfred::Admin::Course.create(:name => 'course 1')
       Alfred::Admin::Assignment.create(:name => 'Vending Machine', :course => course)
     end
+
+    def self.withSolution
+      assignment = vending_machine
+	    solution = Factories::Solution.for(assignment)
+	    assignment.save!
+
+      assignment
+    end
   end
 end
 

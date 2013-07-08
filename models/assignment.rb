@@ -3,6 +3,7 @@ class Assignment
 
   belongs_to :course
   has n, :assignment_generic_files
+  has n, :solutions, :constraint => :protect
 
   property :id, Serial
   property :name, String

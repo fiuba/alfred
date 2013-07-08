@@ -139,6 +139,9 @@ es:
     name: Nombre
     deadline: Fecha límite
     course: Curso
+    delete: 
+      title: Borrar
+      confirm: ¿Está seguro que desea eliminar el trabajo práctico?
     edit_files: Archivos
     files: 
       title: Archivos asociados

@@ -20,7 +20,7 @@
 		        	<i class='icon-download'></i>
 		        </a>
 		        <%- form_tag url(:assignment, :generic, :file, :destroy, :assignment_id => @assignment.id, :id => file.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.files.delete.confirm') }, :style => 'display:inline' do %>
-		        	<button type='submit' title="<%= t('assignments.files.delete.title') %>" rel='tooltip' class="btn btn-danger">
+		        	<button type='submit' title="<%= t('assignments.files.delete.title') %>" rel='tooltip' class="btn btn-mini btn-danger">
 		        		<i class='icon-white icon-trash'></i>
 		        	</button>
 		        <% end %>

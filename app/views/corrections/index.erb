@@ -1,0 +1,24 @@
+<ul class="nav nav-tabs">
+  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:corrections, :index, current_account) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:corrections, :new) %></li>
+</ul>
+<table id="correctionsGrid" class="table table-bordered table-striped table-hover">
+	<tr>
+		<th><%= I18n.translate('corrections.grid.last_update') %></th>
+		<th><%= I18n.translate('corrections.grid.public_comment') %></th>
+		<th><%= I18n.translate('corrections.grid.private_comment') %></th>
+		<th><%= I18n.translate('corrections.grid.grade') %></th>
+	</tr>
+	<% @corrections.each do |c| %>
+		<tr> 
+      <td><%= formats_date( c.created_at ) %></td>
+      <td><%= c.public_comments %></td>
+      <td><%= c.private_comments %></td>
+      <td><%= c.grade %></td>
+		</tr>
+	<% end %>
+</table>
+<% content_for :additional_js do %>
+	<%= javascript_include_tag 'editablegrid-2.0.1.js' %>
+  <%= javascript_include_tag 'corrections_index.js' %>
+<% end %>

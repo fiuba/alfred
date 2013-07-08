@@ -31,7 +31,7 @@ Alfred::App.controllers :solutions do
 					tx_errors << t('solutions.errors.upload_failed')
 				end
 			else
-				tx_errors << @solutions.errors
+				tx_errors << @solution.errors
 			end
 			errors = tx_errors
 		end # End of transaction

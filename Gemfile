@@ -46,9 +46,9 @@ group :development, :test do
 	gem 'foreman'
 end
 
-# group :development do
-# 	gem 'debugger'
-# end
+group :debug do
+	gem 'debugger'
+end
 
 group :test do
 	# Guard gem eases running spec automatically

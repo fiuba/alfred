@@ -1,7 +1,7 @@
 migration 8, :update_assignments do
   up do
   	# Sqlite doesn't support ALTERing tables to remove columns
-  	if DataMapper.repository.adapter.class == DataMapper::Adapters::SqliteAdapter
+  	if DataMapper.repository.adapter.class.to_s =~ /DataMapper::Adapters::SqliteAdapter/i
 	  	drop_table :assignments
 
 	  	create_table :assignments do
@@ -20,7 +20,7 @@ migration 8, :update_assignments do
 
   down do
   	# Sqlite doesn't support ALTERing tables to remove columns
-  	if DataMapper.repository.adapter.class == DataMapper::Adapters::SqliteAdapter
+  	if DataMapper.repository.adapter.class.to_s =~ /DataMapper::Adapters::SqliteAdapter/i
 	  	drop_table :assignments
 
 	  	create_table :assignments do

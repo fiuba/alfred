@@ -39,6 +39,7 @@ gem 'padrino', '0.11.1'
 group :production do
 	gem 'pg'
 	gem 'dm-postgres-adapter'
+	gem 'newrelic_rpm'
 end
 
 group :development, :test do

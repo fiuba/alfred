@@ -44,5 +44,6 @@ Padrino.after_load do
   DataMapper.finalize
 end
 
+require 'newrelic_rpm'
 
 Padrino.load!

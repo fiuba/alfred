@@ -70,7 +70,6 @@ class Account
   end
 
   def is_teacher?
-    puts role
     self.role == TEACHER
   end
 

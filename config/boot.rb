@@ -44,6 +44,6 @@ Padrino.after_load do
   DataMapper.finalize
 end
 
-require 'newrelic_rpm'
+require 'newrelic_rpm' if Padrino.env == :production
 
 Padrino.load!

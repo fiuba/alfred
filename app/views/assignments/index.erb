@@ -3,8 +3,8 @@
 <% end %>
 
 <ul class="nav nav-tabs">
-  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index) %></li>
-  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new) %></li>
+  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index, :course_id => current_course.id) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %></li>
 </ul>
 <div class=tabs-content>
   <table id="assigmentsGrid" class="table table-bordered table-striped table-hover"">
@@ -23,11 +23,11 @@
           <td> <%= l assignment.deadline.to_date %> </td>
           <td class="list-column list-row-action">
             <div class='list-row-action-wrapper'>
-              <%= link_to tag_icon(:edit), :href => url(:assignments, :edit, :id => assignment.id), :rel => :tooltip, :title => "#{pat(:edit)} assignment", :class => 'list-row-action-wrapper-link' %>
+              <%= link_to tag_icon(:edit), :href => url(:assignments, :edit, :id => assignment.id, :course_id => current_course.id), :rel => :tooltip, :title => "#{pat(:edit)} assignment", :class => 'list-row-action-wrapper-link' %>
               <%- link_to :href => url(:assignment, :generic, :file, :index, :assignment_id => assignment.id), :rel => :tooltip, :title => t('assignments.edit_files'), :class => 'list-row-action-wrapper-link' do %>
                 <i class='icon-file'></i>
               <% end %>
-              <%- form_tag url(:assignments, :destroy, :id => assignment.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.delete.confirm') }, :style => 'display:inline' do %>
+              <%- form_tag url(:assignments, :destroy, :id => assignment.id, :course_id => current_course.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.delete.confirm') }, :style => 'display:inline' do %>
                 <button type='submit' title="<%= t('assignments.delete.title') %>" rel='tooltip' class="btn btn-mini btn-danger">
                   <i class='icon-white icon-trash'></i>
                 </button>

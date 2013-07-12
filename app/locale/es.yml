@@ -11,6 +11,7 @@ es:
   account_created: 'cuenta creada'
   sign_in: 'iniciar sesión'
   create_account: 'crear cuenta'
+  back: 'atrás'
   menu:
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'

@@ -33,6 +33,9 @@
 	   	<% end %>
 	 	</tbody>
 	</table>
+	<div class="form-actions">
+		<%= link_to t(:back).capitalize, url(:assignments, :index, :course_id => current_course.id), :class => 'btn btn-primary' %>
+	</div>
 </div>
 
 <% content_for :additional_js do %>

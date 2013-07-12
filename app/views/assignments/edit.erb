@@ -1,10 +1,10 @@
 <ul class="nav nav-tabs">
-  <li> <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index) %></li>
-  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new) %></li>
-  <li class="active"> <%= link_to tag_icon(:edit, pat(:edit)), url(:assignments, :edit, :id => @assignment.id) %></li>
+  <li> <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index, :course_id => current_course.id) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %></li>
+  <li class="active"> <%= link_to tag_icon(:edit, pat(:edit)), url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id) %></li>
 </ul>
 <div class="tabs-content">
-  <% form_for :assignment, url(:assignments, :update, :id => @assignment.id), :method => :put, :class => 'form-horizontal' do |f| %>
-    <%= partial 'assignments/form', :locals => { :f => f, :courses => @courses } %>
+  <% form_for :assignment, url(:assignments, :update, :id => @assignment.id, :course_id => current_course.id), :method => :put, :class => 'form-horizontal' do |f| %>
+    <%= partial 'assignments/form', :locals => { :f => f } %>
   <% end %>
 </div>

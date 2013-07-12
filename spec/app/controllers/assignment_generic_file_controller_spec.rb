@@ -6,6 +6,8 @@ describe "AssignmentGenericFileController" do
   	assignment = double(Assignment, :id => assignment_id)
   	assignment.should_receive(:assignment_generic_files).and_return([])
 		Assignment.should_receive(:find).with('1234').and_return(assignment)
+		course_double = double(:id => 202)
+		Course.should_receive(:first).any_number_of_times.and_return(course_double)
 
 		get "/assignment/#{assignment_id}/assignment_generic_file"
 	end

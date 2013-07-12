@@ -124,9 +124,5 @@ module Alfred
 		def store_location
 			session[:return_to] = request.url
 		end
-
-    def current_course
-      Course.first
-    end
   end
 end

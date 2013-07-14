@@ -72,6 +72,7 @@ module Alfred
 
     access_control.roles_for :teacher do |role|
       role.project_module :assignments, '/courses/.+/assignments'
+      role.project_module :assignment_generic_files, '/assignment/.+/assignment_generic_file'
     end
 
     get '/' do

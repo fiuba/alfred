@@ -7,20 +7,10 @@
   </div>
 </fieldset>
 <%= f.hidden_field :account_id, :value => current_account.id %>
-<% error = @solution.errors.key?(:assignment_id) && @solution.errors[:assignment_id].count > 0 %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label I18n.translate('solutions.form.assignment'), :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.select :assignment_id, :collection => assignments, :fields => [ :name, :id ], :class => 'input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:assignment_id) : "Ex: a simple text" %></span>
-  </div>
-</fieldset>
-
+<%= f.hidden_field :assignment_id, :value => @assignment.id %>
 
 <div class="form-actions">
-  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
-  &nbsp;
   <%= f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue' %>
   &nbsp;
-  <%= link_to pat(:cancel), url(:solutions, :index), :class => 'btn' %>
+  <%= link_to pat(:cancel), url(:solutions, :index, @assignment.id), :class => 'btn' %>
 </div>

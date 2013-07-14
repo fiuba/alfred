@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
-  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:solutions, :index) %></li>
-  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:solutions, :new) %></li>
+  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:solutions, :index, @assignment.id) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:solutions, :new, @assignment.id) %></li>
 </ul>
 <table id="solutionsGrid" class="table table-bordered table-striped table-hover">
 	<tr>
@@ -11,8 +11,8 @@
 	<% @solutions.each do |s| %>
 		<tr> 
       <td><%= formats_date( s.created_at ) %></td>
-			<td><a href="<%= url_for(:solutions, :file, :solution_id => s.id ) %>"><%= s.file %></a></td>
-			<td><a href="<%= url_for(:assignments, :index) %>"><%= s.assignment.name %></a></td>
+      <td><a href="<%= url_for(:solutions, :file, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
+      <td><a href="<%= url_for(:assignments, :index, :course_id => current_course.id) %>"><%= s.assignment.name %></a></td>
 		</tr>
 	<% end %>
 </table>

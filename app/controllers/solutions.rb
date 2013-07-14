@@ -1,112 +1,55 @@
-Alfred::App.controllers :solutions do
+Alfred::App.controllers :solutions, :parent => :assignment do
 	
   get :index do
-    @title = "Solutions"
-		@solutions = Solution.all( :account => current_account )
+    @title = t("solutions")
+    @assignment = Assignment.find_by_id( params[:assignment_id] )
+		@solutions = Solution.all( :account => current_account,
+     :assignment => @assignment )
     render 'solutions/index'
   end
 
   get :new do
     @title = pat(:new_title, :model => 'solution')
-    @solution =	Solution.new
-    @assignments = Assignment.all
+    @assignment = Assignment.find_by_id( params[:assignment_id] )
+		@solution = Solution.new( :account => current_account,
+     :assignment => @assignment )
     render 'solutions/new'
   end
 
   post :create do
 		errors = []
 		input_file = params[:solution][:file]
-    @solution= Solution.new(params[:solution])
-		@solution.file = input_file[:filename]
+    @assignment = Assignment.find_by_id( params[:assignment_id] )
+    @solution= Solution.new( :account_id => current_account.id,
+            :assignment => @assignment, :file => input_file[:filename] )
 
-		Database::Transaction.within do |tx, tx_errors|
+    DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
       if @solution.save
-				@solution_generic_file = 
-					SolutionGenericFile.create( :solution => @solution, :name => input_file[:filename] )
+				@solution_generic_file = SolutionGenericFile.new( :solution => @solution, 
+              :name => input_file[:filename] )
+        errors << @solution_generic_file.errors if not @solution_generic_file.save
 				begin
 		    	storage_gateway = Storage::StorageGateways.get_gateway
  	 	  	 	storage_gateway.upload(@solution_generic_file.path, input_file[:tempfile])
 				rescue Storage::FileUploadFailedError => e
-					# TODO Add error information for user to know what it has happened
-					tx_errors << t('solutions.errors.upload_failed')
+					errors << t('solutions.errors.upload_failed')
 				end
 			else
-				tx_errors << @solution.errors
+				errors << @solution.errors
 			end
-			errors = tx_errors
+
+      trx.rollback() if not errors.empty?
 		end # End of transaction
 
 		if errors.empty?
     	@title = pat(:create_title, :model => "solution #{@solution.id}")
     	flash[:success] = pat(:create_success, :model => 'Solution')
-    	params[:save_and_continue] ? \
-							redirect(url(:solutions, :index)) : \
-							redirect(url(:solutions, :edit, :id => @solution.id))
+			redirect(url(:solutions, :index, :assignment_id => @assignment.id )) 
 		else
     	@title = pat(:create_title, :model => 'solution')
-    	flash.now[:error] = pat(:create_error, :model => 'solution')
-    	@assignments = Assignment.all
+    	flash.now[:error] = errors
     	render 'solutions/new'
     end
-  end
-
-  get :edit, :with => :id do
-    @title = pat(:edit_title, :model => "solution #{params[:id]}")
-    @solution = Solution.get(params[:id].to_i)
-    if @solution
-      @assignments = Assignment.all
-      render 'solutions/edit'
-    else
-			conveys_warning( 
-				pat(:create_error, :model => 'solution', :id => "#{params[:id]}"),
-				404 )
-    end
-  end
-
-  delete :destroy, :with => :id do
-    @title = "Solutions"
-    solution = Solution.get(params[:id].to_i)
-
-		# Check existence
-    if solution.nil?
-			conveys_warning( 
-				pat(:delete_warning, :model => 'solution', :id => "#{params[:id]}"),
-				404 )
-    end
-
-		# Check ownership
-		if not solution.account == current_account
-			conveys_warning( 
-				pat(:delete_warning, :model => 'solution', :id => "#{params[:id]}"),
-				403 )
-		end
-
-		# Check associated files
-		if solution.solution_generic_files.empty?
-			conveys_warning( 
-				pat(:delete_warning, :model => 'solution', :id => "#{params[:id]}"),
-				404 )
-		end
-
-		store_file = solution.solution_generic_files.first
-		Database::Transaction.within do |tx, tx_errors|
-			solution_deleted = solution.destroy
-
-			if solution_deleted
-      	flash[:success] = pat(:delete_success, :model => 'Solution', :id => "#{params[:id]}")
-
-				begin
-			  	storage_gateway = Storage::StorageGateways.get_gateway
- 	 	 	  	storage_gateway.delete( store_file.path() )
-				rescue Storage::FileDeleteError => e
-					tx_errors << t('solutions.errors.delete_failed')
-				end
-      else
-				flash[:error] = pat(:delete_error, :model => 'solution')
-      end
-		end	# Transaction end
-
-    redirect url(:solutions, :index)
   end
 
 	get :file, :with => :solution_id do
@@ -130,5 +73,4 @@ Alfred::App.controllers :solutions do
 		storage_gateway = Storage::StorageGateways.get_gateway
 		storage_gateway.download( file.path )
 	end
-
 end

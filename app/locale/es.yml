@@ -15,7 +15,6 @@ es:
   menu:
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'
-    submissions: 'Mis entregas'
     corrections: 'Mis correcciones'
   solutions:
     errors:

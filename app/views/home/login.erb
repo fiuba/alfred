@@ -1,8 +1,6 @@
     <% form_tag url(:login), :class=>"form-horizontal" do %>
       <div class="login-body modal-body">
 
-        <%= [:error, :warning, :success, :notice].map { |type| flash_tag(type, :class => "alert alert-#{type} fade in", :bootstrap => true) }.join.html_safe %>
-
         <fieldset class="control-group">
           <%= label_tag :email, :class => 'control-label' %>
           <div class="login-controls controls"><%= email_field_tag :email, :value => params[:email], :autofocus => true %></div>

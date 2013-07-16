@@ -6,6 +6,8 @@ module Alfred
     register Padrino::Admin::AccessControl
 
     enable :sessions
+    enable :authentication
+    enable :store_location
 
     ##
     # Caching support
@@ -63,16 +65,27 @@ module Alfred
       
     set :login_page, "/login"
 
-=begin
     access_control.roles_for :any do |role|
-      role.protect '/solutions'
+      role.protect '/'
+      role.allow   '/login'
+      role.allow   '/register'
     end
-=end
+
+    access_control.roles_for :teacher do |role|
+      role.project_module :assignments, '/courses/.+/assignments'
+      role.project_module :assignment_generic_files, '/assignment/.+/assignment_generic_file'
+      role.project_module :corrections, '/corrections'
+      role.project_module :students, '/courses/.+/students'
+    end
+
+    access_control.roles_for :student do |role|
+      role.project_module :solutions, '/assignment/.+/solutions'
+      role.project_module :my, '/courses/.+/my'
+    end
 
     get '/' do
-      render 'home/index'      
+      render 'home/index'
     end
-
 
     get '/logout' do
       set_current_account(nil)

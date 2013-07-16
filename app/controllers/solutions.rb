@@ -1,8 +1,10 @@
 Alfred::App.controllers :solutions, :parent => :assignment do
-	
+	before do
+    @assignment = Assignment.find_by_id( params[:assignment_id] )
+	end	
+
   get :index do
     @title = t("solutions")
-    @assignment = Assignment.find_by_id( params[:assignment_id] )
 		@solutions = Solution.all( :account => current_account,
      :assignment => @assignment )
     render 'solutions/index'
@@ -10,7 +12,6 @@ Alfred::App.controllers :solutions, :parent => :assignment do
 
   get :new do
     @title = pat(:new_title, :model => 'solution')
-    @assignment = Assignment.find_by_id( params[:assignment_id] )
 		@solution = Solution.new( :account => current_account,
      :assignment => @assignment )
     render 'solutions/new'
@@ -19,7 +20,6 @@ Alfred::App.controllers :solutions, :parent => :assignment do
   post :create do
 		errors = []
 		input_file = params[:solution][:file]
-    @assignment = Assignment.find_by_id( params[:assignment_id] )
     @solution= Solution.new( :account_id => current_account.id,
             :assignment => @assignment, :file => input_file[:filename] )
 

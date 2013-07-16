@@ -3,4 +3,4 @@ version: 1.9.3
 before_script: 
   - "sh -e /etc/init.d/xvfb start"
 script: PADRINO_ENV=travis padrino rake
-bundler_args: --without debug
+bundler_args: --without development

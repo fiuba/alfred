@@ -46,7 +46,7 @@ group :development, :test do
 	gem 'foreman'
 end
 
-group :debug do
+group :development do
 	gem 'debugger'
 end
 

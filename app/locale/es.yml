@@ -40,6 +40,7 @@ es:
   students:
     solutions: 'soluciones'
   lastest_solution_date: 'Ultima entrega'
+  deadline_date: 'Fecha de vencimiento'
   corrector: 'Corrector'
   actions: 'acciones'
   solution_pending: 'Entrega pendiente'
@@ -150,6 +151,7 @@ es:
       title: Borrar
       confirm: ¿Está seguro que desea eliminar el trabajo práctico?
     edit_files: Archivos
+    show_files: Archivos
     files: 
       title: Archivos asociados
       name: Nombre

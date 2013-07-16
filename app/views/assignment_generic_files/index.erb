@@ -1,3 +1,5 @@
+<h2><%= t('assignments.files.title') + " #{@assignment.name}" %></h2>
+
 <%- if current_account.is_teacher? %>
 	<ul class="nav nav-tabs">
 	  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:assignment, :generic, :file, :index, :assignment_id => @assignment.id) %></li>

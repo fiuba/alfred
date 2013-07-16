@@ -1,3 +1,5 @@
+<h2><%= t('assignments.files.title') + " #{@assignment.name}" %></h2>
+
 <ul class="nav nav-tabs">
   <li> <%= link_to tag_icon(:list, pat(:list)), url(:assignment, :generic, :file, :index, :assignment_id => @assignment.id) %></li>
   <li class="active"> <%= link_to tag_icon(:plus, pat(:new)), url(:assignment, :generic, :file, :new, :assignment_id => @assignment.id) %></li>

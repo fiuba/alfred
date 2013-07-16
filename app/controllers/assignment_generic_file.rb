@@ -1,7 +1,6 @@
 Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
   
   get :index do
-    @title = t('assignments.files.title')
     @assignment = Assignment.find(params[:assignment_id])
     @files = @assignment.assignment_generic_files || [ ]
     render 'assignment_generic_files/index'
@@ -32,7 +31,6 @@ Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
   end
 
   delete :destroy, :with => :id do
-    @title = t('assignments.files.title')
     assignment_generic_file = AssignmentGenericFile.get(params[:id].to_i)
     if assignment_generic_file
       assignment_generic_file.transaction do |tx|

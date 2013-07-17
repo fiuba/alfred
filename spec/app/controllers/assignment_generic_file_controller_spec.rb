@@ -8,7 +8,7 @@ describe "AssignmentGenericFileController" do
 
   it "should return all files for assignment on index" do
   	assignment_id = 1234
-  	assignment = double(Assignment, :id => assignment_id)
+  	assignment = double(Assignment, :id => assignment_id, :name => 'My Assignment')
   	assignment.should_receive(:assignment_generic_files).and_return([])
 		Assignment.should_receive(:find).with('1234').and_return(assignment)
 		course_double = double(:id => 202, :name => 'My Course')

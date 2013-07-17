@@ -1,0 +1,25 @@
+<h2><%= t('my_assigments') %></h2>
+
+<table id="studentsGrid" class="table table-bordered table-striped table-hover"">
+
+	<tr>
+		<th><%= t('assignment').capitalize %></th>
+		<th><%= t('deadline_date').capitalize %></th>
+		<th><%= t('status').capitalize %></th>
+		<th><%= t('corrector').capitalize %></th>
+		<th><%= t('actions').capitalize %></th>
+	</tr>
+	<% @assignment_status.each do | as|%>
+	<tr>
+		<td><%= as.name %></td>
+		<td><%= l as.deadline.to_date %></td>
+		<td><%= t(as.status) %></td>
+		<td><%= as.corrector_name %></td>
+		<td>
+			<%- link_to :href => url(:assignment, :generic, :file, :index, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('assignments.show_files'), :class => 'list-row-action-wrapper-link' do %>
+        <i class='icon-file'></i>
+      <% end %>
+		</td>
+	</tr>
+	<% end %>
+</table>

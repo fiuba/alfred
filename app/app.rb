@@ -81,6 +81,7 @@ module Alfred
     access_control.roles_for :student do |role|
       role.project_module :solutions, '/assignment/.+/solutions'
       role.project_module :my, '/courses/.+/my'
+      role.allow '/assignment/.+/assignment_generic_file$'
     end
 
     get '/' do

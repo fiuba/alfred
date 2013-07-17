@@ -1,4 +1,4 @@
-<li> <a href='<%= "/courses/#{current_course.name}/students/me" %>'> <%= t('menu.assigments')%> </a> </li>
+<li> <%= link_to t('menu.assigments'), url(:my, :assigments, :course_id => current_course.name) %></li>
 
 
 

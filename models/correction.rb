@@ -4,10 +4,10 @@ class Correction
   include DataMapper::Resource
 
 	# Relations
-	belongs_to :solution, :unique_index => :solution_teacher
+	belongs_to :solution
 
   # Teacher who ranks
-  belongs_to :teacher, :unique_index => :solution_teacher, :model => Account
+  belongs_to :teacher, :model => Account
 
   # property <name>, <type>
   property :id, Serial
@@ -17,16 +17,14 @@ class Correction
 	property :created_at, DateTime  
   property :updated_at, DateTime
 
-  validates_presence_of      :public_comments
-  validates_presence_of      :private_comments
+	property :solution_id, 	Integer, 
+		:required => true, :unique => :solution
 
-  validates_presence_of      :grade
-  validates_numericality_of  :grade
-  validates_within           :grade, :set => 0..10
+  validates_within           :grade, :set => (0..10).to_a << nil
   validates_with_method      :teacher, :is_a_teacher?
 
-  validates_uniqueness_of    :solution, :scope => :teacher
-
+  validates_present     :teacher
+  validates_present     :solution
 
   private
   def is_a_teacher? 

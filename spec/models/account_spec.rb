@@ -102,6 +102,19 @@ describe Account do
 				student.status_for_assignment(assignment).status.should eq :correction_pending
 			end
 
+			it 'should return :correction_in_progress when a solution was submitted, a corrector was assigned but correction is not graded' do
+				course = Course.new( :name => "AlgoIII", :active => true )
+				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
+				assignment = Assignment.new( :course => course )
+				solution = Solution.new(:assignment => assignment)
+				correction = Correction.new(:solution => solution)
+				correction.should_receive(:approved?).and_return(false)
+				correction.should_receive(:grade).and_return(nil)
+				solution.correction = correction
+				Solution.should_receive(:find_by_account_and_assignment).and_return([solution])
+				student.status_for_assignment(assignment).status.should eq :correction_in_progress
+			end
+
 			it 'should return :correction_passed when a solution was submitted, corrected and graded as passed' do
 				course = Course.new( :name => "AlgoIII", :active => true )
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
@@ -141,6 +154,7 @@ describe Account do
 				solution = Solution.new(:assignment => assignment)
 				correction = Correction.new(:solution => solution)
 				correction.should_receive(:approved?).and_return(false)
+				correction.should_receive(:grade).and_return(2)
 				solution.correction = correction
 				Solution.should_receive(:find_by_account_and_assignment).and_return([solution])
 				student.status_for_assignment(assignment).status.should eq :correction_failed
@@ -153,11 +167,13 @@ describe Account do
 				solution = Solution.new(:assignment => assignment)
 				correction = Correction.new(:solution => solution)
 				correction.should_receive(:approved?).and_return(false)
+				correction.should_receive(:grade).and_return(2)
 				solution.correction = correction
 
 				solution1 = Solution.new(:assignment => assignment)
 				correction1 = Correction.new(:solution => solution1)
 				correction1.should_receive(:approved?).and_return(false)
+				correction1.should_receive(:grade).and_return(2)
 				solution1.correction = correction1
 
 				Solution.should_receive(:find_by_account_and_assignment).and_return([solution, solution1])

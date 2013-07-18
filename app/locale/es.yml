@@ -15,6 +15,7 @@ es:
   menu:
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'
+    submissions: 'Mis entregas'
     corrections: 'Mis correcciones'
   solutions:
     errors:
@@ -28,11 +29,21 @@ es:
       assignment: 'Trabajo práctico'
       submission_date: 'Fecha de la entrega'
   corrections:
+    edit: 'Corregir'
+    download_solution_link: 'Descargar solución'
+    download_assignment_link: 'Descargar TP'
+    submission_date: 'Fecha de entrega'
+    form:
+      public_comments: 'Comentarios públicos'
+      private_comments: 'Comentarios privados'
+      grade: 'Calificación'
     grid:
       last_update: 'Última actualización'
       public_comment: 'Comentario público'
       private_comment: 'Comentario privado'
       grade: 'Calificación'
+      solution: 'Trabajo práctico'
+      actions: 'Acciones'
   my_assigments: 'Mis trabajos prácticos'
   my_solutions: 'Mis entregas'
   assignment: 'Trabajo práctico'
@@ -40,7 +51,6 @@ es:
   students:
     solutions: 'soluciones'
   lastest_solution_date: 'Ultima entrega'
-  deadline_date: 'Fecha de vencimiento'
   corrector: 'Corrector'
   actions: 'acciones'
   solution_pending: 'Entrega pendiente'
@@ -144,7 +154,6 @@ es:
       second: Segundos
       year: Año
   assignments:
-    title: Trabajos Prácticos
     name: Nombre
     deadline: Fecha límite
     course: Curso
@@ -152,9 +161,8 @@ es:
       title: Borrar
       confirm: ¿Está seguro que desea eliminar el trabajo práctico?
     edit_files: Archivos
-    show_files: Archivos
     files: 
-      title: Archivos asociados a
+      title: Archivos asociados
       name: Nombre
       download_link: Descargar
       delete: 

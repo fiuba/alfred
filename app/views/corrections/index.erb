@@ -1,6 +1,5 @@
 <ul class="nav nav-tabs">
   <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:corrections, :index, current_account) %></li>
-  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:corrections, :new) %></li>
 </ul>
 <table id="correctionsGrid" class="table table-bordered table-striped table-hover">
 	<tr>
@@ -8,6 +7,7 @@
 		<th><%= I18n.translate('corrections.grid.public_comment') %></th>
 		<th><%= I18n.translate('corrections.grid.private_comment') %></th>
 		<th><%= I18n.translate('corrections.grid.grade') %></th>
+		<th><%= I18n.translate('corrections.grid.actions') %></th>
 	</tr>
 	<% @corrections.each do |c| %>
 		<tr> 
@@ -15,6 +15,13 @@
       <td><%= c.public_comments %></td>
       <td><%= c.private_comments %></td>
       <td><%= c.grade %></td>
+      <td>
+        <a title="<%= t('corrections.download_solution_link') %>" href="<%= solution_file_url(c) %>"><i class='icon-download icon-large icon-white'></i></a>
+        &nbsp;
+        <a title="<%= t('corrections.download_assignment_link') %>" href="#"><i class='icon-download-alt icon-large'></i></a>
+        &nbsp;       
+        <a title="<%= t('corrections.edit') %>" href="<%= url(:corrections, current_course.id, :edit, c.id) %>"><i class='icon-edit icon-large'></i></a>
+      </td>
 		</tr>
 	<% end %>
 </table>

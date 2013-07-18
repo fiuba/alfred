@@ -15,6 +15,7 @@ es:
   menu:
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'
+    submissions: 'Mis entregas'
     corrections: 'Mis correcciones'
   solutions:
     errors:
@@ -29,11 +30,21 @@ es:
       submission_date: 'Fecha de la entrega'
   corrections:
     title_all: 'Entregas para'
+    edit: 'Corregir'
+    download_solution_link: 'Descargar solución'
+    download_assignment_link: 'Descargar TP'
+    submission_date: 'Fecha de entrega'
+    form:
+      public_comments: 'Comentarios públicos'
+      private_comments: 'Comentarios privados'
+      grade: 'Calificación'
     grid:
       last_update: 'Última actualización'
       public_comment: 'Comentario público'
       private_comment: 'Comentario privado'
       grade: 'Calificación'
+      solution: 'Trabajo práctico'
+      actions: 'Acciones'
     grid_all:
       class: 'Turno'
       student_name: 'Nombre'

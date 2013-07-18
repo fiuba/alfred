@@ -1,9 +1,14 @@
 Alfred::App.controllers :corrections do
-  get :index, :with => :teacher_id do
+	before do
+    @course = current_course
+    @teacher = current_account
+
+    halt 403 if @teacher.is_student?
+	end
+  
+  get :index do
 		@title = "Corrections"
-		account = Account.find_by_id( params[:teacher_id] )
-		halt 403 if not account.is_teacher?
-		@corrections = Correction.all(:teacher => account)
+		@corrections = Correction.all(:teacher => @teacher)
     render 'corrections/index'
   end
 
@@ -28,5 +33,35 @@ Alfred::App.controllers :corrections do
 		# TODO: Temporary view, need to move the other index action out of this controller
 		render 'corrections/all_index'
 	end
+
+  get :edit, :with => :id do
+    @title = pat(:edit_title, :model => "corrections #{params[:id]}")
+    @correction = Correction.get(params[:id].to_i)
+    if @correction
+      render 'corrections/edit'
+    else
+      flash[:warning] = pat(:create_error, :model => 'corrections', :id => "#{params[:id]}")
+      halt 404
+    end
+  end
+
+  put :update, :with => :id do
+    @title = pat(:update_title, :model => "correction #{params[:id]}")
+    @correction = Correction.get(params[:id].to_i)
+    if @correction
+      if @correction.update(params[:correction])
+        flash[:success] = pat(:update_success, :model => 'Correction', :id =>  "#{params[:id]}")
+        params[:save_and_continue] ?
+          redirect(url(:corrections, @correction.teacher.id, :index)) :
+          redirect(url(:corrections, @correction.teacher.id, :edit, :id => @correction.id))
+      else
+        flash.now[:error] = pat(:update_error, :model => 'correction')
+        render 'corrections/edit'
+      end
+    else
+      flash[:warning] = pat(:update_warning, :model => 'correction', :id => "#{params[:id]}")
+      halt 404
+    end
+  end
 
 end

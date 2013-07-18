@@ -9,26 +9,22 @@ class Correction
   # Teacher who ranks
   belongs_to :teacher, :model => Account
 
-  property :teacher_id, Integer, :unique_index => :solution_teacher
-  property :solution_id, Integer, :unique_index => :solution_teacher
 
   # property <name>, <type>
   property :id, Serial
   property :public_comments, String
   property :private_comments, String
   property :grade, Float
+  property :teacher_id, Integer, :unique_index => :solution_teacher
+  property :solution_id, Integer, :unique_index => :solution_teacher
 	property :created_at, DateTime  
   property :updated_at, DateTime
 
-  validates_presence_of      :public_comments
-  validates_presence_of      :private_comments
   validates_presence_of      :solution
+  validates_presence_of      :teacher
 
-  validates_presence_of      :grade
-  validates_numericality_of  :grade
-  validates_within           :grade, :set => 0..10
+  validates_within           :grade, :set => (0..10).to_a << nil
   validates_with_method      :teacher, :is_a_teacher?
-
   validates_uniqueness_of    :solution, :scope => :teacher
 
   def approved?

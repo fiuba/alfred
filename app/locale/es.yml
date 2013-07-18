@@ -28,11 +28,21 @@ es:
       assignment: 'Trabajo práctico'
       submission_date: 'Fecha de la entrega'
   corrections:
+    title_all: 'Entregas para'
     grid:
       last_update: 'Última actualización'
       public_comment: 'Comentario público'
       private_comment: 'Comentario privado'
       grade: 'Calificación'
+    grid_all:
+      class: 'Turno'
+      student_name: 'Nombre'
+      upload_date: 'Fecha de entrega'
+      teacher_assigned: 'Corrector'
+      status: 'Estado'
+      actions:
+        assign_to_me: 'Asignarmelo a mi'
+        view_solutions: 'Ver correcciones'
   my_assigments: 'Mis trabajos prácticos'
   my_solutions: 'Mis entregas'
   assignment: 'Trabajo práctico'
@@ -153,6 +163,7 @@ es:
       confirm: ¿Está seguro que desea eliminar el trabajo práctico?
     edit_files: Archivos
     show_files: Archivos
+    show_corrections: Correcciones
     files: 
       title: Archivos asociados a
       name: Nombre

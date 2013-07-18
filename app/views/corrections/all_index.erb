@@ -1,0 +1,99 @@
+<h2><%= t('corrections.title_all') + " #{@assignment.name}" %></h2>
+
+<% 
+=begin %>
+
+TEMPORARILY MOCKED FOR VALIDATION
+
+<table id="correctionsGrid" class="table table-bordered table-striped table-hover">
+	<tr>
+		<th><%= I18n.translate('corrections.grid.student_name') %></th>
+		<th><%= I18n.translate('corrections.grid.public_comment') %></th>
+		<th><%= I18n.translate('corrections.grid.private_comment') %></th>
+		<th><%= I18n.translate('corrections.grid.grade') %></th>
+	</tr>
+	<% @assignment.solutions.each do |s| %>
+		<tr> 
+      <td><%= s.account.name %></td>
+      <td><%= formats_date( s.created_at ) %></td>
+      <td><%= c.public_comments %></td>
+      <td><%= c.private_comments %></td>
+      <td><%= c.grade %></td>
+		</tr>
+	<% end %>
+</table>
+
+<% content_for :additional_js do %>
+	<%= javascript_include_tag 'editablegrid-2.0.1.js' %>
+<% end %>
+<%
+=end %>
+
+<div class="well form-search">
+  <input type="text" class="input-medium search-query" id="filter" placeholder="tipea para filtrar">
+</div>
+
+<table id="correctionsGrid" class="table table-bordered table-striped table-hover">
+	<thead>
+		<tr>
+			<th><%= I18n.translate('corrections.grid_all.class') %></th>
+			<th><%= I18n.translate('corrections.grid_all.student_name') %></th>
+			<th><%= I18n.translate('corrections.grid_all.upload_date') %></th>
+			<th><%= I18n.translate('corrections.grid_all.status') %></th>
+			<th><%= I18n.translate('corrections.grid_all.teacher_assigned') %></th>
+			<th class="header list-row-action-header"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+	    <td>Miércoles Noche</td>
+	    <td>Juan Perez</td>
+	    <td>10/6/2013</td>
+	    <td>Pendiente</td>
+	    <td></td>
+	    <td>
+	    	<a href='#' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.assign_to_me') %>" title="" rel="tooltip">
+	    		<i class='icon-user'></i>
+	    	</a>
+	    	<a href='#' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.view_solutions') %>" title="" rel="tooltip">
+	    		<i class='icon-eye-open'></i>
+	    	</a>
+	    </td>
+		</tr>
+		<tr>
+	    <td>Jueves Noche</td>
+	    <td>Jose Rodriguez</td>
+	    <td>10/6/2013</td>
+	    <td>Corrección en progreso</td>
+	    <td>Diego Sanchez</td>
+	    <td>
+	    	<a href='#' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.assign_to_me') %>" title="" rel="tooltip">
+	    		<i class='icon-user'></i>
+	    	</a>
+	    	<a href='#' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.view_solutions') %>" title="" rel="tooltip">
+	    		<i class='icon-eye-open'></i>
+	    	</a>
+	    </td>
+		</tr>
+		<tr>
+	    <td>Jueves Tarde</td>
+	    <td>Jorge Gonzalez</td>
+	    <td>09/6/2013</td>
+	    <td>Corregido</td>
+	    <td>Nicolás Paez</td>
+	    <td>
+	    	<span class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.assign_to_me') %>" title="" rel="tooltip">
+	    		<i class='icon-user'></i>
+	    	</span>
+	    	<a href='#' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.view_solutions') %>" title="" rel="tooltip">
+	    		<i class='icon-eye-open'></i>
+	    	</a>
+	    </td>
+		</tr>
+	</tbody>
+</table>
+
+<% content_for :additional_js do %>
+	<%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
+  <%= javascript_include_tag 'corrections_all_index.js' %>
+<% end %>

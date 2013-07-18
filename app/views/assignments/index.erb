@@ -29,6 +29,9 @@
               <%- link_to :href => url(:assignment, :generic, :file, :index, :assignment_id => assignment.id), :rel => :tooltip, :title => t('assignments.edit_files'), :class => 'list-row-action-wrapper-link' do %>
                 <i class='icon-file'></i>
               <% end %>
+              <%- link_to :href => url(:corrections, :index, :assignment_id => assignment.id), :rel => :tooltip, :title => t('assignments.show_corrections'), :class => 'list-row-action-wrapper-link' do %>
+                <i class='icon-ok-sign'></i>
+              <% end %>
               <%- form_tag url(:assignments, :destroy, :id => assignment.id, :course_id => current_course.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.delete.confirm') }, :style => 'display:inline' do %>
                 <button type='submit' title="<%= t('assignments.delete.title') %>" rel='tooltip' class="btn btn-mini btn-danger">
                   <i class='icon-white icon-trash'></i>

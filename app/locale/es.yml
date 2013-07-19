@@ -42,7 +42,7 @@ es:
       status: 'Estado'
       actions:
         assign_to_me: 'Asignarmelo a mi'
-        view_solutions: 'Ver correcciones'
+        view_solutions: 'Ver soluciones'
   my_assigments: 'Mis trabajos prácticos'
   my_solutions: 'Mis entregas'
   assignment: 'Trabajo práctico'

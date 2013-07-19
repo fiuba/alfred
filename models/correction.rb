@@ -20,11 +20,14 @@ class Correction
 	property :solution_id, 	Integer, 
 		:required => true, :unique => :solution
 
-  validates_within           :grade, :set => (0..10).to_a << nil
-  validates_with_method      :teacher, :is_a_teacher?
+  validates_within        :grade, :set => (0..10).to_a << nil
+  validates_with_method   :teacher, :is_a_teacher?
+  validates_present       :teacher
+  validates_present       :solution
 
-  validates_present     :teacher
-  validates_present     :solution
+  def approved?
+    self.grade && self.grade >= 4
+  end
 
   private
   def is_a_teacher? 

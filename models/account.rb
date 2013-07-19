@@ -78,15 +78,18 @@ class Account
   end
 
   def status_for_assignment(assignment)
-    solutions = Solution.find_by_account_and_assignment(self, assignment)        
+    solutions = Solution.find_by_account_and_assignment(self, assignment) || []
+    if !solutions.respond_to?(:count)
+      solutions = [ solutions ]
+    end
+
     assignment_status = AssignmentStatus.new 
     assignment_status.assignment_id = assignment.id
     assignment_status.name = assignment.name
     assignment_status.deadline = assignment.deadline
-    if solutions.nil?
+    if solutions.empty?
       assignment_status.status = :solution_pending 
       assignment_status.solution_count = 0
-      #assignment_status.latest_solution_date = nil
       return assignment_status
     end
     solutions.sort_by! { |s| s.created_at}
@@ -99,7 +102,11 @@ class Account
           assignment_status.status = :correction_passed
           return assignment_status
         end
-        assignment_status.status = :correction_failed
+        if s.correction.grade.nil? 
+          assignment_status.status = :correction_in_progress
+        else
+          assignment_status.status = :correction_failed
+        end
       end
     end
     assignment_status

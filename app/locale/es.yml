@@ -173,3 +173,9 @@ es:
         confirm: ¿Está seguro que desea eliminar el archivo?
       new:
         title: Nuevo Archivo
+    status:
+      solution_pending: 'Pendiente de entrega'
+      correction_pending: 'Corrección pendiente'
+      correction_in_progress: 'Corrección en progreso'
+      correction_passed: 'Aprobado'
+      correction_failed: 'Desaprobado'

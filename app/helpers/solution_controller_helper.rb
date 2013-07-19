@@ -13,6 +13,6 @@ Alfred::App.helpers do
 	end
 
   def formats_date( date )
-    date.strftime("%Y-%m-%d %H:%M:%S")
+    date.strftime("%Y-%m-%d %H:%M:%S") if !date.nil?
   end
 end

@@ -43,13 +43,23 @@ describe Account do
 				student.status_for_assignment(assignment).solution_count.should eq 0
 			end
 
-			it 'should return the count of solutions submitted by the student for that assignment' do
-				course = Course.new( :name => "AlgoIII", :active => true )
+			it 'should return 1 when there is a single solution submitted' do
+			  course = Course.new( :name => "AlgoIII", :active => true )
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
 				solution = Solution.new( :assignment => assignment )
-				Solution.should_receive(:find_by_account_and_assignment).and_return([solution])
+				Solution.should_receive(:find_by_account_and_assignment).and_return(solution)
 				student.status_for_assignment(assignment).solution_count.should eq 1
+			end
+
+			it 'should return the count of multiple solutions submitted by the student for that assignment' do
+				course = Course.new( :name => "AlgoIII", :active => true )
+				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
+				assignment = Assignment.new( :course => course )
+				solution1 = Solution.new( :assignment => assignment, :account => student )
+				solution2 = Solution.new( :assignment => assignment, :account => student )
+				Solution.should_receive(:find_by_account_and_assignment).and_return([ solution1, solution2 ])
+				student.status_for_assignment(assignment).solution_count.should eq 2
 			end
 
 		end

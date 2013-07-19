@@ -99,7 +99,11 @@ class Account
           assignment_status.status = :correction_passed
           return assignment_status
         end
-        assignment_status.status = :correction_failed
+        if s.correction.grade.nil? 
+          assignment_status.status = :correction_in_progress
+        else
+          assignment_status.status = :correction_failed
+        end
       end
     end
     assignment_status

@@ -27,6 +27,9 @@ class Correction
 
   validates_uniqueness_of    :solution, :scope => :teacher
 
+  def approved?
+    self.grade && self.grade >= 4
+  end
 
   private
   def is_a_teacher? 

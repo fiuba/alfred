@@ -106,5 +106,30 @@ describe Correction do
 
   end
 
-end
+  describe 'approved?' do
 
+    it 'should return false when grade is not defined' do
+      correction = Correction.new
+      correction.approved?.should be_false
+    end
+
+    it 'should return false when grade is less than 4' do
+      correction = Correction.new
+      correction.grade = 2
+      correction.approved?.should be_false
+    end
+
+    it 'should return true when grade is 4' do
+      correction = Correction.new
+      correction.grade = 4
+      correction.approved?.should be_true
+    end
+
+    it 'should return true when grade is greater then 4' do
+      correction = Correction.new
+      correction.grade = 5
+      correction.approved?.should be_true
+    end
+  end
+
+end

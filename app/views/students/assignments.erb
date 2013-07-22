@@ -19,6 +19,11 @@
 			<%- link_to :href => url(:assignment, :generic, :file, :index, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('assignments.show_files'), :class => 'list-row-action-wrapper-link' do %>
         <i class='icon-file'></i>
       <% end %>
+
+			<%- link_to :href => "/assignment/#{as.assignment_id}/solutions/new", :rel => :tooltip, :title => t('solution.new'), :class => 'list-row-action-wrapper-link' do %>
+        <i class='icon-cloud-upload'></i>
+      <% end %>
+
 		</td>
 	</tr>
 	<% end %>

@@ -12,7 +12,9 @@ class Solution
   # property <name>, <type>
   property :id, Serial
   property :file, String
-  property :created_at, DateTime  
+  property :created_at, DateTime 
+  property :test_result, String
+  property :test_output, String 
 
   validates_presence_of      :file
 

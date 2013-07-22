@@ -12,12 +12,16 @@ es:
   sign_in: 'iniciar sesión'
   create_account: 'crear cuenta'
   back: 'atrás'
+  solution:
+    new: 'entregar solución'
+    upload_help: ''
   menu:
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'
     submissions: 'Mis entregas'
     corrections: 'Mis correcciones'
   solutions:
+    delivered_for: 'soluciones entregadas para'
     errors:
       upload_failed: 'Error al intentar subir el archivo'
       delete_failed: 'Error al intentar borrar el archivo'

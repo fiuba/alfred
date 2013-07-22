@@ -1,18 +1,19 @@
+<h2><%= t('solutions.delivered_for').capitalize %> <%= @assignment.name %></h2>
 <ul class="nav nav-tabs">
   <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:solutions, :index, @assignment.id) %></li>
   <li> <%= link_to tag_icon(:plus, pat(:new)), url(:solutions, :new, @assignment.id) %></li>
 </ul>
 <table id="solutionsGrid" class="table table-bordered table-striped table-hover">
 	<tr>
-		<th><%= I18n.translate('solutions.grid.submission_date') %></th>
-		<th><%= I18n.translate('solutions.grid.file') %></th>
-		<th><%= I18n.translate('solutions.grid.assignment') %></th>
+		<th><%= t('solutions.grid.submission_date') %></th>
+		<th><%= t('solutions.grid.file') %></th>
+		<th><%= t('status') %></th>
 	</tr>
 	<% @solutions.each do |s| %>
 		<tr> 
       <td><%= formats_date( s.created_at ) %></td>
       <td><a href="<%= url_for(:solutions, :file, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
-      <td><a href="<%= url_for(:assignments, :index, :course_id => current_course.id) %>"><%= s.assignment.name %></a></td>
+      <td><%= s.test_result %></a></td>
 		</tr>
 	<% end %>
 </table>

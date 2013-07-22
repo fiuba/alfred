@@ -16,6 +16,8 @@ describe Solution do
 	it { should respond_to( :account ) }
 	it { should respond_to( :assignment) }
 	it { should respond_to( :correction) }
+	it { should respond_to( :test_result) }
+	it { should respond_to( :test_output) }
 
 	describe "should belongs to student" do
 		it { @solution.account.should == @student }

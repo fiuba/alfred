@@ -12,12 +12,16 @@ es:
   sign_in: 'iniciar sesión'
   create_account: 'crear cuenta'
   back: 'atrás'
+  solution:
+    new: 'entregar solución'
+    upload_help: ''
   menu:
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'
     submissions: 'Mis entregas'
     corrections: 'Mis correcciones'
   solutions:
+    delivered_for: 'soluciones entregadas para'
     errors:
       upload_failed: 'Error al intentar subir el archivo'
       delete_failed: 'Error al intentar borrar el archivo'
@@ -163,7 +167,7 @@ es:
       title: Borrar
       confirm: ¿Está seguro que desea eliminar el trabajo práctico?
     edit_files: Archivos
-    show_files: Archivos
+    show_files: ver archivos
     files: 
       title: Archivos asociados a
       name: Nombre

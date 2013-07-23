@@ -28,7 +28,9 @@
       <td>
         <a title="<%= t('corrections.download_solution_link') %>" href="<%= solution_file_url(c) %>"><i class='icon-download icon-large icon-white'></i></a>
         &nbsp;
-        <a title="<%= t('corrections.download_assignment_link') %>" href="#"><i class='icon-download-alt icon-large'></i></a>
+				<%- link_to :href => url(:assignment, :generic, :file, :index, :assignment_id => c.solution.assignment.id), :rel => :tooltip, :title => t('corrections.download_assignment_link'), :class => 'list-row-action-wrapper-link' do %>
+          <i class='icon-file icon-large'></i>
+        <% end %>
         &nbsp;       
         <a title="<%= t('corrections.edit') %>" href="<%= url(:corrections, current_course.id, :edit, c.id) %>"><i class='icon-edit icon-large'></i></a>
       </td>

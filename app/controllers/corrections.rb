@@ -1,4 +1,4 @@
-Alfred::App.controllers :corrections, :parent => :course do
+Alfred::App.controllers :corrections, :parent => :courses do
 	before do
     @course = current_course
     @teacher = current_account
@@ -38,6 +38,9 @@ Alfred::App.controllers :corrections, :parent => :course do
     @title = pat(:update_title, :model => "correction #{params[:id]}")
     @correction = Correction.get(params[:id].to_i)
     if @correction
+      # Nullifies to let validation pass
+      grade = params[:correction][:grade]
+      params[:correction][:grade] = ( grade.blank? ) ? nil : grade
       if @correction.update(params[:correction])
         flash[:success] = pat(:update_success, :model => 'Correction', :id =>  "#{params[:id]}")
         params[:save_and_continue] ?

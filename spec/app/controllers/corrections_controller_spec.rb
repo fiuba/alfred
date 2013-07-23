@@ -18,7 +18,7 @@ describe "CorrectionsController" do
 		it "should respond with error 403 whether not a teacher access to" do
 		  Alfred::App.any_instance.stub(:current_account)
         .and_return(Factories::Account.student)
-			get "/course/#{algorithm.id}/corrections"
+			get "/courses/#{algorithm.id}/corrections"
 			last_response.status.should == 403
 		end
 
@@ -28,7 +28,7 @@ describe "CorrectionsController" do
 				.and_return([])
 			Alfred::App.any_instance.should_receive(:render)
 				.with('corrections/index').and_return({})
-			get "/course/#{algorithm.id}/corrections"
+			get "/courses/#{algorithm.id}/corrections"
 		end
 	end
 
@@ -45,14 +45,14 @@ describe "CorrectionsController" do
 			it "should response 403" do
 		    Alfred::App.any_instance.stub(:current_account)
           .and_return(Factories::Account.student)
-				post "/course/#{algorithm.id}/corrections/create", @params
+				post "/courses/#{algorithm.id}/corrections/create", @params
 				last_response.status.should == 403
 			end
 		end
 
 		describe "teacher creates a solution" do
 			it "should create a new correction" do
-				expect { post "/course/#{algorithm.id}/corrections/create", @params}
+				expect { post "/courses/#{algorithm.id}/corrections/create", @params}
 					.to change{ Correction.all(:teacher => teacher).size }.from(0).to(1)
 			end
 		end
@@ -65,36 +65,54 @@ describe "CorrectionsController" do
 				.and_return(correction)
 			Alfred::App.any_instance.should_receive(:render)
 				.with('corrections/edit').and_return({})
-			get "/course/#{algorithm.id}/corrections/edit/#{correction.id}"
+			get "/courses/#{algorithm.id}/corrections/edit/#{correction.id}"
 		end
 	end
 
   describe "update" do
     before do
 			@correction = Factories::Correction.correctsBy( solution, teacher )
-    end
 
-    it "should change correction's datas" do
-      public_comments = "public new comments"
-      private_comments = "private new comments"
+      @public_comments = "public new comments"
+      @private_comments = "private new comments"
 
     	@params = { 
       	:correction => { 
 						:solution_id => solution.id,
-            :public_comments => public_comments,
-            :private_comments => private_comments,
+            :public_comments => @public_comments,
+            :private_comments => @private_comments,
             :grade => 7
 				}
 			}
 
       Correction.should_receive(:get).with(@correction.id)
         .and_return(@correction)
+    end
 
-			put "/course/#{algorithm.id}/corrections/update/#{@correction.id}", @params
+    describe "when correction is updated" do
+      it "should change correction's datas" do
+  			put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
 
-      @correction.public_comments.should == public_comments
-      @correction.private_comments.should == private_comments
-      @correction.grade.should == 7
+        @correction.public_comments.should == @public_comments
+        @correction.private_comments.should == @private_comments
+        @correction.grade.should == 7
+      end
+
+      describe "when grade is nil" do
+        before do
+          @correction.public_comments = @public_comments
+          @correction.private_comments = @private_comments
+          @correction.grade = 8
+          @correction.save
+        end
+
+        it "should update correction" do
+          @params[:correction][:grade] = nil
+          @correction.grade.should_not == nil
+	    		put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
+          @correction.grade.should == nil
+        end
+      end
     end
   end
 end

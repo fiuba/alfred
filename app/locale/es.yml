@@ -66,6 +66,7 @@ es:
   correction_pending: 'Corrección pendiente'
   correction_passed: 'Aprobado'
   correction_failed: 'Desaprobado'
+  correction_in_progress: 'En progreso'
   date:
     abbr_day_names:
     - dom

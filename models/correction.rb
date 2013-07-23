@@ -29,6 +29,10 @@ class Correction
     self.grade && self.grade >= 4
   end
 
+  def status
+    grade.nil? ? :in_progress : :completed
+  end
+
   private
   def is_a_teacher? 
     if @teacher   

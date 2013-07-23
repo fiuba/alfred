@@ -3,8 +3,14 @@ window.onload = function() {
 
 				// we build and load the metadata in Javascript
 				editableGrid.load({ metadata: [
-					{ name: "File", datatype: "html" },
-					{ name: "Assingment", datatype: "string" },
+					{ name: "tp", datatype: "string" },
+					{ name: "padron", datatype: "string" },
+					{ name: "nombre", datatype: "string" },
+					{ name: "apellido", datatype: "string" },
+					{ name: "prueba", datatype: "string" },
+					{ name: "estado", datatype: "string" },
+					{ name: "nota", datatype: "string" },
+					{ name: "acciones", datatype: "html" }
 				]});
 
 				// then we attach to the HTML table and render it
@@ -12,4 +18,7 @@ window.onload = function() {
 
 				editableGrid.renderGrid();
 
+		    // filter when something is typed into filter
+		    _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); };
+				
 			} 

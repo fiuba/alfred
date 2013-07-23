@@ -1,7 +1,3 @@
-<ul class="nav nav-tabs">
-  <li> <%= link_to tag_icon(:list, pat(:list)), url(:corrections, current_account.id, :index) %></li>
-  <li class="active"> <%= link_to tag_icon(:edit, pat(:edit)), url(:corrections, current_account.id, :edit, :id => @correction.id) %></li>
-</ul>
 <div class="tabs-content">
   <h2><%=  assignment_and_author_information(@correction) %> </h2>
   <p class="lead"><%= solution_abridged_info(@correction.solution) %></p>

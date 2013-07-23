@@ -12,6 +12,10 @@ es:
   sign_in: 'iniciar sesión'
   create_account: 'crear cuenta'
   back: 'atrás'
+  student: 'Alumno'
+  test_result: 'Prueba automática'
+  grade: 'nota'
+  my_corrections: 'Mis correcciones'
   solution:
     new: 'entregar solución'
     upload_help: ''

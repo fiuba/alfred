@@ -80,6 +80,13 @@ describe Correction do
 			@correction.solution.should == solution
 		end
 
+    describe "without grade" do 
+      it "should save a correction with nil grade" do
+        @correction.grade = nil
+        @correction.should be_valid 
+      end
+    end
+
     describe "not duplicated correction" do
       before do
         @correction.save
@@ -93,6 +100,7 @@ describe Correction do
           :grade => 9
         )
       end 
+
       it "should be allowed corrections with different teacher and solution" do
         @another_correction.should be_valid 
       end

@@ -1,19 +1,29 @@
-<ul class="nav nav-tabs">
-  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:corrections, :index, current_account) %></li>
-</ul>
+<h1><%= t('my_corrections')%></h1>
+
+<div class="well form-search">
+  <input type="text" class="input-medium search-query" id="filter" placeholder="tipea para filtrar">
+</div>
+
+
 <table id="correctionsGrid" class="table table-bordered table-striped table-hover">
 	<tr>
-		<th><%= I18n.translate('corrections.grid.last_update') %></th>
-		<th><%= I18n.translate('corrections.grid.public_comment') %></th>
-		<th><%= I18n.translate('corrections.grid.private_comment') %></th>
-		<th><%= I18n.translate('corrections.grid.grade') %></th>
-		<th><%= I18n.translate('corrections.grid.actions') %></th>
+    <th><%= t('assignment').capitalize %></th>
+    <th><%= t('buid').capitalize %></th>
+    <th><%= t('name').capitalize %></th>
+    <th><%= t('surname').capitalize %></th>
+    <th><%= t('test_result').capitalize %></th>
+    <th><%= t('status').capitalize %></th>
+    <th><%= t('grade').capitalize %></th>
+    <th><%= t('corrections.grid.actions').capitalize %></th>
 	</tr>
 	<% @corrections.each do |c| %>
 		<tr> 
-      <td><%= formats_date( c.created_at ) %></td>
-      <td><%= c.public_comments %></td>
-      <td><%= c.private_comments %></td>
+      <td><%= c.solution.assignment.name %></td>
+      <td><%= c.solution.account.buid %></td>
+      <td><%= c.solution.account.name %></td>
+      <td><%= c.solution.account.surname %></td>
+      <td><%= c.solution.test_result %></td>
+      <td><%= c.status %></td>
       <td><%= c.grade %></td>
       <td>
         <a title="<%= t('corrections.download_solution_link') %>" href="<%= solution_file_url(c) %>"><i class='icon-download icon-large icon-white'></i></a>
@@ -25,7 +35,8 @@
 		</tr>
 	<% end %>
 </table>
+
 <% content_for :additional_js do %>
-	<%= javascript_include_tag 'editablegrid-2.0.1.js' %>
+  <%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
   <%= javascript_include_tag 'corrections_index.js' %>
 <% end %>

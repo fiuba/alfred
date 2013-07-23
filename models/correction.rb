@@ -43,6 +43,10 @@ class Correction
     Correction.create!(:solution => latest_solution, :teacher => teacher)
   end
 
+  def status
+    grade.nil? ? :in_progress : :completed
+  end
+
   private
   def is_a_teacher? 
     if @teacher   

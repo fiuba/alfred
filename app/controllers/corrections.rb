@@ -7,7 +7,6 @@ Alfred::App.controllers :corrections do
 	end
   
   get :index do
-		@title = "Corrections"
 		@corrections = Correction.all(:teacher => @teacher)
     render 'corrections/index'
   end

@@ -126,4 +126,17 @@ describe Correction do
     end
   end
 
+  describe 'status' do
+
+    it 'should return :in_progress when grade is not set' do
+      @correction.grade = nil
+      @correction.status.should eq :in_progress
+    end  
+
+
+    it 'should return  :completed when grade is not set' do
+      @correction.grade = 7
+      @correction.status.should eq :completed
+    end  
+  end
 end

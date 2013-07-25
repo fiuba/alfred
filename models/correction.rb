@@ -4,10 +4,13 @@ class Correction
   include DataMapper::Resource
 
 	# Relations
-	belongs_to :solution, :unique_index => :solution_teacher
+	belongs_to :solution
 
   # Teacher who ranks
-  belongs_to :teacher, :unique_index => :solution_teacher, :model => Account
+  belongs_to :teacher, :model => Account
+
+  property :teacher_id, Integer, :unique_index => :solution_teacher
+  property :solution_id, Integer, :unique_index => :solution_teacher
 
   # property <name>, <type>
   property :id, Serial

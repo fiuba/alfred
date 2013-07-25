@@ -25,6 +25,7 @@ $(document).ready(function() {
   $(".assign-to-me").click(function(e) {
     var url = $(this).closest("form").attr("action");
     var teacher_assigned_cell = $(this).closest("tr").find('td.teacher_assigned');
+    var status_cell = $(this).closest("tr").find('td.status');
     e.preventDefault();
     $.ajax(url, {
       beforeSend: function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('input[name="authenticity_token"]').attr('value')) },
@@ -32,6 +33,7 @@ $(document).ready(function() {
       success: function(data, textStatus, jqXHR) {
         $('.main-wrapper').html('<div class="alert alert-success fade in">' + data.message + '<button class="close" data-dismiss="alert" type="button">×</button></div>');
         teacher_assigned_cell.html(data.assigned_teacher);
+        status_cell.html(data.new_status);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         $('.main-wrapper').html('<div class="alert alert-error fade in">' + errorThrown + '<button class="close" data-dismiss="alert" type="button">×</button></div>');

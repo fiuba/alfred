@@ -111,6 +111,10 @@ class Account
     end
     assignment_status
   end
+
+  def full_name
+    "#{self.name} #{self.surname}"
+  end
   
   private
   def password_required

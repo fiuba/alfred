@@ -31,6 +31,18 @@ class Correction
     self.grade && self.grade >= 4
   end
 
+  def self.create_for_teacher(teacher, student, assignment)
+    solutions = Solution.find_by_account_and_assignment(student, assignment, :order => [ :created_at.desc ]) || []
+    if !solutions.respond_to?(:count)
+      solutions = [ solutions ]
+    end
+    raise I18n.t('corrections.no_solutions_found') if solutions.empty?
+    latest_solution = solutions.first
+    raise I18n.t('corrections.solution_already_assigned') if !latest_solution.correction.nil?
+
+    Correction.create!(:solution => latest_solution, :teacher => teacher)
+  end
+
   private
   def is_a_teacher? 
     if @teacher   

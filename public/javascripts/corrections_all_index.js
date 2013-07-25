@@ -19,4 +19,21 @@ $(document).ready(function() {
 
 	// filter when something is typed into filter
   _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); };
+
+  $(".assign-to-me").click(function(e) {
+    var url = $(this).closest("form").attr("action");
+    var teacher_assigned_cell = $(this).closest("tr").find('td.teacher_assigned');
+    e.preventDefault();
+    $.ajax(url, {
+      beforeSend: function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('input[name="authenticity_token"]').attr('value')) },
+      method: 'POST',
+      success: function(data, textStatus, jqXHR) {
+        $('.main-wrapper').html('<div class="alert alert-success fade in">' + data.message + '<button class="close" data-dismiss="alert" type="button">×</button></div>');
+        teacher_assigned_cell.html(data.assigned_teacher);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        $('.main-wrapper').html('<div class="alert alert-error fade in">' + errorThrown + '<button class="close" data-dismiss="alert" type="button">×</button></div>');
+      }
+    });
+  });
 });

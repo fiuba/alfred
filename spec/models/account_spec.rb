@@ -117,7 +117,8 @@ describe Account do
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
-				correction = Correction.new(:solution => solution)
+				teacher = Account.new
+				correction = Correction.new(:solution => solution, :teacher => teacher)
 				correction.should_receive(:approved?).and_return(false)
 				correction.should_receive(:grade).and_return(nil)
 				solution.correction = correction
@@ -130,7 +131,8 @@ describe Account do
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
-				correction = Correction.new(:solution => solution)
+				teacher = Account.new
+				correction = Correction.new(:solution => solution, :teacher => teacher)
 				correction.should_receive(:approved?).and_return(true)
 				solution.correction = correction
 				Solution.should_receive(:find_by_account_and_assignment).and_return([solution])
@@ -144,12 +146,13 @@ describe Account do
 				solution0 = Solution.new(:assignment => assignment)
 
 				solution1 = Solution.new(:assignment => assignment)
-				correction = Correction.new(:solution => solution1)
+				teacher = Account.new
+				correction = Correction.new(:solution => solution1, :teacher => teacher)
 				correction.should_receive(:approved?).and_return(false)
 				solution1.correction = correction
 
 				solution2 = Solution.new(:assignment => assignment)
-				correction2 = Correction.new(:solution => solution2)
+				correction2 = Correction.new(:solution => solution2, :teacher => teacher)
 				correction2.should_receive(:approved?).and_return(true)
 				solution2.correction = correction2
 
@@ -162,7 +165,8 @@ describe Account do
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
-				correction = Correction.new(:solution => solution)
+				teacher = Account.new
+				correction = Correction.new(:solution => solution, :teacher => teacher)
 				correction.should_receive(:approved?).and_return(false)
 				correction.should_receive(:grade).and_return(2)
 				solution.correction = correction
@@ -175,13 +179,14 @@ describe Account do
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
-				correction = Correction.new(:solution => solution)
+				teacher = Account.new
+				correction = Correction.new(:solution => solution, :teacher => teacher)
 				correction.should_receive(:approved?).and_return(false)
 				correction.should_receive(:grade).and_return(2)
 				solution.correction = correction
 
 				solution1 = Solution.new(:assignment => assignment)
-				correction1 = Correction.new(:solution => solution1)
+				correction1 = Correction.new(:solution => solution1, :teacher => teacher)
 				correction1.should_receive(:approved?).and_return(false)
 				correction1.should_receive(:grade).and_return(2)
 				solution1.correction = correction1

@@ -22,6 +22,7 @@ class Correction
 
   validates_presence_of      :public_comments
   validates_presence_of      :private_comments
+  validates_presence_of      :solution
 
   validates_presence_of      :grade
   validates_numericality_of  :grade

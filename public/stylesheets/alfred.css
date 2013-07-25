@@ -40,3 +40,13 @@ form h1 {
 a i {
     text-decoration:none !important;
 }
+
+button.assign-to-me {
+    border: 0;
+    background-color: transparent;
+    color: #2FA4E7;
+    padding: 0;
+}
+button.assign-to-me:hover {
+    color: #157AB5;
+}

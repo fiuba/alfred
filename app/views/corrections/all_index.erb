@@ -1,0 +1,47 @@
+<h2><%= t('corrections.title_all') + " #{@assignment.name}" %></h2>
+
+<div class="well form-search">
+  <input type="text" class="input-medium search-query" id="filter" placeholder="tipea para filtrar">
+</div>
+
+<table id="correctionsGrid" class="table table-bordered table-striped table-hover">
+	<tr>
+		<th><%= I18n.translate('corrections.grid_all.class') %></th>
+		<th><%= I18n.translate('corrections.grid_all.student_name') %></th>
+		<th><%= I18n.translate('corrections.grid_all.upload_date') %></th>
+		<th><%= I18n.translate('corrections.grid_all.status') %></th>
+		<th><%= I18n.translate('corrections.grid_all.teacher_assigned') %></th>
+		<th class="header list-row-action-header"></th>
+	</tr>
+	<% @students_with_assignment_status.each do |sas| %>
+		<tr> 
+      <td><%= sas[:student].tag %></td>
+      <td><%= sas[:student].name %></td>
+      <td><%= formats_date( sas[:assignment_status].latest_solution_date ) %></td>
+      <td class='status'><%= correction_status_label sas[:assignment_status].status %></td>
+      <td class='teacher_assigned'><%= sas[:assignment_status].corrector_name %></td>
+      <td>
+      	<% if sas[:assignment_status].can_be_assigned? %>
+      		
+      		<%- form_tag url(:corrections, :create, :assignment_id => sas[:assignment_status].assignment_id, :student_id => sas[:student].id), :method => :post, :style => 'display:inline' do %>
+      			<button type='submit' title="<%= t('corrections.grid_all.actions.assign_to_me') %>" rel='tooltip' class="assign-to-me">
+              <i class='icon-user'></i>
+            </button>
+          <% end %>
+	    	<% else %>
+	    		<span class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.assign_to_me') %>" title="" rel="tooltip">
+	    			<i class='icon-user'></i>
+	    		</span>
+	    	<% end %>
+	    	<a href='#' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.view_solutions') %>" title="" rel="tooltip">
+	    		<i class='icon-eye-open'></i>
+	    	</a>
+	    </td>
+		</tr>
+	<% end %>
+</table>
+
+<% content_for :additional_js do %>
+	<%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
+  <%= javascript_include_tag 'corrections_all_index.js' %>
+<% end %>

@@ -98,6 +98,7 @@ class Account
     assignment_status.latest_solution_date = solutions.last.created_at
     solutions.each do | s |
       if s.correction
+        assignment_status.corrector_name = s.correction.teacher.full_name
         if s.correction.approved?
           assignment_status.status = :correction_passed
           return assignment_status

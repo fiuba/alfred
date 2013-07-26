@@ -80,7 +80,6 @@ class Account
 
   def status_for_assignment(assignment)
     solutions = Solution.all(:account => self, :assignment => assignment)
-    debugger
     assignment_status = AssignmentStatus.new 
     assignment_status.assignment_id = assignment.id
     assignment_status.name = assignment.name

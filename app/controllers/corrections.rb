@@ -21,7 +21,7 @@ Alfred::App.controllers :corrections do
 		Oj.dump({ 'message' => t('corrections.creation_succeeded'), 'assigned_teacher' => current_account.full_name, 'new_status' => new_status })
 	end
 
-	get :index, :parent => :assignment do
+	get :all_index, :parent => :assignment do
 		@assignment = Assignment.get(params[:assignment_id])
 
 		@students_with_assignment_status = []

@@ -18,4 +18,7 @@ class Solution
 
   validates_presence_of      :file
 
+  def self.get_by_student_and_assignment(student, assigment)
+    Solution.all(:account => student, :assignment => assignment)
+  end
 end

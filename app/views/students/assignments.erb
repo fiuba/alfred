@@ -24,6 +24,11 @@
         <i class='icon-cloud-upload'></i>
       <% end %>
 
+
+			<%- link_to :href => "/assignment/#{as.assignment_id}/solutions", :rel => :tooltip, :title => t('solution.all'), :class => 'list-row-action-wrapper-link' do %>
+        <i class='icon-list'></i>
+      <% end %>
+
 		</td>
 	</tr>
 	<% end %>

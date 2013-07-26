@@ -5,6 +5,32 @@
 #   name = shell.ask("What's your name?")
 #   shell.say name
 #
+
+
+course = Course.new
+course.name = '2013-1'
+course.save
+
+teacher = Account.new_teacher({:name => 'teacher_name', 
+															 :surname => 'teacher_surname',
+															 :password => 'Passw0rd!',
+															 :password_confirmation => 'Passw0rd!',
+															 :buid => '12345', 
+															 :email => 'teacher@test.com'})
+teacher.courses << course
+teacher.save
+
+
+student = Account.new_student({:name => 'student_name', 
+															 :surname => 'student_surname',
+															 :password => 'Passw0rd!',
+															 :password_confirmation => 'Passw0rd!',
+															 :buid => '12346', 
+															 :email => 'student@test.com'})
+student.courses << course
+student.save
+
+
 email     = shell.ask "Which email do you want use for logging into admin?"
 password  = shell.ask "Tell me the password to use:"
 

@@ -9,7 +9,6 @@ class Correction
   # Teacher who ranks
   belongs_to :teacher, :model => Account
 
-
   # property <name>, <type>
   property :id, Serial
   property :public_comments, String
@@ -19,13 +18,15 @@ class Correction
   property :solution_id, Integer, :required => true, :unique => :solution
 	property :created_at, DateTime  
   property :updated_at, DateTime
+	property :solution_id, 	Integer, 
+		:required => true, :unique => :solution
 
   validates_presence_of      :solution
   validates_presence_of      :teacher
-
-  validates_within           :grade, :set => (0..10).to_a << nil
-  validates_with_method      :teacher, :is_a_teacher?
-  validates_uniqueness_of    :solution, :scope => :teacher
+  validates_within        :grade, :set => (0..10).to_a << nil
+  validates_with_method   :teacher, :is_a_teacher?
+  validates_present       :teacher
+  validates_present       :solution
 
   def approved?
     self.grade && self.grade >= 4

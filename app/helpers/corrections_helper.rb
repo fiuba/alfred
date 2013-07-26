@@ -1,5 +1,4 @@
 Alfred::App.helpers do
-
   def correction_status_label(status)
   	I18n.translate("assignments.status.#{status.to_sym}")
   end
@@ -21,6 +20,5 @@ Alfred::App.helpers do
     submission_date = solution.created_at
     "#{t('corrections.submission_date')}: #{submission_date.strftime("%Y-%m-%d %H:%M:%S")}"
   end
-
 
 end

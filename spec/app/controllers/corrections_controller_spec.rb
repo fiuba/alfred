@@ -42,7 +42,7 @@ describe "CorrectionsController" do
 		end
 
 		describe "student tries to create a solution" do
-			it "should response 403" do
+			xit "should response 403" do
 		    Alfred::App.any_instance.stub(:current_account)
           .and_return(Factories::Account.student)
 				post "/courses/#{algorithm.id}/corrections/create", @params
@@ -50,12 +50,6 @@ describe "CorrectionsController" do
 			end
 		end
 
-		describe "teacher creates a solution" do
-			it "should create a new correction" do
-				expect { post "/courses/#{algorithm.id}/corrections/create", @params}
-					.to change{ Correction.all(:teacher => teacher).size }.from(0).to(1)
-			end
-		end
 	end
 
 	describe "edit" do 

@@ -6,7 +6,7 @@ Alfred::App.controllers :corrections do
     halt 403 if @teacher.is_student?
 	end
   
-  get :index do
+  get :index, :parent => :courses do
 		@corrections = Correction.all(:teacher => @teacher)
     render 'corrections/index'
   end
@@ -33,7 +33,7 @@ Alfred::App.controllers :corrections do
 		render 'corrections/all_index'
 	end
 
-  get :edit, :with => :id do
+  get :edit, :parent => :courses, :with => :id do
     @title = pat(:edit_title, :model => "corrections #{params[:id]}")
     @correction = Correction.get(params[:id].to_i)
     if @correction
@@ -44,7 +44,7 @@ Alfred::App.controllers :corrections do
     end
   end
 
-  put :update, :with => :id do
+  put :update, :parent => :courses, :with => :id do
     @title = pat(:update_title, :model => "correction #{params[:id]}")
     @correction = Correction.get(params[:id].to_i)
     if @correction

@@ -9,27 +9,24 @@ class Correction
   # Teacher who ranks
   belongs_to :teacher, :model => Account
 
-  property :teacher_id, Integer, :unique_index => :solution_teacher
-  property :solution_id, Integer, :unique_index => :solution_teacher
-
   # property <name>, <type>
   property :id, Serial
   property :public_comments, String
   property :private_comments, String
   property :grade, Float
+  property :teacher_id, Integer, :unique_index => :solution_teacher
+  property :solution_id, Integer, :required => true, :unique => :solution
 	property :created_at, DateTime  
   property :updated_at, DateTime
+	property :solution_id, 	Integer, 
+		:required => true, :unique => :solution
 
-  validates_presence_of      :public_comments
-  validates_presence_of      :private_comments
   validates_presence_of      :solution
-
-  validates_presence_of      :grade
-  validates_numericality_of  :grade
-  validates_within           :grade, :set => 0..10
-  validates_with_method      :teacher, :is_a_teacher?
-
-  validates_uniqueness_of    :solution, :scope => :teacher
+  validates_presence_of      :teacher
+  validates_within        :grade, :set => (0..10).to_a << nil
+  validates_with_method   :teacher, :is_a_teacher?
+  validates_present       :teacher
+  validates_present       :solution
 
   def approved?
     self.grade && self.grade >= 4
@@ -45,6 +42,10 @@ class Correction
     raise I18n.t('corrections.solution_already_assigned') if !latest_solution.correction.nil?
 
     Correction.create!(:solution => latest_solution, :teacher => teacher)
+  end
+
+  def status
+    grade.nil? ? :in_progress : :completed
   end
 
   private

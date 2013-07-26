@@ -1,6 +1,7 @@
 *.my
 .idea
 .DS_Store
+locals/*
 log/*
 tmp/**/*
 bin/*

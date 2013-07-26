@@ -2,13 +2,15 @@ require 'spec_helper'
 
 describe Correction do
 
+  let(:assignment) { Factories::Assignment.vending_machine }
+	let(:teacher) { Factories::Account.teacher }
+	let(:solution) { Factories::Solution.for(assignment) }
+
 	before (:each) do
 		DataMapper.auto_migrate!
-    assignment = Factories::Assignment.vending_machine
-    @solution = Factories::Solution.for( assignment )
     @correction = Correction.new(
-      :teacher => Factories::Account.teacher,
-      :solution => @solution,
+      :teacher => teacher,
+      :solution => solution,
       :public_comments => "public comment",
       :private_comments => "private comment",
       :grade => 10 
@@ -30,8 +32,8 @@ describe Correction do
       before do
         @correction.save
         @duplicated_correction = Correction.new(
-          :teacher => Factories::Account.teacher,
-          :solution => @solution,
+          :teacher => Factories::Account.teacher( "Yoda", "yoda@d.com"),
+          :solution => solution,
           :public_comments => "public comment",
           :private_comments => "private comment",
           :grade => 9
@@ -42,12 +44,12 @@ describe Correction do
       end
     end
 
-    describe "should not be valid if not a teacher ranks" do
+    describe "not valid without teacher" do
       before  { @correction.teacher = Factories::Account.student }
       it      { should_not be_valid }
     end
 
-    describe "should not be valid with a grade out of range" do
+    describe "not valid with a grade out of range" do
       it "should not be valid with a grade of 11" do
         @correction.grade = 11
         @correction.should_not be_valid
@@ -59,27 +61,12 @@ describe Correction do
       end
     end
 
-    describe "should not be valid without grade" do
-      before  { @correction.grade = nil }
-      it      { should_not be_valid }
-    end
-
-    describe "should not be valid without private comment" do
-      before  { @correction.public_comments = nil }
-      it      { should_not be_valid }
-    end
-
-    describe "should not be valid without public comment" do
-      before  { @correction.public_comments = nil }
-      it      { should_not be_valid }
-    end
-
-    describe "should not be valid without solution" do
+    describe "not valid without solution" do
       before  { @correction.solution = nil }
       it      { should_not be_valid }
     end
 
-    describe "should not be valid without solution" do
+    describe "not valid without teacher" do
       before  { @correction.teacher = nil }
       it      { @correction.should_not be_valid }
     end
@@ -88,17 +75,32 @@ describe Correction do
   describe "valid" do 
     it { should be_valid }
 
+		it "should have the right teacher and solution" do
+			@correction.teacher.should == teacher
+			@correction.solution.should == solution
+		end
+
+    describe "without grade" do 
+      it "should save a correction with nil grade" do
+        @correction.grade = nil
+        @correction.should be_valid 
+      end
+    end
+
     describe "not duplicated correction" do
       before do
         @correction.save
+        other_solution = Factories::Solution.forBy( assignment, 
+          Factories::Account.student("Luck", "luck@d.com") )
         @another_correction = Correction.new(
-          :teacher => Factories::Account.teacher( "Yoda", "yoda@d.com"),
-          :solution => @solution,
+          :teacher => teacher,
+          :solution => other_solution,
           :public_comments => "public comment",
           :private_comments => "private comment",
           :grade => 9
         )
       end 
+
       it "should be allowed corrections with different teacher and solution" do
         @another_correction.should be_valid 
       end
@@ -132,4 +134,17 @@ describe Correction do
     end
   end
 
+  describe 'status' do
+
+    it 'should return :in_progress when grade is not set' do
+      @correction.grade = nil
+      @correction.status.should eq :in_progress
+    end  
+
+
+    it 'should return  :completed when grade is not set' do
+      @correction.grade = 7
+      @correction.status.should eq :completed
+    end  
+  end
 end

@@ -3,8 +3,7 @@ Alfred::App.controllers :solutions, :parent => :assignment do
     @assignment = Assignment.find_by_id( params[:assignment_id] )
 	end	
 
-  get :index do
-    @title = t("solutions")
+  get :index do  	
 		@solutions = Solution.all( :account => current_account,
      :assignment => @assignment )
     render 'solutions/index'

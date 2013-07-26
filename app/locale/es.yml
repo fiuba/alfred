@@ -12,11 +12,20 @@ es:
   sign_in: 'iniciar sesión'
   create_account: 'crear cuenta'
   back: 'atrás'
+  student: 'Alumno'
+  test_result: 'Prueba automática'
+  grade: 'nota'
+  my_corrections: 'Mis correcciones'
+  solution:
+    new: 'entregar solución'
+    upload_help: ''
   menu:
     assigments: 'Trabajos prácticos'
     students: 'Alumnos'
+    submissions: 'Mis entregas'
     corrections: 'Mis correcciones'
   solutions:
+    delivered_for: 'soluciones entregadas para'
     errors:
       upload_failed: 'Error al intentar subir el archivo'
       delete_failed: 'Error al intentar borrar el archivo'
@@ -29,11 +38,21 @@ es:
       submission_date: 'Fecha de la entrega'
   corrections:
     title_all: 'Entregas para'
+    edit: 'Corregir'
+    download_solution_link: 'Descargar solución'
+    download_assignment_link: 'Descargar TP'
+    submission_date: 'Fecha de entrega'
+    form:
+      public_comments: 'Comentarios públicos'
+      private_comments: 'Comentarios privados'
+      grade: 'Calificación'
     grid:
       last_update: 'Última actualización'
       public_comment: 'Comentario público'
       private_comment: 'Comentario privado'
       grade: 'Calificación'
+      solution: 'Trabajo práctico'
+      actions: 'Acciones'
     grid_all:
       class: 'Turno'
       student_name: 'Nombre'
@@ -60,6 +79,7 @@ es:
   correction_pending: 'Corrección pendiente'
   correction_passed: 'Aprobado'
   correction_failed: 'Desaprobado'
+  correction_in_progress: 'En progreso'
   date:
     abbr_day_names:
     - dom

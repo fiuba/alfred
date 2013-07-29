@@ -1,6 +1,6 @@
-Alfred::App.controllers :assignments, :parent => :courses do
-  get :index do
-    @title = "Assignments"
+Alfred::App.controllers :assignments do
+
+  get :index, :parent => :courses do
     @assignments = Assignment.all(:course => current_course)
     render 'assignments/index'
   end

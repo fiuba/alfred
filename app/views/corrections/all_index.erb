@@ -33,7 +33,7 @@
 	    			<i class='icon-user'></i>
 	    		</span>
 	    	<% end %>
-	    	<a href='#' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.view_solutions') %>" title="" rel="tooltip">
+	    	<a href='/assignment/<%= sas[:assignment_status].assignment_id %>/students/<%=sas[:student].id %>/solutions ' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.view_solutions') %>" title="" rel="tooltip">
 	    		<i class='icon-eye-open'></i>
 	    	</a>
 	    </td>

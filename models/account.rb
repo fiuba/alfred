@@ -18,6 +18,7 @@ class Account
   property :role,             String
   property :tag,             String
   has n, :courses, :through => Resource
+  has n, :solutions
 
   # Validations
   validates_presence_of      :email, :role, :buid
@@ -78,11 +79,7 @@ class Account
   end
 
   def status_for_assignment(assignment)
-    solutions = Solution.find_by_account_and_assignment(self, assignment) || []
-    if !solutions.respond_to?(:count)
-      solutions = [ solutions ]
-    end
-
+    solutions = Solution.all(:account => self, :assignment => assignment)
     assignment_status = AssignmentStatus.new 
     assignment_status.assignment_id = assignment.id
     assignment_status.name = assignment.name

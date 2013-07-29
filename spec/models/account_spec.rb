@@ -48,7 +48,7 @@ describe Account do
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
 				solution = Solution.new( :assignment => assignment )
-				Solution.should_receive(:find_by_account_and_assignment).and_return(solution)
+				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).solution_count.should eq 1
 			end
 
@@ -58,7 +58,7 @@ describe Account do
 				assignment = Assignment.new( :course => course )
 				solution1 = Solution.new( :assignment => assignment, :account => student )
 				solution2 = Solution.new( :assignment => assignment, :account => student )
-				Solution.should_receive(:find_by_account_and_assignment).and_return([ solution1, solution2 ])
+				Solution.should_receive(:all).and_return([ solution1, solution2 ])
 				student.status_for_assignment(assignment).solution_count.should eq 2
 			end
 
@@ -87,7 +87,7 @@ describe Account do
 				solution3 = Solution.new( :assignment => assignment )
 				solution3.created_at = DateTime.now
 
-				Solution.should_receive(:find_by_account_and_assignment).and_return([solution1, solution1, solution2, solution3])
+				Solution.should_receive(:all).and_return([solution1, solution1, solution2, solution3])
 
 				student.status_for_assignment(assignment).latest_solution_date.should eq solution3.created_at
 			end
@@ -108,7 +108,7 @@ describe Account do
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
 				solution = Solution.new( :assignment => assignment )
-				Solution.should_receive(:find_by_account_and_assignment).and_return([solution])
+				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).status.should eq :correction_pending
 			end
 
@@ -122,7 +122,7 @@ describe Account do
 				correction.should_receive(:approved?).and_return(false)
 				correction.should_receive(:grade).and_return(nil)
 				solution.correction = correction
-				Solution.should_receive(:find_by_account_and_assignment).and_return([solution])
+				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).status.should eq :correction_in_progress
 			end
 
@@ -135,7 +135,7 @@ describe Account do
 				correction = Correction.new(:solution => solution, :teacher => teacher)
 				correction.should_receive(:approved?).and_return(true)
 				solution.correction = correction
-				Solution.should_receive(:find_by_account_and_assignment).and_return([solution])
+				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).status.should eq :correction_passed
 			end
 
@@ -156,7 +156,7 @@ describe Account do
 				correction2.should_receive(:approved?).and_return(true)
 				solution2.correction = correction2
 
-				Solution.should_receive(:find_by_account_and_assignment).and_return([solution0, solution1, solution2])
+				Solution.should_receive(:all).and_return([solution0, solution1, solution2])
 				student.status_for_assignment(assignment).status.should eq :correction_passed
 			end
 
@@ -170,7 +170,7 @@ describe Account do
 				correction.should_receive(:approved?).and_return(false)
 				correction.should_receive(:grade).and_return(2)
 				solution.correction = correction
-				Solution.should_receive(:find_by_account_and_assignment).and_return([solution])
+				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).status.should eq :correction_failed
 			end
 
@@ -191,7 +191,7 @@ describe Account do
 				correction1.should_receive(:grade).and_return(2)
 				solution1.correction = correction1
 
-				Solution.should_receive(:find_by_account_and_assignment).and_return([solution, solution1])
+				Solution.should_receive(:all).and_return([solution, solution1])
 				student.status_for_assignment(assignment).status.should eq :correction_failed
 			end
 		end

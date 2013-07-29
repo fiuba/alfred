@@ -11,6 +11,13 @@ Alfred::App.controllers :assignments, :parent => :courses do
     render 'assignments/new'
   end
 
+  get 'assignment_id/students/:student_id/solutions' do   
+    student = Account.get(params[:student_id])
+    @solutions = Solution.all( :account => student,
+     :assignment => @assignment )
+    render 'solutions/index'
+  end
+
   post :create do
     @assignment = Assignment.new(params[:assignment].merge({ :course_id => current_course.id }))
     if @assignment.save

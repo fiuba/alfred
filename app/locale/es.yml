@@ -18,6 +18,7 @@ es:
   my_corrections: 'Mis correcciones'
   solution:
     new: 'entregar solución'
+    all: 'ver todas las soluciones'
     upload_help: ''
   menu:
     assigments: 'Trabajos prácticos'
@@ -36,6 +37,7 @@ es:
       file: 'Archivo entregado'
       assignment: 'Trabajo práctico'
       submission_date: 'Fecha de la entrega'
+    test_result: 'Resultado pruebas'
   corrections:
     title_all: 'Entregas para'
     edit: 'Corregir'

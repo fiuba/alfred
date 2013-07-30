@@ -1,14 +1,4 @@
 Alfred::App.controllers :my do
-  before do
-    @course = Course.find_by_name(params[:course_id])
-  end
-
-  get :index do
-    @title = "Students"    
-    
-    @students = @course.students
-    render 'my/index'
-  end
 
   get :assigments, :parent => :courses do
     assignments = Assignment.find_by_course(current_course)
@@ -19,13 +9,59 @@ Alfred::App.controllers :my do
     render 'my/assignments'
   end
 
-  get :solutions, :parent => :assignments do
+  get :solutions, :map => '/my/assignments/:assignment_id/solutions' do
+    @assignment = Assignment.get(params[:assignment_id])
     @solutions = Solution.all(:account => current_account, :assignment_id => params[:assignment_id])
     render 'my/solutions'
   end
 
+  get :new_solution, :map => '/my/assignments/:assignment_id/solutions/new' do
+    @assignment = Assignment.get(params[:assignment_id])
+    @solution = Solution.new( :account => current_account,:assignment => @assignment )
+    render 'my/new_solution'
+  end
+
+  post :create_solution, :map => '/my/assignments/:assignment_id/solutions/create' do
+    errors = []
+    @assignment = Assignment.get(params[:assignment_id])
+    input_file = params[:solution][:file]
+    @solution= Solution.new( :account_id => current_account.id,
+            :assignment => @assignment, :file => input_file[:filename] )
+
+    DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
+      if @solution.save
+        @solution_generic_file = SolutionGenericFile.new( :solution => @solution, 
+              :name => input_file[:filename] )
+        errors << @solution_generic_file.errors if not @solution_generic_file.save
+        begin
+          storage_gateway = Storage::StorageGateways.get_gateway
+          storage_gateway.upload(@solution_generic_file.path, input_file[:tempfile])
+        rescue Storage::FileUploadFailedError => e
+          errors << t('solutions.errors.upload_failed')
+        end
+      else
+        errors << @solution.errors
+      end
+
+      trx.rollback() if not errors.empty?
+    end # End of transaction
+
+    if errors.empty?
+      @title = pat(:create_title, :model => "solution #{@solution.id}")
+      flash[:success] = pat(:create_success, :model => 'Solution')
+      redirect(url(:my, :solutions, :assignment_id => @assignment.id )) 
+    else
+      @title = pat(:create_title, :model => 'solution')
+      flash.now[:error] = errors
+      render 'my/new_solution'
+    end
+  end
+
+=begin
+  TODO: eso deberia ser para ver los detalles de una solución
   get '/assigments/:assignment_id/solutions/:solution_id' do
     render 'students/solution_detail'
   end
+=end
 
 end

@@ -1,0 +1,23 @@
+<h2><%= t('solutions.delivered_for').capitalize %> <%= @assignment.name %></h2>
+
+<%- link_to :href => url(:my, :new_solution, :assignment_id => @assignment.id), :rel => :tooltip, :title => t('solution.new'), :class => 'list-row-action-wrapper-link' do %>  New Solution
+      <% end %>
+
+<table id="solutionsGrid" class="table table-bordered table-striped table-hover">
+	<tr>
+		<th><%= t('solutions.grid.submission_date') %></th>
+		<th><%= t('solutions.grid.file') %></th>
+		<th><%= t('solutions.test_result') %></th>
+	</tr>
+	<% @solutions.each do |s| %>
+		<tr> 
+      <td><%= formats_date( s.created_at ) %></td>
+      <td><a href="<%= url_for(:solutions, :file, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
+      <td><%= s.test_result %></a></td>
+		</tr>
+	<% end %>
+</table>
+<% content_for :additional_js do %>
+	<%= javascript_include_tag 'editablegrid-2.0.1.js' %>
+  <%= javascript_include_tag 'solutions_index.js' %>
+<% end %>

@@ -20,12 +20,11 @@
         <i class='icon-file'></i>
       <% end %>
 
-			<%- link_to :href => "/assignments/#{as.assignment_id}/solutions/new", :rel => :tooltip, :title => t('solution.new'), :class => 'list-row-action-wrapper-link' do %>
+			<%- link_to :href => url(:my, :new_solution, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('solution.new'), :class => 'list-row-action-wrapper-link' do %>
         <i class='icon-cloud-upload'></i>
       <% end %>
 
-
-			<%- link_to :href => "/assignment/#{as.assignment_id}/solutions", :rel => :tooltip, :title => t('solution.all'), :class => 'list-row-action-wrapper-link' do %>
+			<%- link_to :href => url(:my, :solutions, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('solution.all'), :class => 'list-row-action-wrapper-link' do %>
         <i class='icon-list'></i>
       <% end %>
 

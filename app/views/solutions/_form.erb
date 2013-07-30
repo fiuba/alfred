@@ -12,5 +12,5 @@
 <div class="form-actions">
   <%= f.submit pat(:save), :class => 'btn btn-info', :name => 'save_and_continue' %>
   &nbsp;
-  <%= link_to pat(:cancel), url(:solutions, :index, @assignment.id), :class => 'btn' %>
+  <%= link_to pat(:cancel), url(:solutions, :index, @assignment.id, current_account.id), :class => 'btn' %>
 </div>

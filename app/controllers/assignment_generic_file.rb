@@ -1,4 +1,4 @@
-Alfred::App.controllers :assignment_generic_file, :parent => :assignment do
+Alfred::App.controllers :assignment_generic_file, :parent => :assignments do
   
   get :index do
     @assignment = Assignment.find(params[:assignment_id])

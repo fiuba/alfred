@@ -5,6 +5,19 @@ Alfred::App.controllers :assignments do
     render 'assignments/index'
   end
 
+  get :students, :map => '/assignments/:assignment_id/students'  do
+    @assignment = Assignment.get(params[:assignment_id])
+
+    @students_with_assignment_status = []
+    @assignment.course.students.each do | student |
+      @students_with_assignment_status << { :student => student, :assignment_status => student.status_for_assignment(@assignment) }
+    end
+
+    # TODO: Temporary view, need to move the other index action out of this controller
+    #render 'corrections/all_index'
+    render 'assignments/students'
+  end
+
   get :new do
     @title = pat(:new_title, :model => 'assignment')
     @assignment = Assignment.new

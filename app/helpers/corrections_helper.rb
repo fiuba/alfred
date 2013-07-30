@@ -3,10 +3,18 @@ Alfred::App.helpers do
   	I18n.translate("assignments.status.#{status.to_sym}")
   end
 
+=begin
   def solution_file_url( correction ) 
     solution = correction.solution
     assignment = solution.assignment
     url(:solutions, assignment.id, :file, solution.id)
+  end
+=end
+
+  def solution_file_url( correction ) 
+    solution = correction.solution
+    assignment = solution.assignment
+    url(:solutions, :file, :solution_id => solution.id)
   end
 
   def assignment_and_author_information( c )

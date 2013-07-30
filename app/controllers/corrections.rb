@@ -21,18 +21,6 @@ Alfred::App.controllers :corrections do
 		Oj.dump({ 'message' => t('corrections.creation_succeeded'), 'assigned_teacher' => current_account.full_name, 'new_status' => new_status })
 	end
 
-	get :all_index, :parent => :assignment do
-		@assignment = Assignment.get(params[:assignment_id])
-
-		@students_with_assignment_status = []
-    @assignment.course.students.each do | student |
-      @students_with_assignment_status << { :student => student, :assignment_status => student.status_for_assignment(@assignment) }
-    end
-
-		# TODO: Temporary view, need to move the other index action out of this controller
-		render 'corrections/all_index'
-	end
-
   get :edit, :parent => :courses, :with => :id do
     @title = pat(:edit_title, :model => "corrections #{params[:id]}")
     @correction = Correction.get(params[:id].to_i)

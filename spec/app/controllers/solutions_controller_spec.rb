@@ -92,7 +92,6 @@ describe "SolutionsController" do
 			end
 
 			it "should respond solution's file" do
-        pending
         Solution.should_receive(:find)
           .with(@new_solution.id.to_s)
           .and_return(@new_solution)
@@ -100,7 +99,7 @@ describe "SolutionsController" do
       	gateway.should_receive(:download)
           .with("/solutions/#{@new_solution.id}/#{@file_name}")
 
-				get "/assignments/#{@new_solution.assignment.id}/solutions/file/#{@new_solution.id}"
+				get "/solutions/#{@new_solution.id}/file"
         last_response.status.should == 200
 			end
 
@@ -111,8 +110,26 @@ describe "SolutionsController" do
         end
 
         it "should not respond solution belonging to other student" do
-				  get "/assignment/#{@new_solution.assignment.id}/solutions/file/#{@new_solution.id}"
-          last_response.status.should == 404
+				  get "/solutions/#{@new_solution.id}/file"
+          last_response.status.should == 403
+        end
+      end
+
+      describe "any teacher tries to download solution's file" do
+        before do
+				  @new_solution = Factories::Solution.for( assignment )
+				  @file_name = @new_solution.file
+
+      	  gateway.should_receive(:download)
+            .with("/solutions/#{@new_solution.id}/#{@file_name}")
+        end
+
+        it "should response solution's file" do
+          teacher = Factories::Account.teacher 
+		      Alfred::App.any_instance.stub(:current_account).and_return(teacher)
+          @new_solution.account.should_not == teacher
+				  get "solutions/#{@new_solution.id}/file"
+          last_response.status.should == 200
         end
       end
     end

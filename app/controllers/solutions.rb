@@ -59,14 +59,14 @@ Alfred::App.controllers :solutions do
 
 	get :file, :map => '/solutions/:solution_id/file' do
 		solution = Solution.find( params[:solution_id] )
-		#debugger
+
 		if solution.nil?	
 			conveys_warning( params[:id], 404 )
 		end
 
-		#if solution.account != current_account
-		#	conveys_warning( params[:id], 404 )
-		#end
+		if not solution.is_author?( current_account ) and current_account.is_student?
+		  conveys_warning( params[:id], 403 )
+		end
 
 		files = solution.solution_generic_files
 		if files.nil? or files.empty?

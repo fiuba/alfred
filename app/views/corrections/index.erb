@@ -10,7 +10,6 @@
     <th><%= t('assignment').capitalize %></th>
     <th><%= t('buid').capitalize %></th>
     <th><%= t('name').capitalize %></th>
-    <th><%= t('surname').capitalize %></th>
     <th><%= t('test_result').capitalize %></th>
     <th><%= t('status').capitalize %></th>
     <th><%= t('grade').capitalize %></th>
@@ -20,8 +19,7 @@
 		<tr> 
       <td><%= c.solution.assignment.name %></td>
       <td><%= c.solution.account.buid %></td>
-      <td><%= c.solution.account.name %></td>
-      <td><%= c.solution.account.surname %></td>
+      <td><%= c.solution.account.full_name %></td>
       <td><%= c.solution.test_result %></td>
       <td><%= t c.status %></td>
       <td><%= c.grade %></td>

@@ -5,7 +5,6 @@ window.onload = function() {
 				editableGrid.load({ metadata: [
 					{ name: "Padron", datatype: "string" },
 					{ name: "Nombre", datatype: "string" },
-					{ name: "Apellido", datatype: "string" },
 					{ name: "Email", datatype: "string" },
 					{ name: "Turno", datatype: "string" }
 				]});

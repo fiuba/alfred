@@ -16,7 +16,7 @@
 	<% @students_with_assignment_status.each do |sas| %>
 		<tr> 
       <td><%= sas[:student].tag %></td>
-      <td><%= sas[:student].name %></td>
+      <td><%= sas[:student].full_name %></td>
       <td><%= l sas[:assignment_status].latest_solution_date %></td>
       <td class='status'><%= t sas[:assignment_status].status %></td>
       <td class='teacher_assigned'><%= sas[:assignment_status].corrector_name %></td>

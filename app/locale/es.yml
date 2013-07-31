@@ -82,6 +82,7 @@ es:
   status: 'Estado'
   students:
     solutions: 'soluciones'
+    view_assignments_status: 'Ver estado de los TP'
   lastest_solution_date: 'Ultima entrega'
   deadline_date: 'Fecha de vencimiento'
   corrector: 'Corrector'

@@ -17,7 +17,7 @@
 		<tr> 
       <td><%= sas[:student].tag %></td>
       <td><%= sas[:student].name %></td>
-      <td><%= formats_date( sas[:assignment_status].latest_solution_date ) %></td>
+      <td><%= l sas[:assignment_status].latest_solution_date if !sas[:assignment_status].latest_solution_date.nil? %></td>
       <td class='status'><%= correction_status_label sas[:assignment_status].status %></td>
       <td class='teacher_assigned'><%= sas[:assignment_status].corrector_name %></td>
       <td>
@@ -36,13 +36,6 @@
 	      <%- link_to :href => url(:solutions, :index, :assignment_id => sas[:assignment_status].assignment_id, :student_id =>sas[:student].id ), :rel => :tooltip, :title => t('corrections.grid_all.actions.view_solutions'), :class => 'list-row-action-wrapper-link' do %>
             <i class='icon-eye-open'></i>
          <% end %>
-<!--
-	    	<a href='/assignment/<%= sas[:assignment_status].assignment_id %>/students/<%=sas[:student].id %>/solutions ' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.view_solutions') %>" title="" rel="tooltip">
-	    		<i class='icon-eye-open'></i>
-
-	    	<a href='/assignment/<%= sas[:assignment_status].assignment_id %>/students/<%=sas[:student].id %>/solutions ' class="list-row-action-wrapper-link" data-original-title="<%= t('corrections.grid_all.actions.view_solutions') %>" title="" rel="tooltip">
-	    		<i class='icon-eye-open'></i>
--->	    		
 	    	</a>
 	    </td>
 		</tr>

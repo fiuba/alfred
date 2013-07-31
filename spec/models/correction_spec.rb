@@ -136,15 +136,19 @@ describe Correction do
 
   describe 'status' do
 
-    it 'should return :in_progress when grade is not set' do
+    it 'should return :correction_in_progress when grade is not set' do
       @correction.grade = nil
-      @correction.status.should eq :in_progress
+      @correction.status.should eq :correction_in_progress
     end  
 
+    it 'should return  :correction_failed when grade is set and less than 4' do
+      @correction.grade = 1
+      @correction.status.should eq :correction_failed
+    end
 
-    it 'should return  :completed when grade is not set' do
+    it 'should return  :correction_passed when grade is set and greated than 4' do
       @correction.grade = 7
-      @correction.status.should eq :completed
-    end  
+      @correction.status.should eq :correction_passed
+    end
   end
 end

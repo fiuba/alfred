@@ -45,7 +45,13 @@ class Correction
   end
 
   def status
-    grade.nil? ? :in_progress : :completed
+    if grade.nil? 
+      :correction_in_progress
+    elsif approved?
+      :correction_passed
+    else
+      :correction_failed
+    end
   end
 
   private

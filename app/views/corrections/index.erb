@@ -23,7 +23,7 @@
       <td><%= c.solution.account.name %></td>
       <td><%= c.solution.account.surname %></td>
       <td><%= c.solution.test_result %></td>
-      <td><%= c.status %></td>
+      <td><%= t c.status %></td>
       <td><%= c.grade %></td>
       <td>
         <a title="<%= t('corrections.download_solution_link') %>" href="<%= solution_file_url(c) %>"><i class='icon-download icon-white'></i></a>

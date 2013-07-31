@@ -37,6 +37,7 @@ es:
       file: 'Archivo entregado'
       assignment: 'Trabajo práctico'
       submission_date: 'Fecha de la entrega'
+      view_correction: 'Ver corrección'
     test_result: 'Resultado pruebas'
   corrections:
     title_all: 'Entregas para'
@@ -64,6 +65,12 @@ es:
       actions:
         assign_to_me: 'Asignarmelo a mi'
         view_solutions: 'Ver soluciones'
+    show:
+      title: 'Corrección para'
+      submission_date: 'Fecha de entrega:'
+      teacher: 'Corrector:'
+      grade: 'Calificación:'
+      comments: 'Comentarios:'
     creation_succeeded: 'El TP fue asignado correctamente'
     no_solutions_found: 'El alumno no presentó ninguna solución para el TP'
     solution_already_assigned: 'La solución ya fue asignada a otro docente'
@@ -135,6 +142,9 @@ es:
     - :day
     - :month
     - :year
+  time:
+    formats:
+      default: ! '%d/%m/%Y %H:%M'
   datetime:
     distance_in_words:
       about_x_hours:

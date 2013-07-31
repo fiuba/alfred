@@ -50,3 +50,13 @@ button.assign-to-me {
 button.assign-to-me:hover {
     color: #157AB5;
 }
+
+.correction-details dt {
+    margin-top: 10px;
+}
+.correction-comments {
+    margin-top: 10px;
+    padding: 14px 19px 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

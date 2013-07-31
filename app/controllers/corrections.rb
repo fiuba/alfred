@@ -5,6 +5,10 @@ Alfred::App.controllers :corrections do
 
     halt 403 if @teacher.is_student?
 	end
+
+  before :edit, :update do
+    @correction = Correction.get(params[:id])
+  end
   
   get :index, :parent => :courses do
 		@corrections = Correction.all(:teacher => @teacher)
@@ -23,7 +27,6 @@ Alfred::App.controllers :corrections do
 
   get :edit, :parent => :courses, :with => :id do
     @title = pat(:edit_title, :model => "corrections #{params[:id]}")
-    @correction = Correction.get(params[:id].to_i)
     if @correction
       render 'corrections/edit'
     else
@@ -34,7 +37,6 @@ Alfred::App.controllers :corrections do
 
   put :update, :parent => :courses, :with => :id do
     @title = pat(:update_title, :model => "correction #{params[:id]}")
-    @correction = Correction.get(params[:id].to_i)
     if @correction
       # Nullifies to let validation pass
       grade = params[:correction][:grade]
@@ -53,5 +55,4 @@ Alfred::App.controllers :corrections do
       halt 404
     end
   end
-
 end

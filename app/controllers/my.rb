@@ -57,6 +57,12 @@ Alfred::App.controllers :my do
     end
   end
 
+  get :show_correction, :map => '/my/assignments/:assignment_id/corrections/:correction_id' do
+    @correction = Correction.get(params[:correction_id])
+    
+    render 'my/correction'
+  end
+
 =begin
   TODO: eso deberia ser para ver los detalles de una solución
   get '/assigments/:assignment_id/solutions/:solution_id' do

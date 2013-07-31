@@ -39,6 +39,7 @@ es:
       assignment: 'Trabajo práctico'
       submission_date: 'Fecha de la entrega'
       view_correction: 'Ver corrección'
+      correction_unavailable: 'Corrección no disponible'
     test_result: 'Resultado pruebas'
   corrections:
     title_all: 'Entregas para'

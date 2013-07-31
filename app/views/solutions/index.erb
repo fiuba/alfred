@@ -18,6 +18,10 @@
 					<%- link_to :href => url(:my, :show_correction, :assignment_id => @assignment.id, :correction_id => s.correction.id), :rel => :tooltip, :title => t('solutions.grid.view_correction'), :class => 'list-row-action-wrapper-link' do %>
 						<i class='icon-ok-sign'></i>
 					<% end %>
+				<% else %>
+					<span class="list-row-action-wrapper-link" data-original-title="<%= t('solutions.grid.correction_unavailable') %>" title="" rel="tooltip">
+	    			<i class='icon-ok-sign'></i>
+	    		</span>
 				<% end %>
 			</td>
 		</tr>

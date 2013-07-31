@@ -90,6 +90,9 @@ es:
   correction_passed: 'Aprobado'
   correction_failed: 'Desaprobado'
   correction_in_progress: 'En progreso'
+  not_available: 'No disponible'
+  passed: 'Pruebas exitosas'
+  failed: 'Pruebas fallaron'
   date:
     abbr_day_names:
     - dom

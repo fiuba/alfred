@@ -13,7 +13,7 @@ class Solution
   property :id, Serial
   property :file, String
   property :created_at, DateTime 
-  property :test_result, String, :default => 'not_available'
+  property :test_result, String, :default => 'not_available' # other possible results are 'passed' and 'failed'
   property :test_output, String 
 
   validates_presence_of      :file

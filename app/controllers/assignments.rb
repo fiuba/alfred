@@ -13,8 +13,6 @@ Alfred::App.controllers :assignments do
       @students_with_assignment_status << { :student => student, :assignment_status => student.status_for_assignment(@assignment) }
     end
 
-    # TODO: Temporary view, need to move the other index action out of this controller
-    #render 'corrections/all_index'
     render 'assignments/students'
   end
 

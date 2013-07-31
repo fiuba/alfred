@@ -6,7 +6,6 @@ window.onload = function() {
 					{ name: "tp", datatype: "string" },
 					{ name: "padron", datatype: "string" },
 					{ name: "nombre", datatype: "string" },
-					{ name: "apellido", datatype: "string" },
 					{ name: "prueba", datatype: "string" },
 					{ name: "estado", datatype: "string" },
 					{ name: "nota", datatype: "string" },

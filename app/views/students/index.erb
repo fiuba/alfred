@@ -6,7 +6,6 @@
 	<tr>
 		<th><%= t('buid').capitalize %></th>
 		<th><%= t('name').capitalize %></th>
-		<th><%= t('surname').capitalize %></th>
 		<th><%= t('email').capitalize %></th>
 		<th><%= t('tag').capitalize %></th>
 		<th><%= t('actions').capitalize %></th>
@@ -14,13 +13,13 @@
 	<% @students.each do |s|%>
 	<tr id="<%= s.id %>">
 		<td><%= s.buid %></td>
-		<td><%= s.name %></td>
-		<td><%= s.surname %></td>
+		<td><%= s.full_name %></td>
 		<td><%= s.email %></td>
 		<td><%= s.tag %></td>
 		<td>
-			<a href="/courses/<%= current_course.name %>/students/<%= s.id %>/assignments">
+			<%- link_to :href => "/courses/#{current_course.name}/students/#{s.id}/assignments", :rel => :tooltip, :title => t('students.view_assignments_status'), :class => 'list-row-action-wrapper-link' do %>
 				<i class="icon-zoom-in"></i>
+			<% end %>
 		</td>
 	</tr>
 	<% end %>

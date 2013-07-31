@@ -18,7 +18,7 @@
       <td><%= sas[:student].tag %></td>
       <td><%= sas[:student].name %></td>
       <td><%= l sas[:assignment_status].latest_solution_date if !sas[:assignment_status].latest_solution_date.nil? %></td>
-      <td class='status'><%= correction_status_label sas[:assignment_status].status %></td>
+      <td class='status'><%= t sas[:assignment_status].status %></td>
       <td class='teacher_assigned'><%= sas[:assignment_status].corrector_name %></td>
       <td>
       	<% if sas[:assignment_status].can_be_assigned? %>

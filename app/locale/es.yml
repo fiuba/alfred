@@ -27,6 +27,7 @@ es:
     corrections: 'Mis correcciones'
   solutions:
     delivered_for: 'soluciones entregadas para'
+    student: 'Alumno:'
     errors:
       upload_failed: 'Error al intentar subir el archivo'
       delete_failed: 'Error al intentar borrar el archivo'
@@ -208,9 +209,3 @@ es:
         confirm: ¿Está seguro que desea eliminar el archivo?
       new:
         title: Nuevo Archivo
-    status:
-      solution_pending: 'Pendiente de entrega'
-      correction_pending: 'Corrección pendiente'
-      correction_in_progress: 'Corrección en progreso'
-      correction_passed: 'Aprobado'
-      correction_failed: 'Desaprobado'

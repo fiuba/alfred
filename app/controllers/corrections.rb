@@ -5,6 +5,10 @@ Alfred::App.controllers :corrections do
 
     halt 403 if @teacher.is_student?
 	end
+
+  before :edit, :update do
+    @correction = Correction.get(params[:id])
+  end
   
   get :index, :parent => :courses do
 		@corrections = Correction.all(:teacher => @teacher)
@@ -17,25 +21,12 @@ Alfred::App.controllers :corrections do
 
 		Correction.create_for_teacher(current_account, student, assignment)
 
-		new_status = correction_status_label(student.status_for_assignment(assignment.reload).status)
+		new_status = I18n.translate(student.status_for_assignment(assignment.reload).status)
 		Oj.dump({ 'message' => t('corrections.creation_succeeded'), 'assigned_teacher' => current_account.full_name, 'new_status' => new_status })
-	end
-
-	get :all_index, :parent => :assignment do
-		@assignment = Assignment.get(params[:assignment_id])
-
-		@students_with_assignment_status = []
-    @assignment.course.students.each do | student |
-      @students_with_assignment_status << { :student => student, :assignment_status => student.status_for_assignment(@assignment) }
-    end
-
-		# TODO: Temporary view, need to move the other index action out of this controller
-		render 'corrections/all_index'
 	end
 
   get :edit, :parent => :courses, :with => :id do
     @title = pat(:edit_title, :model => "corrections #{params[:id]}")
-    @correction = Correction.get(params[:id].to_i)
     if @correction
       render 'corrections/edit'
     else
@@ -46,7 +37,6 @@ Alfred::App.controllers :corrections do
 
   put :update, :parent => :courses, :with => :id do
     @title = pat(:update_title, :model => "correction #{params[:id]}")
-    @correction = Correction.get(params[:id].to_i)
     if @correction
       # Nullifies to let validation pass
       grade = params[:correction][:grade]
@@ -65,5 +55,4 @@ Alfred::App.controllers :corrections do
       halt 404
     end
   end
-
 end

@@ -1,8 +1,19 @@
-Alfred::App.controllers :assignments, :parent => :courses do
-  get :index do
-    @title = "Assignments"
+Alfred::App.controllers :assignments do
+
+  get :index, :parent => :courses do
     @assignments = Assignment.all(:course => current_course)
     render 'assignments/index'
+  end
+
+  get :students, :map => '/assignments/:assignment_id/students'  do
+    @assignment = Assignment.get(params[:assignment_id])
+
+    @students_with_assignment_status = []
+    @assignment.course.students.each do | student |
+      @students_with_assignment_status << { :student => student, :assignment_status => student.status_for_assignment(@assignment) }
+    end
+
+    render 'assignments/students'
   end
 
   get :new do

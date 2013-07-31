@@ -9,6 +9,6 @@ class AssignmentStatus
 	attr_accessor :deadline
 
 	def can_be_assigned?
-		![:solution_pending, :correction_passed, :correction_failed].include? self.status
+		:correction_pending == self.status
 	end
 end

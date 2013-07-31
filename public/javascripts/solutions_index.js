@@ -1,15 +1,19 @@
-window.onload = function() {
-				editableGrid = new EditableGrid("DemoGridAttach"); 
+$(document).ready(function() {
+	$("[rel='tooltip']").tooltip();
 
-				// we build and load the metadata in Javascript
-				editableGrid.load({ metadata: [
-					{ name: "File", datatype: "html" },
-					{ name: "Assingment", datatype: "string" },
-				]});
+	// TODO: Fix editable grid
 
-				// then we attach to the HTML table and render it
-				editableGrid.attachToHTMLTable('solutionsGrid');
+	// editableGrid = new EditableGrid("DemoGridAttach"); 
 
-				editableGrid.renderGrid();
+	// // we build and load the metadata in Javascript
+	// editableGrid.load({ metadata: [
+	// 	{ name: "File", datatype: "html" },
+	// 	{ name: "File", datatype: "html" },
+	// 	{ name: "Assingment", datatype: "string" },
+	// ]});
 
-			} 
+	// // then we attach to the HTML table and render it
+	// editableGrid.attachToHTMLTable('solutionsGrid');
+
+	// editableGrid.renderGrid();
+});

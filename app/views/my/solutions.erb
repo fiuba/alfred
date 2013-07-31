@@ -1,5 +1,7 @@
 <h2><%= t('solutions.delivered_for').capitalize %> <%= @assignment.name %></h2>
-<h3><%= t('solutions.student') %> <%= "(#{@student.buid}) #{@student.name}" %></h3>
+
+<%- link_to :href => url(:my, :new_solution, :assignment_id => @assignment.id), :rel => :tooltip, :title => t('solution.new'), :class => 'list-row-action-wrapper-link' do %>  New Solution
+      <% end %>
 
 <table id="solutionsGrid" class="table table-bordered table-striped table-hover">
 	<tr>
@@ -10,24 +12,20 @@
 	</tr>
 	<% @solutions.each do |s| %>
 		<tr> 
-			<td><%= l s.created_at %></td>
-			<td><a href="<%= url_for(:solutions, :file, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
-			<td><%= t s.test_result %></a></td>
-			<td>
-				<% if s.correction %>
+      <td><%= l s.created_at %></td>
+      <td><a href="<%= url_for(:solutions, :file, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
+      <td><%= t(s.test_result) %></a></td>
+      <td>
+      	<% if s.correction %>
 					<%- link_to :href => url(:my, :show_correction, :assignment_id => @assignment.id, :correction_id => s.correction.id), :rel => :tooltip, :title => t('solutions.grid.view_correction'), :class => 'list-row-action-wrapper-link' do %>
-						<i class='icon-ok-sign'></i>
-					<% end %>
-				<% else %>
-					<span class="list-row-action-wrapper-link" data-original-title="<%= t('solutions.grid.correction_unavailable') %>" title="" rel="tooltip">
-	    			<i class='icon-ok-sign'></i>
-	    		</span>
-				<% end %>
-			</td>
+	          <i class='icon-ok-sign'></i>
+	        <% end %>
+	      <% end %>
+      </td>
 		</tr>
 	<% end %>
 </table>
 <% content_for :additional_js do %>
 	<%= javascript_include_tag 'editablegrid-2.0.1.js' %>
-	<%= javascript_include_tag 'solutions_index.js' %>
+  <%= javascript_include_tag 'solutions_index.js' %>
 <% end %>

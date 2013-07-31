@@ -1,3 +1,10 @@
+<ul class="nav nav-tabs">
+  <li> <%= link_to tag_icon(:list, pat(:list)), url(:my, :solutions, :assignment_id => @assignment.id) %></li>
+  <li class="active"> <%= link_to tag_icon(:plus, pat(:new)), url(:solutions, :new, @assignment.id) %></li>
+</ul>
+<div class="tabs-content">
+	<% form_for :solution, url(:my, :create_solution, :assignment_id => @assignment.id), :multipart => true, :class => 'form-horizontal' do |f| %>
+
 <% error = @solution.errors.key?(:file) && @solution.errors[:file].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label I18n.translate('solutions.form.file'), :class => 'control-label' %>
@@ -12,5 +19,10 @@
 <div class="form-actions">
   <%= f.submit pat(:save), :class => 'btn btn-info', :name => 'save_and_continue' %>
   &nbsp;
-  <%= link_to pat(:cancel), url(:solutions, :index, @assignment.id, current_account.id), :class => 'btn' %>
+  <%= link_to pat(:cancel), url(:my, :solutions, :assignment_id => @assignment.id), :class => 'btn' %>
+</div>
+
+
+
+ <% end %>
 </div>

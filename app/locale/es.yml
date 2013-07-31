@@ -27,6 +27,7 @@ es:
     corrections: 'Mis correcciones'
   solutions:
     delivered_for: 'soluciones entregadas para'
+    student: 'Alumno:'
     errors:
       upload_failed: 'Error al intentar subir el archivo'
       delete_failed: 'Error al intentar borrar el archivo'
@@ -37,6 +38,8 @@ es:
       file: 'Archivo entregado'
       assignment: 'Trabajo práctico'
       submission_date: 'Fecha de la entrega'
+      view_correction: 'Ver corrección'
+      correction_unavailable: 'Corrección no disponible'
     test_result: 'Resultado pruebas'
   corrections:
     title_all: 'Entregas para'
@@ -64,6 +67,12 @@ es:
       actions:
         assign_to_me: 'Asignarmelo a mi'
         view_solutions: 'Ver soluciones'
+    show:
+      title: 'Corrección para'
+      submission_date: 'Fecha de entrega:'
+      teacher: 'Corrector:'
+      grade: 'Calificación:'
+      comments: 'Comentarios:'
     creation_succeeded: 'El TP fue asignado correctamente'
     no_solutions_found: 'El alumno no presentó ninguna solución para el TP'
     solution_already_assigned: 'La solución ya fue asignada a otro docente'
@@ -82,6 +91,9 @@ es:
   correction_passed: 'Aprobado'
   correction_failed: 'Desaprobado'
   correction_in_progress: 'En progreso'
+  not_available: 'No disponible'
+  passed: 'Pruebas exitosas'
+  failed: 'Pruebas fallaron'
   date:
     abbr_day_names:
     - dom
@@ -135,6 +147,9 @@ es:
     - :day
     - :month
     - :year
+  time:
+    formats:
+      default: ! '%d/%m/%Y %H:%M'
   datetime:
     distance_in_words:
       about_x_hours:
@@ -198,9 +213,3 @@ es:
         confirm: ¿Está seguro que desea eliminar el archivo?
       new:
         title: Nuevo Archivo
-    status:
-      solution_pending: 'Pendiente de entrega'
-      correction_pending: 'Corrección pendiente'
-      correction_in_progress: 'Corrección en progreso'
-      correction_passed: 'Aprobado'
-      correction_failed: 'Desaprobado'

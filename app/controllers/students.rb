@@ -7,7 +7,7 @@ Alfred::App.controllers :students, :parent => :courses do
     render 'students/index'
   end
 
-  get ':student_id/detail' do
+  get ':student_id/assignments' do
     @student = Account.get(params[:student_id])
     assignments = Assignment.find_by_course(current_course)
     @assignment_status = []

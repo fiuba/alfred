@@ -1,22 +1,28 @@
-Alfred::App.controllers :solutions, :parent => :assignment do
+Alfred::App.controllers :solutions do
 	before do
     @assignment = Assignment.find_by_id( params[:assignment_id] )
 	end	
 
-  get :index do  	
-		@solutions = Solution.all( :account => current_account,
-     :assignment => @assignment )
+	# for teacher only
+  get :index, :map => '/assignments/:assignment_id/students/:student_id/solutions'  do
+  	@student = Account.get(params[:student_id])
+    @solutions = Solution.all(:account_id => params[:student_id], :assignment_id => params[:assignment_id])
     render 'solutions/index'
   end
 
-  get :new do
+  # for THE student
+  get :index, :map => '/assignments/:assignment_id/my/solutions'  do
+    @solutions = Solution.all(:account => current_account, :assignment_id => params[:assignment_id])
+    render 'solutions/my_index'
+  end
+
+  get :new, :map => '/assignments/:assignment_id/solutions/new' do
     @title = pat(:new_title, :model => 'solution')
-		@solution = Solution.new( :account => current_account,
-     :assignment => @assignment )
+		@solution = Solution.new( :account => current_account,:assignment => @assignment )
     render 'solutions/new'
   end
 
-  post :create do
+  post :create, :map => '/assignments/:assignment_id/solutions/create' do
 		errors = []
 		input_file = params[:solution][:file]
     @solution= Solution.new( :account_id => current_account.id,
@@ -51,15 +57,15 @@ Alfred::App.controllers :solutions, :parent => :assignment do
     end
   end
 
-	get :file, :with => :solution_id do
+	get :file, :map => '/solutions/:solution_id/file' do
 		solution = Solution.find( params[:solution_id] )
 
 		if solution.nil?	
 			conveys_warning( params[:id], 404 )
 		end
 
-		if solution.account != current_account
-			conveys_warning( params[:id], 404 )
+		if not solution.is_author?( current_account ) and current_account.is_student?
+		  conveys_warning( params[:id], 403 )
 		end
 
 		files = solution.solution_generic_files

@@ -96,15 +96,7 @@ class Account
     solutions.each do | s |
       if s.correction
         assignment_status.corrector_name = s.correction.teacher.full_name
-        if s.correction.approved?
-          assignment_status.status = :correction_passed
-          return assignment_status
-        end
-        if s.correction.grade.nil? 
-          assignment_status.status = :correction_in_progress
-        else
-          assignment_status.status = :correction_failed
-        end
+        assignment_status.status = s.correction.status
       end
     end
     assignment_status

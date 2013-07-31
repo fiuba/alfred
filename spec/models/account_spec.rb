@@ -119,27 +119,26 @@ describe Account do
 				solution = Solution.new(:assignment => assignment)
 				teacher = Account.new
 				correction = Correction.new(:solution => solution, :teacher => teacher)
-				correction.should_receive(:approved?).and_return(false)
-				correction.should_receive(:grade).and_return(nil)
+				correction.should_receive(:status).and_return(:correction_in_progress)
 				solution.correction = correction
 				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).status.should eq :correction_in_progress
 			end
 
-			it 'should return :correction_passed when a solution was submitted, corrected and graded as passed' do
+			it 'should return :correction_passed when a solution was submitted, corrected and passed' do
 				course = Course.new( :name => "AlgoIII", :active => true )
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
 				teacher = Account.new
 				correction = Correction.new(:solution => solution, :teacher => teacher)
-				correction.should_receive(:approved?).and_return(true)
+				correction.should_receive(:status).and_return(:correction_passed)
 				solution.correction = correction
 				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).status.should eq :correction_passed
 			end
 
-			it 'should return :correction_passed when there are several solutions but at least one corrected and graded as passed' do
+			it 'should return :correction_passed when there are several solutions but at least one passed' do
 				course = Course.new( :name => "AlgoIII", :active => true )
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
@@ -148,12 +147,12 @@ describe Account do
 				solution1 = Solution.new(:assignment => assignment)
 				teacher = Account.new
 				correction = Correction.new(:solution => solution1, :teacher => teacher)
-				correction.should_receive(:approved?).and_return(false)
+				correction.should_receive(:status).and_return(:correction_failed)
 				solution1.correction = correction
 
 				solution2 = Solution.new(:assignment => assignment)
 				correction2 = Correction.new(:solution => solution2, :teacher => teacher)
-				correction2.should_receive(:approved?).and_return(true)
+				correction2.should_receive(:status).and_return(:correction_passed)
 				solution2.correction = correction2
 
 				Solution.should_receive(:all).and_return([solution0, solution1, solution2])
@@ -167,28 +166,25 @@ describe Account do
 				solution = Solution.new(:assignment => assignment)
 				teacher = Account.new
 				correction = Correction.new(:solution => solution, :teacher => teacher)
-				correction.should_receive(:approved?).and_return(false)
-				correction.should_receive(:grade).and_return(2)
+				correction.should_receive(:status).and_return(:correction_failed)
 				solution.correction = correction
 				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).status.should eq :correction_failed
 			end
 
-			it 'should return :correction_failed when several solutions were submitted, corrected and graded as failed' do
+			it 'should return :correction_failed when several solutions were submitted, corrected and failed' do
 				course = Course.new( :name => "AlgoIII", :active => true )
 				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
 				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
 				teacher = Account.new
 				correction = Correction.new(:solution => solution, :teacher => teacher)
-				correction.should_receive(:approved?).and_return(false)
-				correction.should_receive(:grade).and_return(2)
+				correction.should_receive(:status).and_return(:correction_failed)
 				solution.correction = correction
 
 				solution1 = Solution.new(:assignment => assignment)
 				correction1 = Correction.new(:solution => solution1, :teacher => teacher)
-				correction1.should_receive(:approved?).and_return(false)
-				correction1.should_receive(:grade).and_return(2)
+				correction1.should_receive(:status).and_return(:correction_failed)
 				solution1.correction = correction1
 
 				Solution.should_receive(:all).and_return([solution, solution1])

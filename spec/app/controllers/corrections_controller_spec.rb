@@ -55,7 +55,7 @@ describe "CorrectionsController" do
 	describe "edit" do 
 		it "should render index content" do
 			correction = Factories::Correction.correctsBy( solution, teacher )
-			Correction.should_receive(:get).with(correction.id)
+			Correction.should_receive(:get).with(correction.id.to_s)
 				.and_return(correction)
 			Alfred::App.any_instance.should_receive(:render)
 				.with('corrections/edit').and_return({})
@@ -79,7 +79,7 @@ describe "CorrectionsController" do
 				}
 			}
 
-      Correction.should_receive(:get).with(@correction.id)
+      Correction.should_receive(:get).with(@correction.id.to_s)
         .and_return(@correction)
     end
 

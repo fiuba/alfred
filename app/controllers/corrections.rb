@@ -21,7 +21,7 @@ Alfred::App.controllers :corrections do
 
 		Correction.create_for_teacher(current_account, student, assignment)
 
-		new_status = correction_status_label(student.status_for_assignment(assignment.reload).status)
+		new_status = I18n.translate(student.status_for_assignment(assignment.reload).status)
 		Oj.dump({ 'message' => t('corrections.creation_succeeded'), 'assigned_teacher' => current_account.full_name, 'new_status' => new_status })
 	end
 

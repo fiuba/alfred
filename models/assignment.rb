@@ -7,7 +7,7 @@ class Assignment
 
   property :id, Serial
   property :name, String
-  property :test_script, String
+  property :test_script, Text
   property :deadline, DateTime
 
   def self.find_by_course (course)

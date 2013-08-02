@@ -14,7 +14,7 @@ migration 18, :modify_test_script_field_type_to_assignment do
       end
     else
       modify_table :assignments do
-        change_column :test_script, DataMapper::Property::Text
+        change_column :test_script, 'text'
       end
     end
   end
@@ -34,7 +34,7 @@ migration 18, :modify_test_script_field_type_to_assignment do
       end
     else
       modify_table :assignments do
-        change_column :test_script, DataMapper::Property::String
+        change_column :test_script, 'text'
       end
     end
   end

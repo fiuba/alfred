@@ -30,16 +30,37 @@ Alfred::App.controllers :assignments do
   end
 
   post :create do
-    @assignment = Assignment.new(params[:assignment].merge({ :course_id => current_course.id }))
-    if @assignment.save
-      @title = pat(:create_title, :model => "assignment #{@assignment.id}")
-      flash[:success] = pat(:create_success, :model => 'Assignment')
-      params[:save_and_continue] ? redirect(url(:assignments, :index, :course_id => current_course.id)) : redirect(url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id))
-    else
+    errors = []
+    Assignment.transaction do |trx|
+      begin
+        @assignment = Assignment.new(params[:assignment].merge({ :course_id => current_course.id }))
+
+        if @assignment.save
+          file_io = params[:assignment_file]['file']
+          @assignment_file = AssignmentFile.new(:assignment => @assignment, :name => file_io[:filename])
+          storage_gateway = Storage::StorageGateways.get_gateway
+          storage_gateway.upload(@assignment_file.path, file_io[:tempfile])
+          if !@assignment_file.save
+            errors << @assignment_file.errors
+          end
+
+          @title = pat(:create_title, :model => "assignment #{@assignment.id}")
+          flash[:success] = pat(:create_success, :model => 'Assignment')
+          params[:save_and_continue] ? redirect(url(:assignments, :index, :course_id => current_course.id)) : redirect(url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id))
+        else
+          errors << @assignment.errors
+        end
+      rescue DataObjects::Error
+        trx.rollback
+      end
+    end
+
+    if errors.size > 0
       @title = pat(:create_title, :model => 'assignment')
       flash.now[:error] = pat(:create_error, :model => 'assignment')
-      render 'assignments/new'
     end
+
+    render 'assignments/new'
   end
 
   get :edit, :with => :id do

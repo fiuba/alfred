@@ -6,6 +6,6 @@
 </ul>
 <div class="tabs-content">
   <% form_for :file, url(:assignment, :generic, :file, :create, :assignment_id => @assignment.id), :class => 'form-horizontal', :multipart => true do |f| %>
-    <%= partial 'assignment_generic_files/form', :locals => { :f => f } %>
+    <%= partial 'assignment_files/form', :locals => { :f => f } %>
  <% end %>
 </div>

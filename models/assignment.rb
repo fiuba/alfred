@@ -2,7 +2,7 @@ class Assignment
   include DataMapper::Resource
 
   belongs_to :course
-  has n, :assignment_generic_files
+  has n, :assignment_files
   has n, :solutions, :constraint => :protect
 
   property :id, Serial

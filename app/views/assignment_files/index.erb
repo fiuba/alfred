@@ -2,8 +2,8 @@
 
 <%- if current_account.is_teacher? %>
 	<ul class="nav nav-tabs">
-	  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:assignment, :generic, :file, :index, :assignment_id => @assignment.id) %></li>
-	  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignment, :generic, :file, :new, :assignment_id => @assignment.id) %></li>
+	  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:assignment, :file, :index, :assignment_id => @assignment.id) %></li>
+	  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignment, :file, :new, :assignment_id => @assignment.id) %></li>
 	</ul>
 <% end %>
 <div class=tabs-content>
@@ -24,7 +24,7 @@
 		        	<i class='icon-download'></i>
 		      	<% end %>
 		        <%- if current_account.is_teacher? %>
-			        <%- form_tag url(:assignment, :generic, :file, :destroy, :assignment_id => @assignment.id, :id => file.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.files.delete.confirm') }, :style => 'display:inline' do %>
+			        <%- form_tag url(:assignment, :file, :destroy, :assignment_id => @assignment.id, :id => file.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.files.delete.confirm') }, :style => 'display:inline' do %>
 			        	<button type='submit' title="<%= t('assignments.files.delete.title') %>" rel='tooltip' class="btn btn-mini btn-danger">
 			        		<i class='icon-white icon-trash'></i>
 			        	</button>

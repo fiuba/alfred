@@ -1,16 +1,21 @@
 Alfred::App.controllers :assignment_file, :parent => :assignments do
-  
-  get :index do
-    @assignment = Assignment.find(params[:assignment_id])
-    @files = @assignment.assignment_files || [ ]
-    render 'assignment_files/index'
-  end
-
   get :new do
     @title = t('assignments.files.new.title')
     @assignment = Assignment.find(params[:assignment_id])
     @file = AssignmentFile.new(:assignment => @assignment)
     render 'assignment_files/new'
+  end
+
+  get :download do
+    @assignment = Assignment.find(params[:assignment_id])
+    halt 404 if @assignment.nil? || @assignment.assignment_file.nil?
+
+    storage_gateway = Storage::StorageGateways.get_gateway
+    file_metadata = storage_gateway.metadata(@assignment.assignment_file.path)
+
+    response.headers['Content-Type'] = file_metadata['mime_type']
+    response.headers['Content-Disposition'] = "attachment; filename=#{@assignment.assignment_file.name}"
+    storage_gateway.download(@assignment.assignment_file.path)
   end
 
   post :create do

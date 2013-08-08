@@ -73,7 +73,7 @@ module Alfred
 
     access_control.roles_for :teacher do |role|
       role.project_module :assignments, '/courses/.+/assignments'
-      role.project_module :assignment_generic_files, '/assignment/.+/assignment_generic_file'
+      role.project_module :assignment_files, '/assignment/.+/assignment_file'
       role.project_module :corrections, '/corrections'
       role.project_module :students, '/courses/.+/students'
       role.project_module :solutions, '/.+/file'
@@ -82,7 +82,7 @@ module Alfred
     access_control.roles_for :student do |role|
       role.project_module :solutions, '/.+/file'
       role.project_module :my, '/courses/.+/my'
-      role.allow '/assignment/.+/assignment_generic_file$'
+      role.allow '/assignment/.+/assignment_file$'
     end
 
     get '/' do

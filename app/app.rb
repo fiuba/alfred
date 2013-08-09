@@ -8,6 +8,7 @@ module Alfred
     enable :sessions
     enable :authentication
     enable :store_location
+    set :allow_disabled_csrf, true
 
     ##
     # Caching support
@@ -69,6 +70,7 @@ module Alfred
       role.protect '/'
       role.allow   '/login'
       role.allow   '/register'
+      role.allow   '/api'
     end
 
     access_control.roles_for :teacher do |role|

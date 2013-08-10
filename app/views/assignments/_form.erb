@@ -38,8 +38,14 @@
 </div>
 
 <% content_for :additional_js do %>
-<%= javascript_include_tag 'jquery-ui/jquery-ui.js' %>
-<%= javascript_include_tag 'assignment_deadline_datepicker.js' %>
+  <% if Padrino.env == :production %>
+    <%= javascript_include_tag 'jquery-ui/jquery-ui.min.js' %>
+  <% else %>
+    <%= javascript_include_tag 'jquery-ui/jquery-ui.js' %>
+  <% end %>
+
+  <%= javascript_include_tag 'assignment_deadline_datepicker.js' %>
+
 <% end %>
 
 <% content_for :additional_css do %>

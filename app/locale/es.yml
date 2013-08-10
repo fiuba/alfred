@@ -130,6 +130,8 @@ es:
       default: ! '%d/%m/%Y'
       long: ! '%d de %B de %Y'
       short: ! '%d de %b'
+    placeholder:
+      default: ! 'dd/mm/aaaa'
     month_names:
     -
     - enero

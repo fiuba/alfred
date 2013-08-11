@@ -4,10 +4,10 @@ class CannotUpdateNameError < StandardError
 	end
 end
 
-class AssignmentGenericFile
+class AssignmentFile
 	include DataMapper::Resource
 
-	storage_names[:default] = 'assignment_generic_files'
+	storage_names[:default] = 'assignment_files'
 
   before :save, :complete_path
 

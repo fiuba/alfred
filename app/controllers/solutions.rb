@@ -57,7 +57,7 @@ Alfred::App.controllers :solutions do
     end
   end
 
-	get :file, :map => '/solutions/:solution_id/file' do
+	get :download, :map => '/solutions/:solution_id/download' do
 		solution = Solution.find( params[:solution_id] )
 
 		if solution.nil?	
@@ -74,6 +74,12 @@ Alfred::App.controllers :solutions do
 		end
 
 		file = files.first
+
+    storage_gateway = Storage::StorageGateways.get_gateway
+    file_metadata = storage_gateway.metadata(file.path)
+
+    response.headers['Content-Type'] = file_metadata['mime_type']
+    response.headers['Content-Disposition'] = "attachment; filename=#{file.name}"
 
 		storage_gateway = Storage::StorageGateways.get_gateway
 		storage_gateway.download( file.path )

@@ -13,7 +13,7 @@
 	<% @solutions.each do |s| %>
 		<tr> 
       <td><%= l s.created_at %></td>
-      <td><a href="<%= url_for(:solutions, :file, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
+      <td><a href="<%= url_for(:solutions, :download, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
       <td><%= t(s.test_result) %></a></td>
       <td>
       	<% if s.correction %>

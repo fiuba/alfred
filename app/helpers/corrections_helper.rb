@@ -2,7 +2,7 @@ Alfred::App.helpers do
   def solution_file_url( correction ) 
     solution = correction.solution
     assignment = solution.assignment
-    url(:solutions, :file, :solution_id => solution.id)
+    url(:solutions, :download, :solution_id => solution.id)
   end
 
   def assignment_and_author_information( c )

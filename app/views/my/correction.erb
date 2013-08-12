@@ -13,7 +13,7 @@
 	<dt><%= t('corrections.show.comments') %></dt>
 	<dd>
 		<div class='correction-comments'>
-			<%= @correction.public_comments.gsub(/\n/, '<br/>').html_safe %>
+			<%= (@correction.public_comments || "").gsub(/\n/, '<br/>').html_safe %>
 		</div>
 	</dd>
 </dl>

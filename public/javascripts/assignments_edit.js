@@ -13,7 +13,7 @@ $(document).ready(function() {
       method: 'DELETE',
       success: function(data, textStatus, jqXHR) {
       	$('.assignment-file, .delete-file').css('display', 'none');
-      	$('.file').css('display', 'block');
+      	$('.file').css('display', 'block').removeAttr('disabled');
       },
       error: function(jqXHR, textStatus, errorThrown) {
       	alert('error');

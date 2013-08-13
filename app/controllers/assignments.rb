@@ -29,6 +29,7 @@ Alfred::App.controllers :assignments do
     render 'solutions/index'
   end
 
+  # TODO: Refactor code to remove duplication (Trello#37)
   post :create do
     errors = []
     Assignment.transaction do |trx|
@@ -74,18 +75,33 @@ Alfred::App.controllers :assignments do
     end
   end
 
+  # TODO: Refactor code to remove duplication (Trello#37)
   put :update, :with => :id do
     @title = pat(:update_title, :model => "assignment #{params[:id]}")
     @assignment = Assignment.get(params[:id].to_i)
     if @assignment
-      if @assignment.update(params[:assignment])
-        flash[:success] = pat(:update_success, :model => 'Assignment', :id =>  "#{params[:id]}")
-        params[:save_and_continue] ?
-          redirect(url(:assignments, :index, :course_id => current_course.id)) :
-          redirect(url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id))
-      else
-        flash.now[:error] = pat(:update_error, :model => 'assignment')
-        render 'assignments/edit'
+      Assignment.transaction do |trx|
+        begin
+          if @assignment.update(params[:assignment])
+            file_io = params[:assignment_file]['file']
+            if file_io
+              @assignment_file = AssignmentFile.new(:assignment => @assignment, :name => file_io[:filename])
+              storage_gateway = Storage::StorageGateways.get_gateway
+              storage_gateway.upload(@assignment_file.path, file_io[:tempfile])
+              @assignment_file.save
+            end
+
+            flash[:success] = pat(:update_success, :model => 'Assignment', :id =>  "#{params[:id]}")
+            params[:save_and_continue] ?
+              redirect(url(:assignments, :index, :course_id => current_course.id)) :
+              redirect(url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id))
+          else
+            flash.now[:error] = pat(:update_error, :model => 'assignment')
+            render 'assignments/edit'
+          end
+        rescue DataObjects::Error
+          trx.rollback
+        end
       end
     else
       flash[:warning] = pat(:update_warning, :model => 'assignment', :id => "#{params[:id]}")

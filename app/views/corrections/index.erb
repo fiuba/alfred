@@ -24,13 +24,13 @@
       <td><%= t c.status %></td>
       <td><%= c.grade %></td>
       <td>
-        <a title="<%= t('corrections.download_solution_link') %>" href="<%= solution_file_url(c) %>"><i class='icon-download icon-white'></i></a>
+        <a title="<%= t('corrections.download_solution_link') %>" href="<%= solution_file_url(c) %>" rel='tooltip'><i class='icon-download icon-white'></i></a>
         &nbsp;
-				<%- link_to :href => url(:assignment, :file, :index, :assignment_id => c.solution.assignment.id), :rel => :tooltip, :title => t('corrections.download_assignment_link'), :class => 'list-row-action-wrapper-link' do %>
+				<%- link_to :href => url(:assignment, :file, :download, :assignment_id => c.solution.assignment.id), :rel => :tooltip, :title => t('corrections.download_assignment_link'), :class => 'list-row-action-wrapper-link' do %>
           <i class='icon-file'></i>
         <% end %>
         &nbsp;       
-        <a title="<%= t('corrections.edit') %>" href="<%= url(:corrections, current_course.id, :edit, c.id) %>"><i class='icon-edit'></i></a>
+        <a title="<%= t('corrections.edit') %>" href="<%= url(:corrections, current_course.id, :edit, c.id) %>" rel='tooltip'><i class='icon-edit'></i></a>
       </td>
 		</tr>
 	<% end %>

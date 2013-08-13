@@ -16,6 +16,7 @@ window.onload = function() {
 				editableGrid.attachToHTMLTable('correctionsGrid');
 
 				editableGrid.renderGrid();
+        $("[rel='tooltip']").tooltip();
 
 		    // filter when something is typed into filter
 		    _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); };

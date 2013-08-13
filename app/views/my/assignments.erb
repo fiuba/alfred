@@ -16,7 +16,7 @@
 		<td><%= t(as.status) %></td>
 		<td><%= as.corrector_name %></td>
 		<td>
-			<%- link_to :href => url(:assignment, :file, :index, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('assignments.show_files'), :class => 'list-row-action-wrapper-link' do %>
+			<%- link_to :href => url(:assignment, :file, :download, :assignment_id => as.assignment_id), :rel => :tooltip, :title => t('assignments.download_file'), :class => 'list-row-action-wrapper-link' do %>
         <i class='icon-file'></i>
       <% end %>
 

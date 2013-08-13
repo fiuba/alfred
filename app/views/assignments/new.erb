@@ -5,7 +5,7 @@
   <li class="active"> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %></li>
 </ul>
 <div class="tabs-content">
-  <% form_for :assignment, url(:assignments, :create, :course_id => current_course.id), :class => 'form-horizontal' do |f| %>
+  <% form_for :assignment, url(:assignments, :create, :course_id => current_course.id), :class => 'form-horizontal', :multipart => true do |f| %>
     <%= partial 'assignments/form', :locals => { :f => f } %>
  <% end %>
 </div>

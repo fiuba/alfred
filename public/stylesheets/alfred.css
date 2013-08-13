@@ -60,3 +60,9 @@ button.assign-to-me:hover {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
+
+.assignment-file {
+    padding: 6px 20px 0px 4px;
+    display: inline-block;
+    font-weight: 500;
+}

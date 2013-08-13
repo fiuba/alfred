@@ -29,17 +29,39 @@ Alfred::App.controllers :assignments do
     render 'solutions/index'
   end
 
+  # TODO: Refactor code to remove duplication (Trello#37)
   post :create do
-    @assignment = Assignment.new(params[:assignment].merge({ :course_id => current_course.id }))
-    if @assignment.save
-      @title = pat(:create_title, :model => "assignment #{@assignment.id}")
-      flash[:success] = pat(:create_success, :model => 'Assignment')
-      params[:save_and_continue] ? redirect(url(:assignments, :index, :course_id => current_course.id)) : redirect(url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id))
-    else
+    errors = []
+    Assignment.transaction do |trx|
+      begin
+        @assignment = Assignment.new(params[:assignment].merge({ :course_id => current_course.id }))
+
+        if @assignment.save
+          file_io = params[:assignment_file]['file']
+          @assignment_file = AssignmentFile.new(:assignment => @assignment, :name => file_io[:filename])
+          storage_gateway = Storage::StorageGateways.get_gateway
+          storage_gateway.upload(@assignment_file.path, file_io[:tempfile])
+          if !@assignment_file.save
+            errors << @assignment_file.errors
+          end
+
+          @title = pat(:create_title, :model => "assignment #{@assignment.id}")
+          flash[:success] = pat(:create_success, :model => 'Assignment')
+          params[:save_and_continue] ? redirect(url(:assignments, :index, :course_id => current_course.id)) : redirect(url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id))
+        else
+          errors << @assignment.errors
+        end
+      rescue DataObjects::Error
+        trx.rollback
+      end
+    end
+
+    if errors.size > 0
       @title = pat(:create_title, :model => 'assignment')
       flash.now[:error] = pat(:create_error, :model => 'assignment')
-      render 'assignments/new'
     end
+
+    render 'assignments/new'
   end
 
   get :edit, :with => :id do
@@ -53,18 +75,33 @@ Alfred::App.controllers :assignments do
     end
   end
 
+  # TODO: Refactor code to remove duplication (Trello#37)
   put :update, :with => :id do
     @title = pat(:update_title, :model => "assignment #{params[:id]}")
     @assignment = Assignment.get(params[:id].to_i)
     if @assignment
-      if @assignment.update(params[:assignment])
-        flash[:success] = pat(:update_success, :model => 'Assignment', :id =>  "#{params[:id]}")
-        params[:save_and_continue] ?
-          redirect(url(:assignments, :index, :course_id => current_course.id)) :
-          redirect(url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id))
-      else
-        flash.now[:error] = pat(:update_error, :model => 'assignment')
-        render 'assignments/edit'
+      Assignment.transaction do |trx|
+        begin
+          if @assignment.update(params[:assignment])
+            file_io = params[:assignment_file]['file']
+            if file_io
+              @assignment_file = AssignmentFile.new(:assignment => @assignment, :name => file_io[:filename])
+              storage_gateway = Storage::StorageGateways.get_gateway
+              storage_gateway.upload(@assignment_file.path, file_io[:tempfile])
+              @assignment_file.save
+            end
+
+            flash[:success] = pat(:update_success, :model => 'Assignment', :id =>  "#{params[:id]}")
+            params[:save_and_continue] ?
+              redirect(url(:assignments, :index, :course_id => current_course.id)) :
+              redirect(url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id))
+          else
+            flash.now[:error] = pat(:update_error, :model => 'assignment')
+            render 'assignments/edit'
+          end
+        rescue DataObjects::Error
+          trx.rollback
+        end
       end
     else
       flash[:warning] = pat(:update_warning, :model => 'assignment', :id => "#{params[:id]}")

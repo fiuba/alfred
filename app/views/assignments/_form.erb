@@ -28,6 +28,20 @@
   </div>
 </fieldset>
 <% error = @assignment.errors.key?(:course_id) && @assignment.errors[:course_id].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :file, :class => 'control-label' %>
+  <div class='controls'>
+    <%= file_field_tag 'assignment_file[file]', :class => 'input-large input-with-feedback file', :autofocus => true, :style => "display: #{@assignment.assignment_file.nil? ? 'block' : 'none'}", :disabled => !@assignment.assignment_file.nil? %>
+    
+    <% if !@assignment.assignment_file.nil? %>
+      <span class='assignment-file'><%= @assignment.assignment_file.name %></span>
+      <button type='submit' title="<%= t('assignments.files.delete.title') %>" rel='tooltip' class="btn btn-mini btn-danger delete-file" data-url="<%= url(:assignment, :file, :destroy, :assignment_id => @assignment.id, :id => @assignment.assignment_file.id) %>" data-confirmation="<%= t('assignments.files.delete.confirm') %>">
+        <i class='icon-white icon-trash'></i>
+      </button>
+    <% end %>
+    <span class='help-inline'><%= f.error_message_on(:deadline) if error %></span>
+  </div>
+</fieldset>
 
 <div class="form-actions">
   <%= f.submit pat(:save), :class => 'btn btn-primary' %>
@@ -45,7 +59,7 @@
   <% end %>
 
   <%= javascript_include_tag 'assignment_deadline_datepicker.js' %>
-
+  <%= javascript_include_tag 'assignments_edit.js' %>
 <% end %>
 
 <% content_for :additional_css do %>

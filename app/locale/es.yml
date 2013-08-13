@@ -204,7 +204,7 @@ es:
     delete: 
       title: Borrar
       confirm: ¿Está seguro que desea eliminar el trabajo práctico?
-    edit_files: Archivos
+    download_file: Bajar archivo
     show_files: Archivos
     show_corrections: Correcciones
     files: 
@@ -214,5 +214,7 @@ es:
       delete: 
         title: Borrar
         confirm: ¿Está seguro que desea eliminar el archivo?
+        success: Archivo borrado exitosamente
+        failure: El archivo no pudo ser borrado
       new:
         title: Nuevo Archivo

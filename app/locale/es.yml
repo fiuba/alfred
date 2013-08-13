@@ -197,6 +197,7 @@ es:
       second: Segundos
       year: Año
   assignments:
+    actions: Acciones
     title: Trabajos Prácticos
     name: Nombre
     deadline: Fecha límite

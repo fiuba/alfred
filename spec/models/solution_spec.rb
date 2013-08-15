@@ -18,6 +18,7 @@ describe Solution do
 	it { should respond_to( :correction) }
 	it { should respond_to( :test_result) }
 	it { should respond_to( :test_output) }
+	it { should respond_to( :as_csv) }
 
 	describe "should belongs to student" do
 		it { @solution.account.should == @student }

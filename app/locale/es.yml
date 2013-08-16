@@ -42,6 +42,7 @@ es:
       submission_date: 'Fecha de la entrega'
       view_correction: 'Ver corrección'
       correction_unavailable: 'Corrección no disponible'
+      correction_status: 'Estado de la corrección'
     test_result: 'Resultado pruebas'
   corrections:
     title_all: 'Entregas para'

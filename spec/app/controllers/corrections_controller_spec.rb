@@ -59,7 +59,7 @@ describe "CorrectionsController" do
 				.and_return(correction)
 			Alfred::App.any_instance.should_receive(:render)
 				.with('corrections/edit').and_return({})
-			get "/courses/#{algorithm.id}/corrections/edit/#{correction.id}"
+			get "/corrections/edit/#{correction.id}"
 		end
 	end
 

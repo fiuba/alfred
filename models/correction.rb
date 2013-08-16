@@ -33,7 +33,7 @@ class Correction
   end
 
   def self.create_for_teacher(teacher, student, assignment)
-    solutions = Solution.find_by_account_and_assignment(student, assignment, :order => [ :created_at.desc ]) || []
+    solutions = Solution.all(:account => student, :assignment => assignment, :order => [ :created_at.desc ]) || []
     if !solutions.respond_to?(:count)
       solutions = [ solutions ]
     end

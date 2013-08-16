@@ -26,4 +26,11 @@ class Solution
     self.account == account
   end 
 
+  def assigned_teacher
+    correction.teacher if correction
+
+    other_assigned_solution = Solution.first(:assignment => assignment, :account => account, :correction.not => nil)
+
+    other_assigned_solution.correction.teacher if other_assigned_solution
+  end
 end

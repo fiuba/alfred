@@ -22,7 +22,6 @@
       <td class='teacher_assigned'><%= sas[:assignment_status].corrector_name %></td>
       <td>
       	<% if sas[:assignment_status].can_be_assigned? %>
-      		
       		<%- form_tag url(:corrections, :create, :assignment_id => sas[:assignment_status].assignment_id, :student_id => sas[:student].id), :method => :post, :style => 'display:inline' do %>
       			<button type='submit' title="<%= t('corrections.grid_all.actions.assign_to_me') %>" rel='tooltip' class="assign-to-me">
               <i class='icon-user'></i>

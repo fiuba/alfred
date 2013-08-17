@@ -22,7 +22,7 @@
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label t(:buid), :class => 'control-label' %>
   <div class='controls'>
-    <%= f.text_field :buid, :class => 'input-xlarge input-with-feedback', :autofocus => true %>
+    <%= f.text_field :buid, :class => 'input-xlarge input-with-feedback' %>
     <span class='help-inline'><%= error ? f.error_message_on(:buid) : "" %></span>
   </div>
 </fieldset>
@@ -38,7 +38,7 @@
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label t(:tag), :class => 'control-label' %>
   <div class='controls'>
-    <%= f.text_field :tag, :class => 'input-xlarge input-with-feedback' %>
+    <%= f.text_field :tag, :class => 'input-xlarge input-with-feedback', :placeholder => 'mier - jt - jn'%>
     <span class='help-inline'><%= error ? f.error_message_on(:tag) : "" %></span>
   </div>
 </fieldset>

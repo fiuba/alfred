@@ -11,33 +11,29 @@ describe "GradingReport" do
     @teacher    = Factories::Account.me_as_teacher
     @correction = Factories::Correction.correctsBy(@solution, @teacher) 
     I18n.stub(:t).with('date.formats.default').and_return(date_format)
-  end
-
-  describe "solution with graded and ranked" do
-    let(:expected) { 
-      "#{@author.courses.first.name};" +
-      "#{@author.tag};" +
-      "#{@author.buid};" +
-      "#{@author.prety_full_name};" +
-      Date.today.strftime(date_format) + ";" +
-      "#{@assignment.name};" +
-      Date.today.strftime(date_format) + ";" +
-      "7.0;" +
-      "#{@teacher.prety_full_name}" 
-    }
-
-    it "should response fully populated" do
-      @solution.as_csv.should == expected
-    end
-  end
-
-  describe "not ranked" do
-  end
-
-  describe "not assigned" do
+    I18n.stub(:t).with('grading_report.course').and_return('Curso')
+    I18n.stub(:t).with('grading_report.shift').and_return('Turno')
+    I18n.stub(:t).with('grading_report.buid').and_return('Padron')
+    I18n.stub(:t).with('grading_report.student').and_return('Estudiante')
+    I18n.stub(:t).with('grading_report.solution_date').and_return('Fecha entrega')
+    I18n.stub(:t).with('grading_report.grade').and_return('Nota')
+    I18n.stub(:t).with('grading_report.teacher').and_return('Docente')
+    I18n.stub(:t).with('grading_report.status').and_return('Estado')
   end
 
   describe "report" do
+    it "should response headers as first line" do
+      stream_csv = GradingReport.report( @assignment )
+      expected_headers = [ 'Curso', 'Turno', 'Padron', 'Estudiante', 
+              'Fecha entrega', 'Nota', 'Docente', 'Estado' ]
+
+      headers = stream_csv.parse_csv( { :col_sep => ';' } )
+
+      expected_headers.each do |h| 
+        headers.should include( h )
+      end
+      
+    end
   end
 end
 

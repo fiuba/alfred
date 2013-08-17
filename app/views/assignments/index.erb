@@ -33,6 +33,11 @@
               <%- link_to :href => url(:assignments, :students, :assignment_id => assignment.id), :rel => :tooltip, :title => t('assignments.show_corrections'), :class => 'list-row-action-wrapper-link' do %>
                 <i class='icon-ok-sign'></i>
               <% end %>
+              <%- link_to :href => url(:reporters, :gradings, :assignment_id => assignment.id), 
+                      :rel => :tooltip, :title => t('assignments.export_to_csv'), 
+                      :class => 'list-row-action-wrapper-link' do %>
+                <i class='icon-save'></i>
+              <% end %>
               <%- form_tag url(:assignments, :destroy, :id => assignment.id, :course_id => current_course.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.delete.confirm') }, :style => 'display:inline' do %>
                 <button type='submit' title="<%= t('assignments.delete.title') %>" rel='tooltip' class="btn btn-mini btn-danger">
                   <i class='icon-white icon-trash'></i>

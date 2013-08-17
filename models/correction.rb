@@ -33,15 +33,10 @@ class Correction
   end
 
   def self.create_for_teacher(teacher, student, assignment)
-    solutions = Solution.all(:account => student, :assignment => assignment, :order => [ :created_at.desc ]) || []
-    if !solutions.respond_to?(:count)
-      solutions = [ solutions ]
-    end
-    raise I18n.t('corrections.no_solutions_found') if solutions.empty?
-    latest_solution = solutions.first
-    raise I18n.t('corrections.solution_already_assigned') if !latest_solution.correction.nil?
-
-    Correction.create!(:solution => latest_solution, :teacher => teacher)
+    latest = Solution.latest_by_student_and_assignment(student,assignment)
+    raise I18n.t('corrections.no_solutions_found') if latest.nil?
+    raise I18n.t('corrections.solution_already_assigned') if !latest.correction.nil?
+    Correction.create!(:solution => latest, :teacher => teacher)
   end
 
   def status

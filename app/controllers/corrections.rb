@@ -22,22 +22,27 @@ Alfred::App.controllers :corrections do
     render 'corrections/new'
   end
 
-	post :create, :parent => :solution, :provides => [:html, :json] do
+	post :create, :parent => :solution do
     solution  = Solution.get(params[:solution_id])
 
 		@correction = Correction.create(:solution => solution, :teacher => current_account)
 
-    case content_type
-      when :json
-        new_status = I18n.translate(solution.account.status_for_assignment(solution.assignment.reload).status)
-        Oj.dump({ 'message' => t('corrections.creation_succeeded'), 'assigned_teacher' => current_account.full_name, 'new_status' => new_status })
-      when :html
-        flash[:success] = pat(:create_success, :model => 'Corrección', :id =>  "#{@correction.id}")
-        params[:save_and_continue] ?
-          redirect(url(:corrections, @correction.teacher.id, :index)) :
-          redirect(url(:corrections, :edit, :id => @correction.id))
-		end
+    flash[:success] = pat(:create_success, :model => 'Corrección', :id =>  "#{@correction.id}")
+    params[:save_and_continue] ?
+      redirect(url(:corrections, @correction.teacher.id, :index)) :
+      redirect(url(:corrections, :edit, :id => @correction.id))
 	end
+
+  post :assign_to_teacher, :provides => :json, :with => [:student_id, :assignment_id, :teacher_id] do
+    student = Account.get(params[:student_id])
+    assignment = Assignment.get(params[:assignment_id])
+    teacher = Account.get(params[:teacher_id])
+
+    Correction.create_for_teacher(teacher, student, assignment)
+
+    new_status = I18n.translate(student.status_for_assignment(assignment.reload).status)
+    Oj.dump({ 'message' => t('corrections.creation_succeeded'), 'assigned_teacher' => current_account.full_name, 'new_status' => new_status })
+  end
 
   get :edit, :with => :id do
     @title = pat(:edit_title, :model => "corrections #{params[:id]}")

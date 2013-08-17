@@ -28,7 +28,7 @@
 				<%- link_to :href => url(:assignment, :file, :download, :assignment_id => c.solution.assignment.id), :rel => :tooltip, :title => t('corrections.download_assignment_link'), :class => 'list-row-action-wrapper-link' do %>
           <i class='icon-file'></i>
         <% end %>
-        <%- link_to url(:corrections, current_course.id, :edit, c.id), :rel => :tooltip, :title => t('corrections.edit') do %>
+        <%- link_to url(:corrections, :edit, c.id), :rel => :tooltip, :title => t('corrections.edit') do %>
           <i class='icon-edit'></i>
         <% end %>
         <%- link_to :href => url(:solutions, :index, :assignment_id => c.solution.assignment.id, :student_id => c.solution.account.id), :rel => :tooltip, :title => t('solution.all'), :class => 'list-row-action-wrapper-link' do %>

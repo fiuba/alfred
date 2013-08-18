@@ -17,6 +17,7 @@ es:
   grade: 'nota'
   my_corrections: 'Mis correcciones'
   save_and_notify: 'Guardar y notificar'
+  new: 'Nueva'
   solution:
     new: 'entregar solución'
     all: 'ver todas las soluciones'
@@ -198,6 +199,7 @@ es:
       second: Segundos
       year: Año
   assignments:
+    actions: Acciones
     title: Trabajos Prácticos
     name: Nombre
     deadline: Fecha límite

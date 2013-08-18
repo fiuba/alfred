@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'padrino-core/cli/rake'
-PADRINO_ENV  = ENV['PADRINO_ENV'] ||= ENV['RACK_ENV'] ||= 'development'  unless defined?(PADRINO_ENV)
+PADRINO_ENV  = ENV['PADRINO_ENV'] ||= ENV['RACK_ENV'] ||= 'test'  unless defined?(PADRINO_ENV)
 
 PadrinoTasks.use(:database)
 PadrinoTasks.use(:datamapper)

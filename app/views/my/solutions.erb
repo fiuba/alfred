@@ -1,7 +1,9 @@
 <h2><%= t('solutions.delivered_for').capitalize %> <%= @assignment.name %></h2>
 
-<%- link_to :href => url(:my, :new_solution, :assignment_id => @assignment.id), :rel => :tooltip, :title => t('solution.new'), :class => 'list-row-action-wrapper-link' do %>  New Solution
-      <% end %>
+<ul class="nav nav-tabs">
+  <li class=active> <%= link_to tag_icon(:list, pat(:list)), url(:my, :solutions, :assignment_id => @assignment.id) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:my, :new, :solution, :assignment_id => @assignment.id) %></li>
+</ul>
 
 <table id="solutionsGrid" class="table table-bordered table-striped table-hover">
 	<tr>

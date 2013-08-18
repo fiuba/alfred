@@ -9,6 +9,7 @@
 
 course = Course.new
 course.name = '2013-1'
+course.active = true
 course.save
 
 teacher = Account.new_teacher({:name => 'teacher_name', 

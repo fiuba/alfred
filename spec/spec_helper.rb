@@ -14,6 +14,7 @@ Dir.glob(File.dirname(__FILE__) + "/support/**/*.rb").each {|f| require f}
 Capybara.app = Alfred::App
 
 RSpec.configure do |conf|
+	DataMapper.auto_migrate!
   conf.include Rack::Test::Methods
 	conf.include Capybara
 end

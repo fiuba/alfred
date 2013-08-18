@@ -16,6 +16,7 @@ es:
   test_result: 'Prueba automática'
   grade: 'nota'
   my_corrections: 'Mis correcciones'
+  new: 'Nueva'
   solution:
     new: 'entregar solución'
     all: 'ver todas las soluciones'

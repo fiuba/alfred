@@ -1,19 +1,8 @@
 <ul class="nav" id="main-menu-left">
   <% if (current_account) %>            
-          <li>
-            <a data-toggle="dropdown" href="#"><%= current_course.name %><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-            <% current_account.courses.each do |course| %>
-            <li>
-              <a tabindex="-1" href="/courses/<%= course.name %>"><%= course.name %></a>
-            </li>
-            <% end %>
-          </ul>
-        
-          </li>
-          <%= partial "layouts/#{current_account.role}_menu" %>
+    <%= partial "layouts/course_menu" %>
+    <%= partial "layouts/#{current_account.role}_menu" %>
   <% end %>
-
 </ul>   
 
 <ul class="nav pull-right" id="main-menu-right">

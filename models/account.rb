@@ -121,6 +121,10 @@ class Account
   def full_name
     "#{self.name} #{self.surname}"
   end
+
+  def prety_full_name
+    "#{self.surname}, #{self.name}"
+  end
   
   private
   def password_required

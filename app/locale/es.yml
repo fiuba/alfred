@@ -98,6 +98,17 @@ es:
   not_available: 'No disponible'
   passed: 'Pruebas exitosas'
   failed: 'Pruebas fallaron'
+  grading_report:
+    course: 'Curso'
+    shift: 'Turno'
+    buid: 'Padron'
+    student: 'Estudiante'
+    solution_date: 'Fecha solución'
+    assignment: 'TP'
+    correction_date: 'Fecha corrección'
+    grade: 'Nota'
+    teacher: 'Docente'
+    status: 'Estado'
   date:
     abbr_day_names:
     - dom
@@ -211,6 +222,7 @@ es:
     download_file: Bajar archivo
     show_files: Archivos
     show_corrections: Correcciones
+    export_to_csv: Exportar hoja de cálculo
     files: 
       title: Archivos asociados a
       name: Nombre

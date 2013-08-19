@@ -2,7 +2,8 @@ module Factories
   module Correction
 		def self.correctsBy( solution, teacher )
 			Alfred::App::Correction.all.first ||
-			Alfred::App::Correction.create( :teacher => teacher, :solution => solution )
+			Alfred::App::Correction.create( :created_at => Date.today, 
+        :grade => 7, :teacher => teacher, :solution => solution )
 		end
 	end
 end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "SolutionsController" do
   let(:gateway) { double(Storage::DropboxGateway) }
   let(:student) { Factories::Account.student }
-  let(:another_student) { Factories::Account.student( "Bruce", "bruce@d.com" ) }
+  let(:another_student) { Factories::Account.student( "Bruce", "Wane", "bruce@d.com" ) }
   let(:assignment) { Factories::Assignment.vending_machine}
 
   before (:each) do

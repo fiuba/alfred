@@ -92,6 +92,7 @@ module Alfred
 
     access_control.roles_for :teacher do |role|
       role.project_module :assignments, '/courses/.+/assignments'
+      role.project_module :assignments, '/.+/gradings_report'
       role.project_module :assignment_files, '/assignment/.+/assignment_file'
       role.project_module :corrections, '/corrections'
       role.project_module :students, '/courses/.+/students'

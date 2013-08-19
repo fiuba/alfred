@@ -22,7 +22,7 @@
 <div class="form-actions">
   <%= f.submit pat(:save), :class => 'btn btn-primary' %>
   &nbsp;
-  <%= f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue' %>
+  <%= f.submit t(:save_and_notify), :class => 'btn btn-info', :name => 'save_and_notify' %>
   &nbsp;
   <%= link_to pat(:cancel), url(:corrections, current_account.id, :index), :class => 'btn' %>
 </div>

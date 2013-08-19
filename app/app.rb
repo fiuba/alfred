@@ -41,13 +41,30 @@ module Alfred
     # layout  :my_layout            # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
     #
 
-    ##
+    set :delivery_method, :file => {
+      :location => "#{Padrino.root}/tmp/emails",
+    }
+
+
     # You can configure for a specified environment like:
     #
-    #   configure :development do
-    #     set :foo, :bar
-    #     disable :asset_stamp # no asset timestamping for dev
-    #   end
+    configure :development, :test do
+      set :delivery_method, :file => {
+        :location => "#{Padrino.root}/tmp/emails",
+      }
+    end
+
+    configure :staging, :production do
+      set :delivery_method, :smtp => { 
+        :address              => ENV['MAIL_SERVER'],
+        :port                 => ENV['MAIL_PORT'],
+        :user_name            => ENV['MAIL_USER'],
+        :password             => ENV['MAIL_PASSWORD'],
+        :authentication       => :plain,
+        :enable_starttls_auto => true  
+      }
+    end
+
     #
 
     ##

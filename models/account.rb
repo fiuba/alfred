@@ -37,14 +37,14 @@ class Account
 
   def is_valid_tag?
     return true if self.is_teacher?    
-    if self.valid_tags().include? @tag
+    if Account.valid_tags.include? @tag
       return true
     end
     errors.add(:tag, "Debe ser mie, jt o jn")
     return false
   end
 
-  def valid_tags
+  def self.valid_tags
     ['mie', 'jt', 'jn']
   end
 

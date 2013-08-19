@@ -41,6 +41,10 @@ a i {
     text-decoration:none !important;
 }
 
+[class^="icon-"], [class*=" icon-"] {
+  font-size: 1.2em;
+}
+
 button.assign-to-me {
     border: 0;
     background-color: transparent;

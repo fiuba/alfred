@@ -37,14 +37,17 @@ Alfred::App.controllers :assignments do
         @assignment = Assignment.new(params[:assignment].merge({ :course_id => current_course.id }))
 
         if @assignment.save
-          file_io = params[:assignment_file]['file']
-          @assignment_file = AssignmentFile.new(:assignment => @assignment, :name => file_io[:filename])
-          storage_gateway = Storage::StorageGateways.get_gateway
-          storage_gateway.upload(@assignment_file.path, file_io[:tempfile])
-          if !@assignment_file.save
-            errors << @assignment_file.errors
-          end
+          if params[:assignment_file]
+            file_io = params[:assignment_file]['file']
+            @assignment_file = AssignmentFile.new(:assignment => @assignment, :name => file_io[:filename])
+            storage_gateway = Storage::StorageGateways.get_gateway
+            storage_gateway.upload(@assignment_file.path, file_io[:tempfile])
 
+            if !@assignment_file.save
+              errors << @assignment_file.errors
+            end
+
+          end
           @title = pat(:create_title, :model => "assignment #{@assignment.id}")
           flash[:success] = pat(:create_success, :model => 'Assignment')
           params[:save_and_continue] ? redirect(url(:assignments, :index, :course_id => current_course.id)) : redirect(url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id))
@@ -83,12 +86,14 @@ Alfred::App.controllers :assignments do
       Assignment.transaction do |trx|
         begin
           if @assignment.update(params[:assignment])
-            file_io = params[:assignment_file]['file']
-            if file_io
-              @assignment_file = AssignmentFile.new(:assignment => @assignment, :name => file_io[:filename])
-              storage_gateway = Storage::StorageGateways.get_gateway
-              storage_gateway.upload(@assignment_file.path, file_io[:tempfile])
-              @assignment_file.save
+            if params[:assignment_file]
+              file_io = params[:assignment_file]['file']
+              if file_io
+                @assignment_file = AssignmentFile.new(:assignment => @assignment, :name => file_io[:filename])
+                storage_gateway = Storage::StorageGateways.get_gateway
+                storage_gateway.upload(@assignment_file.path, file_io[:tempfile])
+                @assignment_file.save
+              end
             end
 
             flash[:success] = pat(:update_success, :model => 'Assignment', :id =>  "#{params[:id]}")

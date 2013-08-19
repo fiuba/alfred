@@ -43,9 +43,10 @@ Alfred::App.controllers :corrections do
       params[:correction][:grade] = ( grade.blank? ) ? nil : grade
       if @correction.update(params[:correction])
         flash[:success] = pat(:update_success, :model => 'Correction', :id =>  "#{params[:id]}")
-        params[:save_and_continue] ?
-          redirect(url(:corrections, @correction.teacher.id, :index)) :
-          redirect(url(:corrections, @correction.teacher.id, :edit, :id => @correction.id))
+        if (params[:save_and_notify])
+          deliver(:notification, :correction_result, @correction)          
+        end
+        redirect(url(:corrections, @correction.teacher.id, :index))
       else
         flash.now[:error] = pat(:update_error, :model => 'correction')
         render 'corrections/edit'

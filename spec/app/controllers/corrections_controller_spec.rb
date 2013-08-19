@@ -92,6 +92,18 @@ describe "CorrectionsController" do
         @correction.grade.should == 7
       end
 
+      it "should call mail deliver when save_and_notify is present" do
+      	addtional_params = { :save_and_notify => 'save_and_notify'}
+      	@params.merge! addtional_params
+      	Alfred::App.should_receive(:deliver).with(:notification, :correction_result, @correction)
+  			put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
+      end
+
+      it "should not call mail deliver when save_and_notify is not present" do
+      	Alfred::App.should_not_receive(:deliver)
+  			put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
+      end
+
       describe "when grade is nil" do
         before do
           @correction.public_comments = @public_comments

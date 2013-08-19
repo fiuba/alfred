@@ -1,3 +1,4 @@
+# encoding: UTF-8
 Alfred::App.controllers :corrections do
 	before do
     @course = current_course
@@ -15,17 +16,35 @@ Alfred::App.controllers :corrections do
     render 'corrections/index'
   end
 
-	post :create, :provides => :json do
-		student = Account.get(params[:student_id])
-		assignment = Assignment.get(params[:assignment_id])
+  get :new, :parent => :solution  do
+    solution = Solution.get(params[:solution_id])
+    @correction = Correction.new(:teacher => current_account, :solution => solution)
+    render 'corrections/new'
+  end
 
-		Correction.create_for_teacher(current_account, student, assignment)
+	post :create, :parent => :solution do
+    solution  = Solution.get(params[:solution_id])
 
-		new_status = I18n.translate(student.status_for_assignment(assignment.reload).status)
-		Oj.dump({ 'message' => t('corrections.creation_succeeded'), 'assigned_teacher' => current_account.full_name, 'new_status' => new_status })
+		@correction = Correction.create(:solution => solution, :teacher => current_account)
+
+    flash[:success] = pat(:create_success, :model => 'Corrección', :id =>  "#{@correction.id}")
+    params[:save_and_continue] ?
+      redirect(url(:corrections, @correction.teacher.id, :index)) :
+      redirect(url(:corrections, :edit, :id => @correction.id))
 	end
 
-  get :edit, :parent => :courses, :with => :id do
+  post :assign_to_teacher, :provides => :json, :with => [:student_id, :assignment_id, :teacher_id] do
+    student = Account.get(params[:student_id])
+    assignment = Assignment.get(params[:assignment_id])
+    teacher = Account.get(params[:teacher_id])
+
+    Correction.create_for_teacher(teacher, student, assignment)
+
+    new_status = I18n.translate(student.status_for_assignment(assignment.reload).status)
+    Oj.dump({ 'message' => t('corrections.creation_succeeded'), 'assigned_teacher' => current_account.full_name, 'new_status' => new_status })
+  end
+
+  get :edit, :with => :id do
     @title = pat(:edit_title, :model => "corrections #{params[:id]}")
     if @correction
       render 'corrections/edit'
@@ -42,7 +61,7 @@ Alfred::App.controllers :corrections do
       grade = params[:correction][:grade]
       params[:correction][:grade] = ( grade.blank? ) ? nil : grade
       if @correction.update(params[:correction])
-        flash[:success] = pat(:update_success, :model => 'Correction', :id =>  "#{params[:id]}")
+        flash[:success] = pat(:update_success, :model => 'Corrección', :id =>  "#{params[:id]}")
         if (params[:save_and_notify])
           deliver(:notification, :correction_result, @correction)          
         end

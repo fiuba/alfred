@@ -7,6 +7,7 @@ module Factories
 
       new_solution = Alfred::App::Solution.create!( 
         :file => file_name, :account => author,
+        :created_at => DateTime.now,
         :assignment => assignment )
 
 			Alfred::App::SolutionGenericFile.create!( 
@@ -21,6 +22,7 @@ module Factories
 
       new_solution = Alfred::App::Solution.create!( 
         :file => file_name, :account => author,
+        :created_at => DateTime.now,
         :assignment => assignment )
 
 			Alfred::App::SolutionGenericFile.create!( 

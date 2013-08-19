@@ -6,6 +6,7 @@
 		<th><%= t('solutions.grid.submission_date') %></th>
 		<th><%= t('solutions.grid.file') %></th>
 		<th><%= t('solutions.test_result') %></th>
+    <th><%= t('solutions.grid.correction_status') %>
 		<th><%= t('actions').capitalize %></th>
 	</tr>
 	<% @solutions.each do |s| %>
@@ -13,11 +14,15 @@
 			<td><%= l s.created_at %></td>
 			<td><a href="<%= url_for(:solutions, :download, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
 			<td><%= t s.test_result %></a></td>
+      <td><%= t(s.correction.status) if s.correction %></td>
 			<td>
 				<% if s.correction %>
 					<%- link_to :href => url(:my, :show_correction, :assignment_id => @assignment.id, :correction_id => s.correction.id), :rel => :tooltip, :title => t('solutions.grid.view_correction'), :class => 'list-row-action-wrapper-link' do %>
 						<i class='icon-ok-sign'></i>
 					<% end %>
+          <% if s.correction.teacher == current_account %>
+            <a title="<%= t('corrections.edit') %>" href="<%= url(:corrections, current_course.id, :edit, s.correction.id) %>" rel='tooltip'><i class='icon-edit'></i></a>
+          <% end %>
 				<% else %>
 					<span class="list-row-action-wrapper-link" data-original-title="<%= t('solutions.grid.correction_unavailable') %>" title="" rel="tooltip">
 	    			<i class='icon-ok-sign'></i>

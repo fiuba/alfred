@@ -3,81 +3,110 @@ require 'spec_helper'
 describe "CorrectionsController" do
   let(:teacher) { Factories::Account.teacher }
   let(:algorithm) { Factories::Course.algorithm }
-  let(:solution) { Factories::Solution.for( Factories::Assignment.vending_machine ) }
+  let(:assignment) { Factories::Assignment.vending_machine }
+  let(:solution) { Factories::Solution.for(assignment) }
 
-	before (:each) do
-		DataMapper.auto_migrate!
+  before (:each) do
+    DataMapper.auto_migrate!
 
-		Alfred::App.any_instance.stub(:current_account)
+    Alfred::App.any_instance.stub(:current_account)
       .and_return(Factories::Account.teacher)
-		Alfred::App.any_instance.stub(:current_course)
+    Alfred::App.any_instance.stub(:current_course)
       .and_return(Factories::Course.algorithm)
-	end
+  end
 
-	describe "index" do
-		it "should respond with error 403 whether not a teacher access to" do
-		  Alfred::App.any_instance.stub(:current_account)
+  describe "index" do
+    it "should respond with error 403 whether not a teacher access to" do
+      Alfred::App.any_instance.stub(:current_account)
         .and_return(Factories::Account.student)
-			get "/courses/#{algorithm.id}/corrections"
-			last_response.status.should == 403
-		end
+      get "/courses/#{algorithm.id}/corrections"
+      last_response.status.should == 403
+    end
 
-		it "should render index content" do
-			Correction.should_receive(:all)
-				.with(:teacher => teacher)
-				.and_return([])
-			Alfred::App.any_instance.should_receive(:render)
-				.with('corrections/index').and_return({})
-			get "/courses/#{algorithm.id}/corrections"
-		end
-	end
+    it "should render index content" do
+      Correction.should_receive(:all)
+        .with(:teacher => teacher)
+        .and_return([])
+      Alfred::App.any_instance.should_receive(:render)
+        .with('corrections/index').and_return({})
+      get "/courses/#{algorithm.id}/corrections"
+    end
+  end
 
-	describe "create" do
-		before do
-    	@params = { 
-      	:correction => { 
-						:solution_id => solution.id
-				}
-			}
-		end
+  describe "create" do
+    before do
+      @params = { 
+        :student_id => solution.account.id,
+        :assignment_id => assignment.id
+      }
+    end
 
-		describe "student tries to create a solution" do
-			xit "should response 403" do
-		    Alfred::App.any_instance.stub(:current_account)
+    describe "student tries to create a solution" do
+      it "should response 403" do
+        Alfred::App.any_instance.stub(:current_account)
           .and_return(Factories::Account.student)
-				post "/courses/#{algorithm.id}/corrections/create", @params
-				last_response.status.should == 403
-			end
-		end
+        post "/corrections/create", @params
+        last_response.status.should_not == 200
+      end
+    end
 
-	end
+    describe "teacher assings himself correction of a solution" do
+      before do
+        @author = solution.account
+        @first_solution = Factories::Solution.forBy( assignment, @author )
+        @second_solution = Factories::Solution.forBy( assignment, @author )
 
-	describe "edit" do 
-		it "should render index content" do
-			correction = Factories::Correction.correctsBy( solution, teacher )
-			Correction.should_receive(:get).with(correction.id.to_s)
-				.and_return(correction)
-			Alfred::App.any_instance.should_receive(:render)
-				.with('corrections/edit').and_return({})
-			get "/courses/#{algorithm.id}/corrections/edit/#{correction.id}"
-		end
-	end
+        # It ensures that creation dates are differents
+        @second_solution.created_at = @first_solution.created_at + 2
+
+        Alfred::App.any_instance.stub(:current_account)
+          .and_return(teacher)
+      end
+
+      it "should bind correction with last solution" do
+        solutions = Solution.all(:account => @author, :assignment => assignment, :order => [ :created_at.desc ])
+        solutions.size.should > 2
+        @first_solution.created_at.should < @second_solution.created_at
+        Correction.all.size.should == 0
+
+        @params[:teacher_id] = teacher.id
+        post "/corrections/assign_to_teacher/#{solution.account.id}/#{assignment.id}/#{teacher.id}.json"
+
+        last_response.status.should == 200
+        created_correction = Correction.all.last
+        created_correction.teacher.should == teacher
+        created_correction.solution.id.should == @second_solution.id
+      end
+    end
+
+  end
+
+  describe "edit" do 
+    it "should render index content" do
+      correction = Factories::Correction.correctsBy( solution, teacher )
+      Correction.should_receive(:get).with(correction.id.to_s)
+        .and_return(correction)
+      Alfred::App.any_instance.should_receive(:render)
+        .with('corrections/edit').and_return({})
+      get "/corrections/edit/#{correction.id}"
+    end
+  end
 
   describe "update" do
     before do
-			@correction = Factories::Correction.correctsBy( solution, teacher )
+      @correction = Factories::Correction.correctsBy( solution, teacher )
 
       @public_comments = "public new comments"
       @private_comments = "private new comments"
 
-    	@params = { 
-      	:correction => { 
-						:solution_id => solution.id,
+      @params = { 
+        :correction => { 
+            :solution_id => solution.id,
             :public_comments => @public_comments,
             :private_comments => @private_comments,
             :grade => 7
-				}
-			}
+        }
+      }
 
       Correction.should_receive(:get).with(@correction.id.to_s)
         .and_return(@correction)
@@ -85,7 +114,7 @@ describe "CorrectionsController" do
 
     describe "when correction is updated" do
       it "should change correction's datas" do
-  			put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
+        put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
 
         @correction.public_comments.should == @public_comments
         @correction.private_comments.should == @private_comments
@@ -93,15 +122,15 @@ describe "CorrectionsController" do
       end
 
       it "should call mail deliver when save_and_notify is present" do
-      	addtional_params = { :save_and_notify => 'save_and_notify'}
-      	@params.merge! addtional_params
-      	Alfred::App.should_receive(:deliver).with(:notification, :correction_result, @correction)
-  			put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
+        addtional_params = { :save_and_notify => 'save_and_notify'}
+        @params.merge! addtional_params
+        Alfred::App.should_receive(:deliver).with(:notification, :correction_result, @correction)
+        put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
       end
 
       it "should not call mail deliver when save_and_notify is not present" do
-      	Alfred::App.should_not_receive(:deliver)
-  			put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
+        Alfred::App.should_not_receive(:deliver)
+        put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
       end
 
       describe "when grade is nil" do
@@ -115,7 +144,7 @@ describe "CorrectionsController" do
         it "should update correction" do
           @params[:correction][:grade] = nil
           @correction.grade.should_not == nil
-	    		put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
+          put "/courses/#{algorithm.id}/corrections/update/#{@correction.id}", @params
           @correction.grade.should == nil
         end
       end

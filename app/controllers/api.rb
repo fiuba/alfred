@@ -6,11 +6,14 @@ Alfred::App.controllers :api do
 
   get :next_task do
   	solution = Solution.last # first(:test_result => 'not_available')
+    test_script = solution.assignment.test_script.gsub('${buid}',solution.account.buid)
     content_type :json
-    {  :id => solution.id,
-    	 :test_file_path => solution.assignment.assignment_generic_files.first.path,
-    	 :solution_file_path => solution.solution_generic_files.first.path,
-    	 :test_script => solution.assignment.test_script
+    {
+      :id => solution.id,
+      :buid => solution.account.buid,
+      :test_file_path => solution.assignment.assignment_file.path,
+    	:solution_file_path => solution.solution_generic_files.first.path,
+    	:test_script => test_script
     }.to_json
   end
 

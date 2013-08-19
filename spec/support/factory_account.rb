@@ -20,7 +20,8 @@ module Factories
         :email => email,
         :password => 'foobar',
         :password_confirmation => 'foobar',
-        :role => Alfred::Admin::Account::STUDENT
+        :role => Alfred::Admin::Account::STUDENT,
+        :tag => 'mie'
       }
       Alfred::Admin::Account.find_by_email( email ) ||
                 Alfred::Admin::Account.create( params )

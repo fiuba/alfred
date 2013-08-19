@@ -32,6 +32,22 @@ class Account
   validates_format_of        :email,    :with => :email_address
   validates_format_of        :role,     :with => /[A-Za-z]/
 
+
+  validates_with_method :tag, :method => :is_valid_tag?
+
+  def is_valid_tag?
+    return true if self.is_teacher?    
+    if Account.valid_tags.include? @tag
+      return true
+    end
+    errors.add(:tag, "Debe ser mie, jt o jn")
+    return false
+  end
+
+  def self.valid_tags
+    ['mie', 'jt', 'jn']
+  end
+
   # Callbacks
   before :save, :encrypt_password
 

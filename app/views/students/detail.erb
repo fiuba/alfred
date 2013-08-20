@@ -5,7 +5,6 @@
 
 
 <table id="studentsGrid" class="table table-bordered table-striped table-hover"">
-
 	<tr>
 		<th><%= t('assignment').capitalize %></th>
 		<th><%= t('status').capitalize %></th>
@@ -21,7 +20,11 @@
 		<td><%= as.solution_count %></td>
 		<td><%= as.latest_solution_date %></td>
 		<td><%= as.corrector_name %></td>
-		<td><a href="/students/">ver_última</a> | <a href="/students/xxxx">ver_todas</a></td>
+		<td>
+      <%- link_to :href => url(:solutions, :index, :assignment_id => as.assignment_id, :student_id => @student.id ), :rel => :tooltip, :title => t('corrections.grid_all.actions.view_solutions'), :class => 'list-row-action-wrapper-link' do %>
+        <i class='icon-list'></i>
+     <% end %>
+    </td>
 	</tr>
 	<% end %>
 </table>

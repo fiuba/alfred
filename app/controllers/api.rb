@@ -5,7 +5,7 @@ Alfred::App.controllers :api do
   end
 
   get :next_task do
-  	solution = Solution.last # first(:test_result => 'not_available')
+  	solution = Solution.first(:test_result => 'not_available')
     test_script = solution.assignment.test_script.gsub('${buid}',solution.account.buid)
     content_type :json
     {
@@ -22,7 +22,7 @@ Alfred::App.controllers :api do
     solution.test_result = params[:test_result]
     solution.test_output = params[:test_output]
     solution.save
-    deliver(:notification, :solution_test_result, @solution)  
+    deliver(:notification, :solution_test_result, solution)  
   end
 
 end

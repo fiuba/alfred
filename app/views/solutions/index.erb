@@ -21,12 +21,17 @@
 						<i class='icon-ok-sign'></i>
 					<% end %>
           <% if s.correction.teacher == current_account %>
-            <a title="<%= t('corrections.edit') %>" href="<%= url(:corrections, :edit, s.correction.id) %>" rel='tooltip'><i class='icon-edit'></i></a>
+            <%- link_to :href => url(:corrections, :edit, s.correction.id), :rel => :tooltip, :title => t('corrections.edit') do %>
+              <i class='icon-edit'></i>
+            <% end %>
           <% end %>
 				<% else %>
 					<span class="list-row-action-wrapper-link" data-original-title="<%= t('solutions.grid.correction_unavailable') %>" title="" rel="tooltip">
 	    			<i class='icon-ok-sign'></i>
 	    		</span>
+          <%- link_to :href => url(:corrections, :new, s.id), :rel => :tooltip, :title => t('corrections.edit') do %>
+            <i class='icon-edit'></i>
+          <% end %>
 				<% end %>
 			</td>
 		</tr>

@@ -17,7 +17,7 @@ describe Account do
 
 	end
 
-		describe 'is_teacher?' do
+	describe 'is_teacher?' do
 
 		it 'should return false when is student' do
 			student = Account.new_student( {:name => 'student name'})
@@ -190,8 +190,39 @@ describe Account do
 				Solution.should_receive(:all).and_return([solution, solution1])
 				student.status_for_assignment(assignment).status.should eq :correction_failed
 			end
-		end
-		
-	end
-	
+	  end
+  end
+
+  describe "create" do
+    it "should allow creating admin account without tag" do
+      params = {
+        :name => 'admin',
+        :surname => 'admin',
+        :buid => 'a',
+        :email => 'admin@admin.com',
+        :password => 'foobar',
+        :password_confirmation => 'foobar',
+        :role => Alfred::Admin::Account::ADMIN
+      }
+
+      admin = Account.new( params )
+      admin.should be_valid
+    end
+
+    it "should allow creating student with valid tag" do
+      params = {
+        :name => 'Yoda',
+        :surname => '?',
+        :buid => 'y',
+        :email => 'yoda@student.com',
+        :password => 'foobar',
+        :password_confirmation => 'foobar',
+        :role => Alfred::Admin::Account::STUDENT,
+        :tag => Account.valid_tags.first
+      }
+
+      yoda = Account.new( params )
+      yoda.should be_valid
+    end
+  end
 end

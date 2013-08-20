@@ -36,7 +36,8 @@ class Account
   validates_with_method :tag, :method => :is_valid_tag?
 
   def is_valid_tag?
-    return true if self.is_teacher?    
+    return true unless self.is_student?    
+
     if Account.valid_tags.include? @tag
       return true
     end

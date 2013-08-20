@@ -14,7 +14,7 @@ class Correction
   property :public_comments, String
   property :private_comments, String
   property :grade, Float
-  property :teacher_id, Integer, :unique_index => :solution_teacher
+  property :teacher_id, Integer
   property :solution_id, Integer, :required => true, :unique => :solution
 	property :created_at, DateTime  
   property :updated_at, DateTime

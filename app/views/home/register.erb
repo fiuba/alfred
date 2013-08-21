@@ -1,4 +1,4 @@
-<h1><%= t(:registration) %></h1>
+<h1><%= t(:registration).capitalize %></h1>
 <hr/>
   <% form_for :account, url(:register), :class => 'form-horizontal' do |f| %>
 
@@ -60,6 +60,6 @@
 </fieldset>
 
 <div class="form-actions">
-  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+  <%= f.submit t(:create_account), :class => 'btn btn-primary' %>
 </div>
  <% end %>

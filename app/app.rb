@@ -156,6 +156,11 @@ module Alfred
       end
     end
 
+    get :course, :map => 'courses/:course_id' do
+      current_course = Course.first(:name => params[:course_id])
+      render 'home/index'
+    end
+
 		def store_location
 			session[:return_to] = request.url
 		end

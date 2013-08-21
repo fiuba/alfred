@@ -41,11 +41,6 @@ module Alfred
     # layout  :my_layout            # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
     #
 
-    set :delivery_method, :file => {
-      :location => "#{Padrino.root}/tmp/emails",
-    }
-
-
     # You can configure for a specified environment like:
     #
     configure :development, :test do

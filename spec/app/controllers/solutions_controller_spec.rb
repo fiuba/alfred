@@ -55,7 +55,6 @@ describe "SolutionsController" do
       end
 
       it "should not create a solution" do
-              puts @params
         post "/my/assignments/#{assignment.id}/solutions/create", @params
         Solution.all.size.should == 0
         last_response.status.should == 200

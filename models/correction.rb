@@ -36,7 +36,7 @@ class Correction
     latest = Solution.latest_by_student_and_assignment(student,assignment)
     raise I18n.t('corrections.no_solutions_found') if latest.nil?
     raise I18n.t('corrections.solution_already_assigned') if !latest.correction.nil?
-    Correction.create!(:solution => latest, :teacher => teacher)
+    Correction.create(:solution => latest, :teacher => teacher)
   end
 
   def status

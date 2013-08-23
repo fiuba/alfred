@@ -146,7 +146,7 @@ module Alfred
         flash[:success] = t(:account_created)
         redirect('/login')
       else
-        flash.now[:error] = pat(:create_error, :model => 'account')
+        flash.now[:error] = t(:account_creation_error)
         render 'home/register'
       end
     end

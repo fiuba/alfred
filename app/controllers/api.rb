@@ -6,6 +6,7 @@ Alfred::App.controllers :api do
 
   get :next_task do
   	solution = Solution.first(:test_result => 'not_available')
+    return {}.to_json if solution.nil?
     test_script = solution.assignment.test_script.gsub('${buid}',solution.account.buid)
     content_type :json
     {
@@ -19,6 +20,7 @@ Alfred::App.controllers :api do
 
   post :task_result,:csrf_protection => false do
     solution = Solution.get(params[:id]) 
+    return if solution.nil?
     solution.test_result = params[:test_result]
     solution.test_output = params[:test_output]
     solution.save

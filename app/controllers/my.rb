@@ -1,5 +1,11 @@
 Alfred::App.controllers :my do
 
+  define_method :is_file_specified? do |params|
+    solution_params = params[:solution]
+    return false unless solution_params.has_key?('file')
+    true
+  end
+
   get :assigments, :parent => :courses do
     assignments = Assignment.find_by_course(current_course)
     @assignment_status = []
@@ -23,28 +29,35 @@ Alfred::App.controllers :my do
 
   post :create_solution, :map => '/my/assignments/:assignment_id/solutions/create' do
     errors = []
+
     @assignment = Assignment.get(params[:assignment_id])
-    input_file = params[:solution][:file]
     @solution= Solution.new( :account_id => current_account.id,
-            :assignment => @assignment, :file => input_file[:filename] )
+            :assignment => @assignment )
 
-    DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
-      if @solution.save
-        @solution_generic_file = SolutionGenericFile.new( :solution => @solution, 
-              :name => input_file[:filename] )
-        errors << @solution_generic_file.errors if not @solution_generic_file.save
-        begin
-          storage_gateway = Storage::StorageGateways.get_gateway
-          storage_gateway.upload(@solution_generic_file.path, input_file[:tempfile])
-        rescue Storage::FileUploadFailedError => e
-          errors << t('solutions.errors.upload_failed')
+    if is_file_specified?(params)
+      input_file = params[:solution][:file]
+      @solution.file = input_file[:filename]
+
+      DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
+        if @solution.save
+          @solution_generic_file = SolutionGenericFile.new( :solution => @solution, 
+                :name => input_file[:filename] )
+          errors << @solution_generic_file.errors if not @solution_generic_file.save
+          begin
+            storage_gateway = Storage::StorageGateways.get_gateway
+            storage_gateway.upload(@solution_generic_file.path, input_file[:tempfile])
+          rescue Storage::FileUploadFailedError => e
+            errors << t('solutions.errors.upload_failed')
+          end
+        else
+          errors << @solution.errors
         end
-      else
-        errors << @solution.errors
-      end
 
-      trx.rollback() if not errors.empty?
-    end # End of transaction
+        trx.rollback() if not errors.empty?
+      end # End of transaction
+    else
+      errors << t('solutions.errors.file_absent')
+    end # End of if
 
     if errors.empty?
       @title = pat(:create_title, :model => "solution #{@solution.id}")

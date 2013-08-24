@@ -83,6 +83,8 @@ module Alfred
       role.allow   '/login'
       role.allow   '/register'
       role.allow   '/api'
+      role.allow   '/profile'
+      role.allow   '/password'
     end
 
     access_control.roles_for :teacher do |role|
@@ -148,6 +150,22 @@ module Alfred
       else
         flash.now[:error] = pat(:create_error, :model => 'account')
         render 'home/register'
+      end
+    end
+
+    get :profile do
+      @account = current_account
+      render 'home/profile'
+    end
+
+    put :update do
+      @account = current_account
+      if @account.update(params[:account])
+        flash[:success] = t(:account_created)
+        redirect('/')
+      else
+        flash.now[:error] = pat(:create_error, :model => 'account')
+        render 'home/profile'
       end
     end
 

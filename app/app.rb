@@ -146,9 +146,14 @@ module Alfred
         flash[:success] = t(:account_created)
         redirect('/login')
       else
-        flash.now[:error] = pat(:create_error, :model => 'account')
+        flash.now[:error] = t(:account_creation_error)
         render 'home/register'
       end
+    end
+
+    get :course, :map => 'courses/:course_id' do
+      current_course = Course.first(:name => params[:course_id])
+      render 'home/index'
     end
 
 		def store_location

@@ -8,7 +8,9 @@ es:
   password: 'contraseña'
   password_confirmation: 'confirmación de contraseña'
   email: 'email'
-  account_created: 'cuenta creada'
+  create_account: 'Crear cuenta'
+  account_created: 'Cuenta creada'
+  account_creation_error: 'No se pudo crear la cuenta'
   sign_in: 'iniciar sesión'
   create_account: 'crear cuenta'
   back: 'atrás'
@@ -33,6 +35,7 @@ es:
     errors:
       upload_failed: 'Error al intentar subir el archivo'
       delete_failed: 'Error al intentar borrar el archivo'
+      file_absent: 'Debe seleccionar archivo'
     form:
       file: 'Archivo a entregar'
       assignment: 'Trabajo práctico'
@@ -234,3 +237,6 @@ es:
         failure: El archivo no pudo ser borrado
       new:
         title: Nuevo Archivo
+  account:
+    errors:
+      biud: 'El padron es obligatorio'

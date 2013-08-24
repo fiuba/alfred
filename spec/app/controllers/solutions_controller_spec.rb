@@ -42,8 +42,23 @@ describe "SolutionsController" do
           :assignment_id => assignment.id
         }
       }
+    end
 
-      Storage::StorageGateways.should_receive(:get_gateway).and_return(gateway)
+    describe "without file specified" do
+      before do
+        @params = { 
+          :solution => { 
+            :account_id => student.id,
+            :assignment_id => assignment.id
+          }
+        }
+      end
+
+      it "should not create a solution" do
+        post "/my/assignments/#{assignment.id}/solutions/create", @params
+        Solution.all.size.should == 0
+        last_response.status.should == 200
+      end
     end
 
     describe "with valid provided datas" do
@@ -53,6 +68,8 @@ describe "SolutionsController" do
       end
 
       it "should add both solution and solution_generic_file" do
+        Storage::StorageGateways.should_receive(:get_gateway).and_return(gateway)
+
         post "/assignments/#{assignment.id}/solutions/create", @params
 
         new_solution = Solution.all.first
@@ -72,6 +89,8 @@ describe "SolutionsController" do
       end
 
       it "should not add either solution or solution_generic_file" do
+        Storage::StorageGateways.should_receive(:get_gateway).and_return(gateway)
+
         post "/assignments/#{assignment.id}/solutions/create", @params
         Solution.all.size.should be_equal(0)
         SolutionGenericFile.all.size.should be_equal(0)

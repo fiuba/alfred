@@ -26,6 +26,23 @@ describe Correction do
 	it { should respond_to( :grade ) }
 
 
+  describe "creation" do
+      before do
+        @correction = Correction.new(
+          :teacher => Factories::Account.teacher( "Yoda", "yoda@d.com"),
+          :solution => solution,
+          :public_comments => "public comment",
+          :private_comments => "private comment",
+          :grade => 9
+        )
+        @correction.save
+      end 
+
+      it "should have creating date equal to today" do
+        @correction.created_at.to_date.should == Date.today
+      end
+  end
+
   describe "invalid" do
 
     describe "duplicated correction" do

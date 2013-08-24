@@ -76,6 +76,7 @@ describe "CorrectionsController" do
         created_correction = Correction.all.last
         created_correction.teacher.should == teacher
         created_correction.solution.id.should == @second_solution.id
+        created_correction.created_at.to_date.should == Date.today.to_date
       end
     end
 

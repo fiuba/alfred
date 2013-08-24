@@ -1,6 +1,8 @@
 Alfred
 ======
 
+[![Build Status](https://travis-ci.org/fiuba/alfred.png?branch=develop)](https://travis-ci.org/fiuba/alfred)
+
 After cloning the repository:
 
 * Install dependencies: **_bundle install_**

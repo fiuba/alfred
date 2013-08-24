@@ -1,0 +1,28 @@
+<% error = @correction.errors.key?(:grade) && @correction.errors[:grade].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label t('corrections.form.public_comments'), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_area :public_comments, :class => 'span8', :autofocus => true %>
+  </div>
+</fieldset>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label I18n.translate('corrections.form.private_comments'), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_area :private_comments, :class => 'span8' %>
+  </div>
+</fieldset>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label t('corrections.form.grade'), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :grade, :class => 'input-large input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:grade) : "" %></span>
+  </div>
+</fieldset>
+<%= f.hidden_field :teacher_id, :value => current_account.id %>
+<div class="form-actions">
+  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+  &nbsp;
+  <%= f.submit t(:save_and_notify), :class => 'btn btn-info', :name => 'save_and_notify' %>
+  &nbsp;
+  <%= link_to pat(:cancel), url(:corrections, current_account.id, :index), :class => 'btn' %>
+</div>

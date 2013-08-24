@@ -1,0 +1,12 @@
+<div class="tabs-content">
+  <h2><%=  assignment_and_author_information(@correction) %> </h2>
+  <p class="lead"><%= solution_abridged_info(@correction.solution) %></p>
+  <p>
+  <a href="mailto:#"><%= @correction.solution.account.email %></a> | 
+  <%= @correction.solution.account.tag %>
+  </p>
+  <br>
+  <% form_for :correction, url(:corrections, :create, @correction.solution.id), :method => :post, :class => 'form-horizontal' do |f| %>
+    <%= partial 'corrections/form', :locals => { :f => f } %>
+  <% end %>
+</div>

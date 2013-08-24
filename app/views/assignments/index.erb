@@ -1,0 +1,56 @@
+<h2><%= t('assignments.title') %></h2>
+
+<% content_for :additional_css do %>
+  <%= stylesheet_link_tag 'editablegrid-2.0.1' %>
+<% end %>
+
+<ul class="nav nav-tabs">
+  <li class=active> 
+    <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index, :course_id => current_course.id) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %></li>
+</ul>
+<div class=tabs-content>
+  <table id="assigmentsGrid" class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th class=header> <%= t('assignments.name').capitalize %></th>
+        <th class=header> <%= t('assignments.deadline').capitalize %></th>
+        <th class=header><%= t('assignments.actions').capitalize %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @assignments.each do |assignment| %>
+        <tr class=list-row>
+          <td> <%= assignment.name %> </td>
+          <td> <%= l assignment.deadline.to_date %> </td>
+          <td class="list-column list-row-action">
+            <div class='list-row-action-wrapper'>
+              <%= link_to tag_icon(:edit), :href => url(:assignments, :edit, :id => assignment.id, :course_id => current_course.id), :rel => :tooltip, :title => "#{pat(:edit)} assignment", :class => 'list-row-action-wrapper-link' %>
+              <%- link_to :href => url(:assignment, :file, :download, :assignment_id => assignment.id), :rel => :tooltip, :title => t('assignments.download_file'), :class => 'list-row-action-wrapper-link' do %>
+                <i class='icon-file'></i>
+              <% end %>
+              <%- link_to :href => url(:assignments, :students, :assignment_id => assignment.id), :rel => :tooltip, :title => t('assignments.show_corrections'), :class => 'list-row-action-wrapper-link' do %>
+                <i class='icon-ok-sign'></i>
+              <% end %>
+              <%- link_to :href => url(:reporters, :gradings, :assignment_id => assignment.id), 
+                      :rel => :tooltip, :title => t('assignments.export_to_csv'), 
+                      :class => 'list-row-action-wrapper-link' do %>
+                <i class='icon-save'></i>
+              <% end %>
+              <%- form_tag url(:assignments, :destroy, :id => assignment.id, :course_id => current_course.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.delete.confirm') }, :style => 'display:inline' do %>
+                <button type='submit' title="<%= t('assignments.delete.title') %>" rel='tooltip' class="btn btn-mini btn-danger">
+                  <i class='icon-white icon-trash'></i>
+                </button>
+              <% end %>
+             </div>
+          </td>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<% content_for :additional_js do %>
+  <%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
+  <%= javascript_include_tag 'assignments_index.js' %>
+<% end %>

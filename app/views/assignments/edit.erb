@@ -1,0 +1,12 @@
+<h2><%= t('assignments.title') %></h2>
+
+<ul class="nav nav-tabs">
+  <li> <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index, :course_id => current_course.id) %></li>
+  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %></li>
+  <li class="active"> <%= link_to tag_icon(:edit, pat(:edit)), url(:assignments, :edit, :id => @assignment.id, :course_id => current_course.id) %></li>
+</ul>
+<div class="tabs-content">
+  <% form_for :assignment, url(:assignments, :update, :id => @assignment.id, :course_id => current_course.id), :method => :put, :class => 'form-horizontal', :multipart => true do |f| %>
+    <%= partial 'assignments/form', :locals => { :f => f } %>
+  <% end %>
+</div>

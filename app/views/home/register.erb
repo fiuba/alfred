@@ -1,0 +1,65 @@
+<h1><%= t(:registration).capitalize %></h1>
+<hr/>
+  <% form_for :account, url(:register), :class => 'form-horizontal' do |f| %>
+
+<% error = @account.errors.key?(:name) && @account.errors[:name].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label t(:name), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :name, :class => 'input-xlarge input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= error ? f.error_message_on(:name) : "" %></span>
+  </div>
+</fieldset>
+<% error = @account.errors.key?(:surname) && @account.errors[:surname].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label t(:surname), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :surname, :class => 'input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:surname) : "" %></span>
+  </div>
+</fieldset>
+<% error = @account.errors.key?(:buid) && @account.errors[:buid].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label t(:buid), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :buid, :class => 'input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:buid) : "" %></span>
+  </div>
+</fieldset>
+<% error = @account.errors.key?(:email) && @account.errors[:email].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :email, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :email, :class => 'input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:email) : "" %></span>
+  </div>
+</fieldset>
+<% error = @account.errors.key?(:tag) && @account.errors[:tag].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label t(:tag), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :tag, :class => 'input-xlarge input-with-feedback', :placeholder => 'mie - jt - jn'%>
+    <span class='help-inline'><%= error ? f.error_message_on(:tag) : "" %></span>
+  </div>
+</fieldset>
+<% error = @account.errors.key?(:password) && @account.errors[:password].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label t(:password), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.password_field :password, :class => 'input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:password) : "" %></span>
+  </div>
+</fieldset>
+<% error = @account.errors.key?(:password_confirmation) && @account.errors[:password_confirmation].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label t(:password_confirmation), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.password_field :password_confirmation, :class => 'input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= error ? f.error_message_on(:password_confirmation) : "" %></span>
+  </div>
+</fieldset>
+
+<div class="form-actions">
+  <%= f.submit t(:create_account), :class => 'btn btn-primary' %>
+</div>
+ <% end %>

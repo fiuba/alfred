@@ -1,0 +1,16 @@
+<% error = @solution.errors.key?(:file) && @solution.errors[:file].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label I18n.translate('solutions.form.file'), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.file_field :file, :class => 'input-large input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= error ? f.error_message_on(:file) : t('solution.upload_help') %></span>
+  </div>
+</fieldset>
+<%= f.hidden_field :account_id, :value => current_account.id %>
+<%= f.hidden_field :assignment_id, :value => @assignment.id %>
+
+<div class="form-actions">
+  <%= f.submit pat(:save), :class => 'btn btn-info', :name => 'save_and_continue' %>
+  &nbsp;
+  <%= link_to pat(:cancel), url(:solutions, :index, @assignment.id, current_account.id), :class => 'btn' %>
+</div>

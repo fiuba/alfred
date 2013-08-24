@@ -1,0 +1,242 @@
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+es:
+  registration: 'registración'
+  name: 'nombre'
+  surname: 'apellido'
+  buid: 'padrón'
+  tag: 'turno'
+  password: 'contraseña'
+  password_confirmation: 'confirmación de contraseña'
+  email: 'email'
+  create_account: 'Crear cuenta'
+  account_created: 'Cuenta creada'
+  account_creation_error: 'No se pudo crear la cuenta'
+  sign_in: 'iniciar sesión'
+  create_account: 'crear cuenta'
+  back: 'atrás'
+  student: 'Alumno'
+  test_result: 'Prueba automática'
+  grade: 'nota'
+  my_corrections: 'Mis correcciones'
+  save_and_notify: 'Guardar y notificar'
+  new: 'Nueva'
+  solution:
+    new: 'entregar solución'
+    all: 'ver todas las soluciones'
+    upload_help: ''
+  menu:
+    assigments: 'Trabajos prácticos'
+    students: 'Alumnos'
+    submissions: 'Mis entregas'
+    corrections: 'Mis correcciones'
+  solutions:
+    delivered_for: 'soluciones entregadas para'
+    student: 'Alumno:'
+    errors:
+      upload_failed: 'Error al intentar subir el archivo'
+      delete_failed: 'Error al intentar borrar el archivo'
+      file_absent: 'Debe seleccionar archivo'
+    form:
+      file: 'Archivo a entregar'
+      assignment: 'Trabajo práctico'
+    grid:
+      file: 'Archivo entregado'
+      assignment: 'Trabajo práctico'
+      submission_date: 'Fecha de la entrega'
+      view_correction: 'Ver corrección'
+      correction_unavailable: 'Corrección no disponible'
+      correction_status: 'Estado de la corrección'
+    test_result: 'Resultado pruebas'
+  corrections:
+    title_all: 'Entregas para'
+    edit: 'Corregir'
+    download_solution_link: 'Descargar solución'
+    download_assignment_link: 'Descargar TP'
+    submission_date: 'Fecha de entrega'
+    form:
+      public_comments: 'Comentarios públicos'
+      private_comments: 'Comentarios privados'
+      grade: 'Calificación'
+    grid:
+      last_update: 'Última actualización'
+      public_comment: 'Comentario público'
+      private_comment: 'Comentario privado'
+      grade: 'Calificación'
+      solution: 'Trabajo práctico'
+      actions: 'Acciones'
+    grid_all:
+      class: 'Turno'
+      student_name: 'Nombre'
+      upload_date: 'Fecha de entrega'
+      teacher_assigned: 'Corrector'
+      status: 'Estado'
+      actions:
+        assign_to_me: 'Asignarmelo a mi'
+        view_solutions: 'Ver soluciones'
+    show:
+      title: 'Corrección para'
+      submission_date: 'Fecha de entrega:'
+      teacher: 'Corrector:'
+      grade: 'Calificación:'
+      comments: 'Comentarios:'
+    creation_succeeded: 'El TP fue asignado correctamente'
+    no_solutions_found: 'El alumno no presentó ninguna solución para el TP'
+    solution_already_assigned: 'La solución ya fue asignada a otro docente'
+  my_assigments: 'Mis trabajos prácticos'
+  my_solutions: 'Mis entregas'
+  assignment: 'Trabajo práctico'
+  status: 'Estado'
+  students:
+    solutions: 'soluciones'
+    view_assignments_status: 'Ver estado de los TP'
+  lastest_solution_date: 'Ultima entrega'
+  deadline_date: 'Fecha de vencimiento'
+  corrector: 'Corrector'
+  actions: 'acciones'
+  solution_pending: 'Entrega pendiente'
+  correction_pending: 'Corrección pendiente'
+  correction_passed: 'Aprobado'
+  correction_failed: 'Desaprobado'
+  correction_in_progress: 'En progreso'
+  not_available: 'No disponible'
+  passed: 'Pruebas exitosas'
+  failed: 'Pruebas fallaron'
+  grading_report:
+    course: 'Curso'
+    shift: 'Turno'
+    buid: 'Padron'
+    student: 'Estudiante'
+    solution_date: 'Fecha solución'
+    assignment: 'TP'
+    correction_date: 'Fecha corrección'
+    grade: 'Nota'
+    teacher: 'Docente'
+    status: 'Estado'
+  date:
+    abbr_day_names:
+    - dom
+    - lun
+    - mar
+    - mié
+    - jue
+    - vie
+    - sáb
+    abbr_month_names:
+    -
+    - ene
+    - feb
+    - mar
+    - abr
+    - may
+    - jun
+    - jul
+    - ago
+    - sep
+    - oct
+    - nov
+    - dic
+    day_names:
+    - domingo
+    - lunes
+    - martes
+    - miércoles
+    - jueves
+    - viernes
+    - sábado
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%d de %B de %Y'
+      short: ! '%d de %b'
+    placeholder:
+      default: ! 'dd/mm/aaaa'
+    month_names:
+    -
+    - enero
+    - marzo
+    - febrero
+    - abril
+    - mayo
+    - junio
+    - julio
+    - agosto
+    - septiembre
+    - octubre
+    - noviembre
+    - diciembre
+    order:
+    - :day
+    - :month
+    - :year
+  time:
+    formats:
+      default: ! '%d/%m/%Y %H:%M'
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: "hace una hora"
+        other: "hace %{count} horas"
+      about_x_months:
+        one: "hace aproximadamente un mes"
+        other: "hace aproximadamente %{count} meses"
+      about_x_years:
+        one: "hace aproximadamente un año"
+        other: "hace aproximadamente %{count} años"
+      almost_x_years:
+        one: "hace casi un año"
+        other: "hace casi %{count} años"
+      half_a_minute: "hace menos de un minuto"
+      less_than_x_minutes:
+        one: "hace menos de un minuto"
+        other: "hace menos de %{count} minutos"
+      less_than_x_seconds:
+        one: "hace menos de un segundo"
+        other: "hace menos de %{count} segundos"
+      over_x_years:
+        one: "hace más de un año"
+        other: "hace más de %{count} años"
+      x_days:
+        one: "hace un día"
+        other: "hace %{count} días"
+      x_minutes:
+        one: "hace un minuto"
+        other: "hace %{count} minutos"
+      x_months:
+        one: "hace un mes"
+        other: "hace %{count} meses"
+      x_seconds:
+        one: "hace un segundo"
+        other: "hace %{count} segundos"
+    prompts:
+      day: Día
+      hour: Hora
+      minute: Minutos
+      month: Mes
+      second: Segundos
+      year: Año
+  assignments:
+    actions: Acciones
+    title: Trabajos Prácticos
+    name: Nombre
+    deadline: Fecha límite
+    course: Curso
+    delete: 
+      title: Borrar
+      confirm: ¿Está seguro que desea eliminar el trabajo práctico?
+    download_file: Bajar archivo
+    show_files: Archivos
+    show_corrections: Correcciones
+    export_to_csv: Exportar hoja de cálculo
+    files: 
+      title: Archivos asociados a
+      name: Nombre
+      download_link: Descargar
+      delete: 
+        title: Borrar
+        confirm: ¿Está seguro que desea eliminar el archivo?
+        success: Archivo borrado exitosamente
+        failure: El archivo no pudo ser borrado
+      new:
+        title: Nuevo Archivo
+  account:
+    errors:
+      biud: 'El padron es obligatorio'

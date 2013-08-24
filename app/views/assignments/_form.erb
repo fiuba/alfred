@@ -1,0 +1,67 @@
+<% error = @assignment.errors.key?(:name) && @assignment.errors[:name].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :name, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :name, :class => 'input-xlarge input-with-feedback', :autofocus => true %>
+    <span class='help-inline'><%= f.error_message_on(:name) if error %></span>
+  </div>
+</fieldset>
+<% error = @assignment.errors.key?(:test_script) && @assignment.errors[:test_script].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :test_script, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_area :test_script, :class => 'input-xxlarge input-with-feedback', :rows => 10 %>
+    <span class='help-inline'><%= f.error_message_on(:test_script)  if error %></span>
+  </div>
+</fieldset>
+<% error = @assignment.errors.key?(:deadline) && @assignment.errors[:deadline].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :deadline, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_field :deadline,                                                     \
+                     :id => 'assignment_deadline',                                  \
+                     :value => f.object.deadline.try(:strftime, t('date.formats.default')), \
+                     :class => 'span3 input-xlarge input-with-feedback',                  \
+                     :placeholder => t('date.placeholder.default') %>
+    <a href="#" id="assignment_deadline_button" class="add-on"><i class="icon-calendar"></i></a>
+    <span class='help-inline'><%= f.error_message_on(:deadline) if error %></span>
+  </div>
+</fieldset>
+<% error = @assignment.errors.key?(:course_id) && @assignment.errors[:course_id].count > 0 %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :file, :class => 'control-label' %>
+  <div class='controls'>
+    <%= file_field_tag 'assignment_file[file]', :class => 'input-large input-with-feedback file', :autofocus => true, :style => "display: #{@assignment.assignment_file.nil? ? 'block' : 'none'}", :disabled => !@assignment.assignment_file.nil? %>
+    
+    <% if !@assignment.assignment_file.nil? %>
+      <span class='assignment-file'><%= @assignment.assignment_file.name %></span>
+      <button type='submit' title="<%= t('assignments.files.delete.title') %>" rel='tooltip' class="btn btn-mini btn-danger delete-file" data-url="<%= url(:assignment, :file, :destroy, :assignment_id => @assignment.id, :id => @assignment.assignment_file.id) %>" data-confirmation="<%= t('assignments.files.delete.confirm') %>">
+        <i class='icon-white icon-trash'></i>
+      </button>
+    <% end %>
+    <span class='help-inline'><%= f.error_message_on(:deadline) if error %></span>
+  </div>
+</fieldset>
+
+<div class="form-actions">
+  <%= f.submit pat(:save), :class => 'btn btn-primary' %>
+  &nbsp;
+  <%= f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue' %>
+  &nbsp;
+  <%= link_to pat(:cancel), url(:assignments, :index, :course_id => current_course.id), :class => 'btn' %>
+</div>
+
+<% content_for :additional_js do %>
+  <% if Padrino.env == :production %>
+    <%= javascript_include_tag 'jquery-ui/jquery-ui.min.js' %>
+  <% else %>
+    <%= javascript_include_tag 'jquery-ui/jquery-ui.js' %>
+  <% end %>
+
+  <%= javascript_include_tag 'assignment_deadline_datepicker.js' %>
+  <%= javascript_include_tag 'assignments_edit.js' %>
+<% end %>
+
+<% content_for :additional_css do %>
+<%= stylesheet_link_tag 'jquery-ui.css' %>
+<% end %>

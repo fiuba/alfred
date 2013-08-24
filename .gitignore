@@ -1,3 +1,14 @@
+*.my
+.idea
+.DS_Store
+locals/*
+log/*
+tmp/**/*
+bin/*
+vendor/gems/*
+!vendor/gems/cache/
+.sass-cache/*
+db/*.db
 *.gem
 *.rbc
 .bundle
@@ -7,12 +18,19 @@ InstalledFiles
 lib/bundler/man
 pkg
 rdoc
+reports
 spec/reports
 test/tmp
 test/version_tmp
 tmp
+:memory
+.env
 
 # YARD artifacts
 .yardoc
 _yardoc
 doc/
+
+# Temporary vim files
+*.sw*
+*~

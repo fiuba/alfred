@@ -1,0 +1,31 @@
+<div class="well form-search">
+  <input type="text" class="input-medium search-query" id="filter" placeholder="tipea para filtrar">
+</div>
+
+<table id="studentsGrid" class="table table-bordered table-striped table-hover"">
+	<tr>
+		<th><%= t('buid').capitalize %></th>
+		<th><%= t('name').capitalize %></th>
+		<th><%= t('email').capitalize %></th>
+		<th><%= t('tag').capitalize %></th>
+		<th><%= t('actions').capitalize %></th>
+	</tr>
+	<% @students.each do |s|%>
+	<tr id="<%= s.id %>">
+		<td><%= s.buid %></td>
+		<td><%= s.full_name %></td>
+		<td><%= s.email %></td>
+		<td><%= s.tag %></td>
+		<td>
+			<%- link_to :href => "/courses/#{current_course.name}/students/#{s.id}/assignments", :rel => :tooltip, :title => t('students.view_assignments_status'), :class => 'list-row-action-wrapper-link' do %>
+				<i class="icon-zoom-in"></i>
+			<% end %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+
+<% content_for :additional_js do %>
+	<%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
+  <%= javascript_include_tag 'students_index.js' %>
+<% end %>

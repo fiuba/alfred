@@ -1,0 +1,3 @@
+<li><%= link_to t('menu.students'), url(:students, :index, :course_id => current_course.name) %></li>
+<li><%= link_to t('menu.assigments'), url(:assignments, :index, :course_id => current_course.id) %></li>
+<li><%= link_to t('menu.corrections'), url( :corrections, :index, current_course.id) %></li>

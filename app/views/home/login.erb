@@ -1,0 +1,23 @@
+    <% form_tag url(:login), :class=>"form-horizontal" do %>
+      <div class="login-body modal-body">
+
+        <fieldset class="control-group">
+          <%= label_tag :email, :class => 'control-label' %>
+          <div class="login-controls controls"><%= email_field_tag :email, :value => params[:email], :autofocus => true %></div>
+        </fieldset>
+
+        <fieldset class="control-group">
+          <%= label_tag t(:password), :class => 'control-label' %>
+          <div class="login-controls controls"><%= password_field_tag :password, :value => params[:password] %></div>        
+        </fieldset>
+
+        <fieldset class="control-group">
+          <div class="login-controls controls"><%= submit_tag(t(:sign_in), :id => 'sign_in', :class => "btn btn-primary") %></div>
+        </fieldset>
+        <fieldset class="control-group">
+          <div class="login-controls controls">
+             <%= link_to t(:create_account), url(:register) %>
+          </div>
+        </fieldset>
+      </div>
+    <% end %>

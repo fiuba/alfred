@@ -1,0 +1,19 @@
+<h2><%= t('corrections.show.title').capitalize %> <%= @correction.solution.assignment.name %></h2>
+
+<dl class='correction-details'>
+	<dt><%= t('corrections.show.submission_date') %></dt>
+	<dd><%= l @correction.solution.created_at.to_datetime %></dd>
+
+	<dt><%= t('corrections.show.teacher') %></dt>
+	<dd><%= @correction.teacher.full_name %> (<%= mail_to @correction.teacher.email %>)</dd>
+
+	<dt><%= t('corrections.show.grade') %></dt>
+	<dd><%= @correction.grade %></dd>
+	
+	<dt><%= t('corrections.show.comments') %></dt>
+	<dd>
+		<div class='correction-comments'>
+			<%= (@correction.public_comments || "").gsub(/\n/, '<br/>').html_safe %>
+		</div>
+	</dd>
+</dl>

@@ -1,0 +1,43 @@
+<h2><%= t('solutions.delivered_for').capitalize %> <%= @assignment.name %></h2>
+<h3><%= t('solutions.student') %> <%= "(#{@student.buid}) #{@student.full_name}" %></h3>
+
+<table id="solutionsGrid" class="table table-bordered table-striped table-hover">
+	<tr>
+		<th><%= t('solutions.grid.submission_date') %></th>
+		<th><%= t('solutions.grid.file') %></th>
+		<th><%= t('solutions.test_result') %></th>
+    <th><%= t('solutions.grid.correction_status') %>
+		<th><%= t('actions').capitalize %></th>
+	</tr>
+	<% @solutions.each do |s| %>
+		<tr> 
+			<td><%= l s.created_at %></td>
+			<td><a href="<%= url_for(:solutions, :download, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
+			<td><%= t s.test_result %></a></td>
+      <td><%= t(s.correction.status) if s.correction %></td>
+			<td>
+				<% if s.correction %>
+					<%- link_to :href => url(:my, :show_correction, :assignment_id => @assignment.id, :correction_id => s.correction.id), :rel => :tooltip, :title => t('solutions.grid.view_correction'), :class => 'list-row-action-wrapper-link' do %>
+						<i class='icon-ok-sign'></i>
+					<% end %>
+          <% if s.correction.teacher == current_account %>
+            <%- link_to :href => url(:corrections, :edit, s.correction.id), :rel => :tooltip, :title => t('corrections.edit') do %>
+              <i class='icon-edit'></i>
+            <% end %>
+          <% end %>
+				<% else %>
+					<span class="list-row-action-wrapper-link" data-original-title="<%= t('solutions.grid.correction_unavailable') %>" title="" rel="tooltip">
+	    			<i class='icon-ok-sign'></i>
+	    		</span>
+          <%- link_to :href => url(:corrections, :new, s.id), :rel => :tooltip, :title => t('corrections.edit') do %>
+            <i class='icon-edit'></i>
+          <% end %>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+</table>
+<% content_for :additional_js do %>
+	<%= javascript_include_tag 'editablegrid-2.0.1.js' %>
+	<%= javascript_include_tag 'solutions_index.js' %>
+<% end %>

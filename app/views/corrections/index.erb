@@ -1,0 +1,45 @@
+<h1><%= t('my_corrections')%></h1>
+
+<div class="well form-search">
+  <input type="text" class="input-medium search-query" id="filter" placeholder="tipea para filtrar">
+</div>
+
+
+<table id="correctionsGrid" class="table table-bordered table-striped table-hover">
+	<tr>
+    <th><%= t('assignment').capitalize %></th>
+    <th><%= t('buid').capitalize %></th>
+    <th><%= t('name').capitalize %></th>
+    <th><%= t('test_result').capitalize %></th>
+    <th><%= t('status').capitalize %></th>
+    <th><%= t('grade').capitalize %></th>
+    <th><%= t('corrections.grid.actions').capitalize %></th>
+	</tr>
+	<% @corrections.each do |c| %>
+		<tr> 
+      <td><%= c.solution.assignment.name %></td>
+      <td><%= c.solution.account.buid %></td>
+      <td><%= c.solution.account.full_name %></td>
+      <td><%= c.solution.test_result %></td>
+      <td><%= t c.status %></td>
+      <td><%= c.grade %></td>
+      <td>
+        <a title="<%= t('corrections.download_solution_link') %>" href="<%= solution_file_url(c) %>" rel='tooltip'><i class='icon-download icon-white'></i></a>
+				<%- link_to :href => url(:assignment, :file, :download, :assignment_id => c.solution.assignment.id), :rel => :tooltip, :title => t('corrections.download_assignment_link'), :class => 'list-row-action-wrapper-link' do %>
+          <i class='icon-file'></i>
+        <% end %>
+        <%- link_to url(:corrections, :edit, c.id), :rel => :tooltip, :title => t('corrections.edit') do %>
+          <i class='icon-edit'></i>
+        <% end %>
+        <%- link_to :href => url(:solutions, :index, :assignment_id => c.solution.assignment.id, :student_id => c.solution.account.id), :rel => :tooltip, :title => t('solution.all'), :class => 'list-row-action-wrapper-link' do %>
+          <i class='icon-list'></i>
+        <% end %>
+      </td>
+		</tr>
+	<% end %>
+</table>
+
+<% content_for :additional_js do %>
+  <%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
+  <%= javascript_include_tag 'corrections_index.js' %>
+<% end %>

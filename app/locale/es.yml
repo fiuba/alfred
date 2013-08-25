@@ -100,7 +100,8 @@ es:
   correction_in_progress: 'En progreso'
   not_available: 'No disponible'
   passed: 'Pruebas exitosas'
-  failed: 'Pruebas fallaron'
+  failed: 'Pruebas fallidas'
+  undefined: 'Ejecución fallida'
   grading_report:
     course: 'Curso'
     shift: 'Turno'

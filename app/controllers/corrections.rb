@@ -10,7 +10,7 @@ Alfred::App.controllers :corrections do
   before :edit, :update do
     @correction = Correction.get(params[:id])
   end
-  
+
   get :index, :parent => :courses do
 		@corrections = Correction.all(:teacher => @teacher)
     render 'corrections/index'
@@ -23,14 +23,16 @@ Alfred::App.controllers :corrections do
   end
 
 	post :create, :parent => :solution do
-    solution  = Solution.get(params[:solution_id])
+		@correction = Correction.create(params[:correction].merge({ 'solution_id' => params[:solution_id], 'teacher_id' => current_account.id }))
 
-		@correction = Correction.create(:solution => solution, :teacher => current_account)
-
-    flash[:success] = pat(:create_success, :model => 'Corrección', :id =>  "#{@correction.id}")
-    params[:save_and_continue] ?
-      redirect(url(:corrections, @correction.teacher.id, :index)) :
-      redirect(url(:corrections, :edit, :id => @correction.id))
+    if @correction.saved?
+      flash[:success] = pat(:create_success, :model => 'Corrección', :id =>  "#{@correction.id}")
+      params[:save_and_continue] ?
+        redirect(url(:corrections, @correction.teacher.id, :index)) :
+        redirect(url(:corrections, :edit, :id => @correction.id))
+    else
+      render 'corrections/new'
+    end
 	end
 
   post :assign_to_teacher, :provides => :json, :with => [:student_id, :assignment_id, :teacher_id] do
@@ -63,7 +65,7 @@ Alfred::App.controllers :corrections do
       if @correction.update(params[:correction])
         flash[:success] = pat(:update_success, :model => 'Corrección', :id =>  "#{params[:id]}")
         if (params[:save_and_notify])
-          deliver(:notification, :correction_result, @correction)          
+          deliver(:notification, :correction_result, @correction)
         end
         redirect(url(:corrections, @correction.teacher.id, :index))
       else

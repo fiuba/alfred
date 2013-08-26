@@ -35,7 +35,7 @@ describe "CorrectionsController" do
 
   describe "create" do
     before do
-      @params = { 
+      @params = {
         :student_id => solution.account.id,
         :assignment_id => assignment.id
       }
@@ -80,9 +80,32 @@ describe "CorrectionsController" do
       end
     end
 
+    it "should display error message if correction cannot be created" do
+      failed_correction_double = double(:id => nil, :errors => {:grade => ['cannot be blank']}, :solution => solution)
+      failed_correction_double.should_receive(:saved?).and_return(false)
+      Correction.should_receive(:create).with(any_args).and_return(failed_correction_double)
+      Alfred::App.any_instance.stub(:current_account).and_return(teacher)
+
+      correction_params = { :public_comments => 'my public comment', :private_comments => 'my private comment', :grade => '10' }
+      post '/solution/1/corrections/create', { :correction => correction_params }
+    end
+
+    it "should create a new correction" do
+      teacher = Factories::Account.teacher
+      correction_double = double(:id => 101, :saved? => true)
+      Correction
+        .should_receive(:create)
+        .with({"public_comments"=>"my public comment", "private_comments"=>"my private comment", "grade"=>"10", "teacher_id"=>"123", 'solution_id'=>"1", 'teacher_id'=>teacher.id})
+        .and_return(correction_double)
+      Alfred::App.any_instance.stub(:current_account).and_return(teacher)
+
+      correction_params = { :public_comments => 'my public comment', :private_comments => 'my private comment', :grade => '10' }
+      post '/solution/1/corrections/create', { :correction => correction_params }
+    end
+
   end
 
-  describe "edit" do 
+  describe "edit" do
     it "should render index content" do
       correction = Factories::Correction.correctsBy( solution, teacher )
       Correction.should_receive(:get).with(correction.id.to_s)
@@ -100,8 +123,8 @@ describe "CorrectionsController" do
       @public_comments = "public new comments"
       @private_comments = "private new comments"
 
-      @params = { 
-        :correction => { 
+      @params = {
+        :correction => {
             :solution_id => solution.id,
             :public_comments => @public_comments,
             :private_comments => @private_comments,

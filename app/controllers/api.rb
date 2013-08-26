@@ -24,7 +24,8 @@ Alfred::App.controllers :api do
     solution.test_result = params[:test_result]
     solution.test_output = params[:test_output]
     solution.save
-    deliver(:notification, :solution_test_result, solution)  
+    deliver(:notification, :solution_test_result, solution) \
+      if MailNotifierConfig.has_to_send_notification_of_test_result
   end
 
 end

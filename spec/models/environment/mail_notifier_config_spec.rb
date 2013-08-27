@@ -26,7 +26,8 @@ describe "MailNotifierConfig" do
 
   describe "has_to_send_notification_of_test_result" do
     describe "environment variable is not set" do
-      it { MailNotifierConfig.has_to_send_notification_of_test_result.should == true }
+      it { MailNotifierConfig
+            .has_to_prevent_notification_for(:test_result).should == false }
     end
 
     describe "environment variable is set" do
@@ -34,7 +35,8 @@ describe "MailNotifierConfig" do
         ENV['MAIL_PREVENT_NOTIFICATION_FOR'] = 'test_result'
       end
 
-      it { MailNotifierConfig.has_to_send_notification_of_test_result.should == false }
+      it { MailNotifierConfig
+            .has_to_prevent_notification_for( :test_result ).should == true }
     end
   end
 end

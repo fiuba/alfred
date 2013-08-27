@@ -8,11 +8,13 @@
 #
 class MailNotifierConfig
 
-  VARIABLE_SEPARATOR = ','
-
-  def self.has_to_send_notification_of_test_result
-    not stored_values(ENV['MAIL_PREVENT_NOTIFICATION_FOR']).include?(:test_result)
+  def self.has_to_prevent_notification_for( action )
+    stored_values(ENV['MAIL_PREVENT_NOTIFICATION_FOR']).include?( action )
   end
+
+  private
+
+  VARIABLE_SEPARATOR = ','
 
   def self.stored_values( content )
     value =  content || ""

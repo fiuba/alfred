@@ -22,7 +22,7 @@ class GradingReport
   end
 
   def self.report(assignment)
-    options = { :col_sep => ';', :headers => true }
+    options = { :col_sep => ';', :headers => true, :encoding => 'UTF-8' }
 
     CSV.generate(options) do |csv|
       csv << self.headers
@@ -42,33 +42,24 @@ class GradingReport
   end
 
   private
-    def self.last_correction_for_solution_by_student_for(student, assignment)
+    def self.latest_correction_for_solution_by_student_for(student, assignment)
       solutions = Solution.all(:account => student, :assignment => assignment)
+      solutions = solutions.select { |s| s.correction }
       solutions.sort_by! { |s| s.created_at }
-      last_solution = solutions.last
-
-      # Responses nil if there aren't solutions or correction of 
-      # last solution doesn't exist
-      if last_solution.nil? or last_solution.correction.nil?
-        return nil
-      end
-
-      last_solution.correction
+      return nil if solutions.empty?
+      solutions.last.correction
     end
 
     def self.correction_teacher(student, assignment)
-      if last_correction_for_solution_by_student_for(student, assignment).nil?
-        return nil
-      end
-      last_correction_for_solution_by_student_for(student, assignment).teacher.prety_full_name
+      latest_correction = latest_correction_for_solution_by_student_for(student, assignment)
+      return '' if latest_correction.nil?
+      latest_correction.teacher.prety_full_name
     end
 
     def self.correction_grading(student, assignment)
-      if last_correction_for_solution_by_student_for(student, assignment).nil? or
-         last_correction_for_solution_by_student_for(student, assignment).grade.nil?
-        return nil
-      end
-      last_correction_for_solution_by_student_for(student, assignment).grade
+      latest_correction = latest_correction_for_solution_by_student_for(student, assignment)
+      return '' unless (latest_correction and not latest_correction.grade.nil?)
+      latest_correction.grade
     end
 
     def self.format_date( date )

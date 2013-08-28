@@ -17,15 +17,8 @@ class MailNotifierConfig
   VARIABLE_SEPARATOR = ','
 
   def self.stored_values( content )
-    value =  content || ""
-    value.split(VARIABLE_SEPARATOR).collect do |value| 
-      begin
-        value.to_sym
-      rescue
-        ''
-      end
-    end
+    content ||= ''
+    content.split(VARIABLE_SEPARATOR).map(&:to_sym)
   end
-
   
 end

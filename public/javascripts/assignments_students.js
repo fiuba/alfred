@@ -10,7 +10,9 @@ $(document).ready(function() {
     { name: "Nombre", datatype: "string" },
     { name: "Fecha de entrega", datatype: "date" },
     { name: "Estado", datatype: "string" },
-    { name: "Corrector", datatype: "string" }]});
+    { name: "Corrector", datatype: "string" },
+    { name: "Acciones", datatype: "html", editable: false }
+  ]});
 
   // then we attach to the HTML table and render it
   editableGrid.attachToHTMLTable('correctionsGrid');

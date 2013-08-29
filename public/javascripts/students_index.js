@@ -1,12 +1,13 @@
 window.onload = function() {
-				editableGrid = new EditableGrid("DemoGridAttach"); 
+				editableGrid = new EditableGrid("DemoGridAttach");
 
 				// we build and load the metadata in Javascript
 				editableGrid.load({ metadata: [
 					{ name: "Padron", datatype: "string" },
 					{ name: "Nombre", datatype: "string" },
 					{ name: "Email", datatype: "string" },
-					{ name: "Turno", datatype: "string" }
+					{ name: "Turno", datatype: "string" },
+          { name: "Acciones", datatype: "html", editable: false }
 				]});
 
 				// then we attach to the HTML table and render it
@@ -16,5 +17,5 @@ window.onload = function() {
 
 		    // filter when something is typed into filter
 		    _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); };
-				
-			} 
+
+			}

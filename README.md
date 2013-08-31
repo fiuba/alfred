@@ -19,6 +19,7 @@ Note: the current implementation depends on Dropbox to store assignments files, 
 * DROPBOX_AUTH_TOKEN_KEY
 * DROPBOX_AUTH_TOKEN_SECRET
 
+There is a new variable which affects sending mails to student at time test result status is received.  The variable is **MAIL_PREVENT_NOTIFICATION_FOR**.  If it's set to ***test_result*** then mails about test execution status will not be sent to student. Otherwise, mail notifier will work as heretofore.
 
 After performing these steps you can use the following users to log into the application:
 

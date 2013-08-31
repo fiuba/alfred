@@ -34,3 +34,6 @@ doc/
 # Temporary vim files
 *.sw*
 *~
+
+# nohup automatic output file
+nohup.out

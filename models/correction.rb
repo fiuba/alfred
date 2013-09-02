@@ -16,9 +16,9 @@ class Correction
   property :grade, Float
   property :teacher_id, Integer
   property :solution_id, Integer, :required => true, :unique => :solution
-	property :created_at, DateTime  
+	property :created_at, DateTime
   property :updated_at, DateTime
-	property :solution_id, 	Integer, 
+	property :solution_id, 	Integer,
 		:required => true, :unique => :solution
 
   validates_presence_of      :solution
@@ -39,8 +39,16 @@ class Correction
     Correction.create(:solution => latest, :teacher => teacher)
   end
 
+  def self.assigned_corrections_status(teacher)
+    assigned_corrections = repository(:default).adapter.select("SELECT DISTINCT s.account_id, s.assignment_id  FROM corrections c INNER JOIN solutions s ON s.id = c.solution_id WHERE c.teacher_id = #{teacher.id}")
+    assigned_corrections.collect do |ac|
+      student = Account.get(ac.account_id)
+      { :student => student, :assignment_status => student.status_for_assignment(Assignment.get(ac.assignment_id)) }
+    end
+  end
+
   def status
-    if grade.nil? 
+    if grade.nil?
       :correction_in_progress
     elsif approved?
       :correction_passed
@@ -50,12 +58,12 @@ class Correction
   end
 
   private
-  def is_a_teacher? 
-    if @teacher   
+  def is_a_teacher?
+    if @teacher
       return true if @teacher.is_teacher?
-    end 
+    end
 
     return [ false, 'Only a teacher is able to correct' ]
   end
-  
+
 end

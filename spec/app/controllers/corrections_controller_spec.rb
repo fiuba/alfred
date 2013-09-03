@@ -24,11 +24,12 @@ describe "CorrectionsController" do
     end
 
     it "should render index content" do
-      Correction.should_receive(:all)
-        .with(:teacher => teacher)
+      Correction.should_receive(:assigned_corrections_status)
+        .with(teacher)
         .and_return([])
       Alfred::App.any_instance.should_receive(:render)
-        .with('corrections/index').and_return({})
+        .with('corrections/index')
+
       get "/courses/#{algorithm.id}/corrections"
     end
   end

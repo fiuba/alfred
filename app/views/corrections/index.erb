@@ -15,23 +15,31 @@
     <th><%= t('grade').capitalize %></th>
     <th><%= t('corrections.grid.actions').capitalize %></th>
 	</tr>
-	<% @corrections.each do |c| %>
-		<tr> 
-      <td><%= c.solution.assignment.name %></td>
-      <td><%= c.solution.account.buid %></td>
-      <td><%= c.solution.account.full_name %></td>
-      <td><%= c.solution.test_result %></td>
-      <td><%= t c.status %></td>
-      <td><%= c.grade %></td>
+	<% @assigned_corrections.each do |ac| %>
+		<tr>
+      <td><%= ac.assignment_name %></td>
+      <td><%= ac.student_buid %></td>
+      <td><%= ac.student_full_name %></td>
+      <td><%= ac.solution_test_result %></td>
+      <td><%= t ac.status %></td>
+      <td><%= ac.grade %></td>
       <td>
-        <a title="<%= t('corrections.download_solution_link') %>" href="<%= solution_file_url(c) %>" rel='tooltip'><i class='icon-download icon-white'></i></a>
-				<%- link_to :href => url(:assignment, :file, :download, :assignment_id => c.solution.assignment.id), :rel => :tooltip, :title => t('corrections.download_assignment_link'), :class => 'list-row-action-wrapper-link' do %>
+        <%- link_to :href => url(:solutions, :download, :solution_id => ac.solution_id), :rel => :tooltip, :title => t('corrections.download_solution_link'), :class => 'list-row-action-wrapper-link' do %>
+          <i class='icon-download icon-white'></i>
+        <% end %>
+				<%- link_to :href => url(:assignment, :file, :download, :assignment_id => ac.assignment_id), :rel => :tooltip, :title => t('corrections.download_assignment_link'), :class => 'list-row-action-wrapper-link' do %>
           <i class='icon-file'></i>
         <% end %>
-        <%- link_to url(:corrections, :edit, c.id), :rel => :tooltip, :title => t('corrections.edit') do %>
-          <i class='icon-edit'></i>
+        <% if ac.correction_id %>
+          <%- link_to url(:corrections, :edit, ac.correction_id), :rel => :tooltip, :title => t('corrections.edit'), :class => 'list-row-action-wrapper-link' do %>
+            <i class='icon-edit'></i>
+          <% end %>
+        <% else %>
+          <%- link_to :href => url(:corrections, :new, ac.solution_id), :rel => :tooltip, :title => t('corrections.edit') do %>
+            <i class='icon-edit'></i>
+          <% end %>
         <% end %>
-        <%- link_to :href => url(:solutions, :index, :assignment_id => c.solution.assignment.id, :student_id => c.solution.account.id), :rel => :tooltip, :title => t('solution.all'), :class => 'list-row-action-wrapper-link' do %>
+        <%- link_to :href => url(:solutions, :index, :assignment_id => ac.assignment_id, :student_id => ac.student_id), :rel => :tooltip, :title => t('solution.all'), :class => 'list-row-action-wrapper-link' do %>
           <i class='icon-list'></i>
         <% end %>
       </td>

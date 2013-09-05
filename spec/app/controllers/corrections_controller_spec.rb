@@ -24,7 +24,7 @@ describe "CorrectionsController" do
     end
 
     it "should render index content" do
-      Correction.should_receive(:assigned_corrections_status)
+      CorrectionStatus.should_receive(:corrections_status_for_teacher)
         .with(teacher)
         .and_return([])
       Alfred::App.any_instance.should_receive(:render)

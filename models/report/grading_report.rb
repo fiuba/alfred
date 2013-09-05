@@ -17,7 +17,7 @@ class GradingReport
   def self.file_name(assignment)
     assignment_name = ""
     assignment_name = assignment.name unless assignment.nil?
-    assignment_name.gsub(' ', '-')
+    assignment_name.gsub!(' ', '-')
     "grading_report_for_#{assignment_name}.csv"
   end
 

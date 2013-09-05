@@ -39,14 +39,6 @@ class Correction
     Correction.create(:solution => latest, :teacher => teacher)
   end
 
-  def self.assigned_corrections_status(teacher)
-    assigned_corrections = repository(:default).adapter.select("SELECT DISTINCT s.account_id, s.assignment_id  FROM corrections c INNER JOIN solutions s ON s.id = c.solution_id WHERE c.teacher_id = #{teacher.id}")
-    assigned_corrections.collect do |ac|
-      student = Account.get(ac.account_id)
-      { :student => student, :assignment_status => student.status_for_assignment(Assignment.get(ac.assignment_id)) }
-    end
-  end
-
   def status
     if grade.nil?
       :correction_in_progress

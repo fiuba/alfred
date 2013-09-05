@@ -32,40 +32,19 @@ class GradingReport
         csv << [  assignment.course.name,
                   student.tag,
                   student.buid,
-                  student.prety_full_name,
+                  student.full_name,
                   I18n.t( assignment_status.status ),
                   format_date( assignment_status.latest_solution_date ),
-                  correction_grading(student, assignment),
-                  correction_teacher(student, assignment) ] 
+                  assignment_status.grade || '',
+                  assignment_status.corrector_name || '' ] 
       end
     end
   end
 
   private
-    def self.latest_correction_for_solution_by_student_for(student, assignment)
-      solutions = Solution.all(:account => student, :assignment => assignment)
-      solutions = solutions.select { |s| s.correction }
-      solutions.sort_by! { |s| s.created_at }
-      return nil if solutions.empty?
-      solutions.last.correction
-    end
-
-    def self.correction_teacher(student, assignment)
-      latest_correction = latest_correction_for_solution_by_student_for(student, assignment)
-      return '' if latest_correction.nil?
-      latest_correction.teacher.prety_full_name
-    end
-
-    def self.correction_grading(student, assignment)
-      latest_correction = latest_correction_for_solution_by_student_for(student, assignment)
-      return '' unless (latest_correction and not latest_correction.grade.nil?)
-      latest_correction.grade
-    end
-
     def self.format_date( date )
-      ( date.nil? ) ? "" :
-        date.strftime( I18n.t('date.formats.default') )
+      return '' if date.nil?
+      date.strftime( I18n.t('date.formats.default') )
     end
-    
 
 end

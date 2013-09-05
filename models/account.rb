@@ -127,8 +127,9 @@ class Account
   end
 
   def status_for_assignment(assignment)
-    solutions = Solution.all(:account => self, :assignment => assignment)
-    assignment_status = AssignmentStatus.new
+    solutions = Solution.all(:account => self, :assignment => assignment, \
+      :order => [ :created_at.asc ] )
+    assignment_status = AssignmentStatus.new 
     assignment_status.assignment_id = assignment.id
     assignment_status.name = assignment.name
     assignment_status.deadline = assignment.deadline
@@ -137,7 +138,6 @@ class Account
       assignment_status.solution_count = 0
       return assignment_status
     end
-    solutions.sort_by! { |s| s.created_at}
     assignment_status.solution_count = solutions.size
     assignment_status.status = :correction_pending
     assignment_status.latest_solution_date = solutions.last.created_at
@@ -145,6 +145,7 @@ class Account
       if s.correction
         assignment_status.corrector_name = s.correction.teacher.full_name
         assignment_status.status = s.correction.status
+        assignment_status.grade = s.correction.grade
       end
     end
     assignment_status

@@ -11,9 +11,9 @@ module Factories
       self.name( 'Vending Machine' )
     end
 
-    def self.tp0
-	    course = Factories::Course.algorithm
-      Alfred::Admin::Assignment.create(:name => 'TP 0', :course => course)
+    def self.tp( name = 'TP 0' )
+      Alfred::Admin::Assignment.create(:course => Factories::Course.algorithm, \
+        :name => name )
     end
 
     def self.withSolution

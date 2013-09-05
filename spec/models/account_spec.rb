@@ -33,29 +33,23 @@ describe Account do
 	end
 
 	describe 'status_for_assignment' do
+    let(:course)      { Factories::Course.algorithm }
+    let(:student)     { Factories::Account.student }
+    let(:assignment)  { Factories::Assignment.tp } 
 
 		describe 'solution_count' do
 
 			it 'should return 0 when there are no solutions submitted' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				student.status_for_assignment(assignment).solution_count.should eq 0
 			end
 
 			it 'should return 1 when there is a single solution submitted' do
-			  course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				solution = Solution.new( :assignment => assignment )
 				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).solution_count.should eq 1
 			end
 
 			it 'should return the count of multiple solutions submitted by the student for that assignment' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				solution1 = Solution.new( :assignment => assignment, :account => student )
 				solution2 = Solution.new( :assignment => assignment, :account => student )
 				Solution.should_receive(:all).and_return([ solution1, solution2 ])
@@ -67,16 +61,10 @@ describe Account do
 		describe 'latest_solution_date' do
 
 			it 'should return nil when there are no solutions submitted' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				student.status_for_assignment(assignment).latest_solution_date.should eq nil
 			end
 
 			it 'should return the date of the latest solution submitted by the student for that assignment' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 
 				solution1 = Solution.new( :assignment => assignment )
 				solution1.created_at = DateTime.now
@@ -97,25 +85,16 @@ describe Account do
 		describe 'status' do
 
 			it 'should return :solution_pending when there are no solutions submitted' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				student.status_for_assignment(assignment).status.should eq :solution_pending
 			end
 
 			it 'should return :correction_pending when a solution was submitted but was not corrected yet' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				solution = Solution.new( :assignment => assignment )
 				Solution.should_receive(:all).and_return([solution])
 				student.status_for_assignment(assignment).status.should eq :correction_pending
 			end
 
 			it 'should return :correction_in_progress when a solution was submitted, a corrector was assigned but correction is not graded' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
 				teacher = Account.new
 				correction = Correction.new(:solution => solution, :teacher => teacher)
@@ -126,9 +105,6 @@ describe Account do
 			end
 
 			it 'should return :correction_passed when a solution was submitted, corrected and passed' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
 				teacher = Account.new
 				correction = Correction.new(:solution => solution, :teacher => teacher)
@@ -139,9 +115,6 @@ describe Account do
 			end
 
 			it 'should return :correction_passed when there are several solutions but at least one passed' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				solution0 = Solution.new(:assignment => assignment)
 
 				solution1 = Solution.new(:assignment => assignment)
@@ -160,9 +133,6 @@ describe Account do
 			end
 
 			it 'should return :correction_failed when a solution was submitted, corrected and graded as failed' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
 				teacher = Account.new
 				correction = Correction.new(:solution => solution, :teacher => teacher)
@@ -173,9 +143,6 @@ describe Account do
 			end
 
 			it 'should return :correction_failed when several solutions were submitted, corrected and failed' do
-				course = Course.new( :name => "AlgoIII", :active => true )
-				student = Account.new( :email => "x@x.com", :role => "student", :buid => "?")
-				assignment = Assignment.new( :course => course )
 				solution = Solution.new(:assignment => assignment)
 				teacher = Account.new
 				correction = Correction.new(:solution => solution, :teacher => teacher)
@@ -190,6 +157,38 @@ describe Account do
 				Solution.should_receive(:all).and_return([solution, solution1])
 				student.status_for_assignment(assignment).status.should eq :correction_failed
 			end
+
+      describe "correction info" do
+        before (:all) do
+          @solution = Factories::Solution.for(assignment)
+          @teacher  = Factories::Account.teacher 
+        end
+
+        it "should not return neither grade nor teacher" do
+				  student.status_for_assignment(assignment).grade.should be_nil
+				  student.status_for_assignment(assignment).corrector_name.should be_nil
+        end
+
+        describe "with a correction" do
+          before (:all) do
+            @correction = Factories::Correction.correctsBy( @solution, @teacher )
+          end
+
+          it "should return both grading and teacher name" do
+            status = student.status_for_assignment(assignment)
+					  status.grade.should == 7.0
+					  status.corrector_name.should == @teacher.full_name
+          end
+
+          it "should return teacher name" do
+            @correction.grade = nil
+            @correction.save
+            status = student.status_for_assignment(assignment)
+            status.grade.should be_nil
+					  status.corrector_name.should == @teacher.full_name
+          end
+        end
+      end
 	  end
   end
 

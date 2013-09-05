@@ -7,7 +7,7 @@ describe "GradingReport" do
 
   before(:each) do
     DataMapper.auto_migrate!
-    @assignment = Factories::Assignment.tp0
+    @assignment = Factories::Assignment.tp
     @author     = Factories::Account.me_as_student
     @solution   = Factories::Solution.forBy( @assignment, @author )
   end
@@ -25,7 +25,7 @@ describe "GradingReport" do
         expected_row << @author.courses.first.name
         expected_row << @author.tag
         expected_row << @author.buid
-        expected_row << @author.prety_full_name()
+        expected_row << @author.full_name()
         expected_row << I18n.t(:correction_pending)
         expected_row << @solution.created_at.to_date.strftime( date_format )
         expected_row << ''
@@ -54,11 +54,11 @@ describe "GradingReport" do
         expected_row << @author.courses.first.name
         expected_row << @author.tag
         expected_row << @author.buid
-        expected_row << @author.prety_full_name()
+        expected_row << @author.full_name()
         expected_row << I18n.t(:correction_in_progress)
         expected_row << @solution.created_at.to_date.strftime( date_format )
         expected_row << ''
-        expected_row << @correction.teacher.prety_full_name()
+        expected_row << @correction.teacher.full_name()
 
 
         @reader.shift()       # It skips headers
@@ -100,11 +100,11 @@ describe "GradingReport" do
         expected_row << @author.courses.first.name
         expected_row << @author.tag
         expected_row << @author.buid
-        expected_row << @author.prety_full_name()
+        expected_row << @author.full_name()
         expected_row << I18n.t(:correction_passed)
         expected_row << @solution.created_at.to_date.strftime( date_format )
         expected_row << @correction.grade.to_s
-        expected_row << @correction.teacher.prety_full_name()
+        expected_row << @correction.teacher.full_name()
 
 
         @reader.shift()       # It skips headers
@@ -125,11 +125,11 @@ describe "GradingReport" do
           expected_row << @author.courses.first.name
           expected_row << @author.tag
           expected_row << @author.buid
-          expected_row << @author.prety_full_name()
+          expected_row << @author.full_name()
           expected_row << I18n.t(:correction_passed)
           expected_row << @solution.created_at.to_date.strftime( date_format )
           expected_row << @correction.grade.to_s
-          expected_row << @correction.teacher.prety_full_name()
+          expected_row << @correction.teacher.full_name()
 
           @reader.shift()       # It skips headers
           row = @reader.shift()

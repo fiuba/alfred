@@ -7,6 +7,7 @@ class AssignmentStatus
 	attr_accessor :status 
 	attr_accessor :name
 	attr_accessor :deadline
+	attr_accessor :grade
 
 	def can_be_assigned?
 		:correction_pending == self.status

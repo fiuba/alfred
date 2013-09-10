@@ -15,6 +15,8 @@ $(document).ready(function() {
   editableGrid.attachToHTMLTable('assigmentsGrid');
 
   editableGrid.renderGrid();
+
+  $("[rel='tooltip']").tooltip();
 });
 
 $("form.delete-form").submit(function() {

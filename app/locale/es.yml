@@ -220,18 +220,19 @@ es:
     name: Nombre
     deadline: Fecha límite
     course: Curso
-    delete: 
+    delete:
       title: Borrar
       confirm: ¿Está seguro que desea eliminar el trabajo práctico?
+    edit: Editar trabajo práctico
     download_file: Bajar archivo
     show_files: Archivos
     show_corrections: Correcciones
     export_to_csv: Exportar hoja de cálculo
-    files: 
+    files:
       title: Archivos asociados a
       name: Nombre
       download_link: Descargar
-      delete: 
+      delete:
         title: Borrar
         confirm: ¿Está seguro que desea eliminar el archivo?
         success: Archivo borrado exitosamente

@@ -5,6 +5,7 @@ describe Correction do
   let(:assignment) { Factories::Assignment.vending_machine }
 	let(:teacher) { Factories::Account.teacher }
 	let(:solution) { Factories::Solution.for(assignment) }
+  let(:student) { solution.account }
 
 	before (:each) do
 		DataMapper.auto_migrate!
@@ -13,7 +14,7 @@ describe Correction do
       :solution => solution,
       :public_comments => "public comment",
       :private_comments => "private comment",
-      :grade => 10 
+      :grade => 10
     )
 	end
 
@@ -36,7 +37,7 @@ describe Correction do
           :grade => 9
         )
         @correction.save
-      end 
+      end
 
       it "should have creating date equal to today" do
         @correction.created_at.to_date.should == Date.today
@@ -55,9 +56,9 @@ describe Correction do
           :private_comments => "private comment",
           :grade => 9
         )
-      end 
+      end
       it "should not be both corrections with the same teacher and solution" do
-        @duplicated_correction.should_not be_valid 
+        @duplicated_correction.should_not be_valid
       end
     end
 
@@ -89,7 +90,7 @@ describe Correction do
     end
   end
 
-  describe "valid" do 
+  describe "valid" do
     it { should be_valid }
 
 		it "should have the right teacher and solution" do
@@ -97,17 +98,17 @@ describe Correction do
 			@correction.solution.should == solution
 		end
 
-    describe "without grade" do 
+    describe "without grade" do
       it "should save a correction with nil grade" do
         @correction.grade = nil
-        @correction.should be_valid 
+        @correction.should be_valid
       end
     end
 
     describe "not duplicated correction" do
       before do
         @correction.save
-        other_solution = Factories::Solution.forBy( assignment, 
+        other_solution = Factories::Solution.forBy( assignment,
           Factories::Account.student("Luck", "luck@d.com") )
         @another_correction = Correction.new(
           :teacher => teacher,
@@ -116,10 +117,10 @@ describe Correction do
           :private_comments => "private comment",
           :grade => 9
         )
-      end 
+      end
 
       it "should be allowed corrections with different teacher and solution" do
-        @another_correction.should be_valid 
+        @another_correction.should be_valid
       end
     end
 
@@ -156,7 +157,7 @@ describe Correction do
     it 'should return :correction_in_progress when grade is not set' do
       @correction.grade = nil
       @correction.status.should eq :correction_in_progress
-    end  
+    end
 
     it 'should return  :correction_failed when grade is set and less than 4' do
       @correction.grade = 1

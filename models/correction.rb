@@ -16,9 +16,9 @@ class Correction
   property :grade, Float
   property :teacher_id, Integer
   property :solution_id, Integer, :required => true, :unique => :solution
-	property :created_at, DateTime  
+	property :created_at, DateTime
   property :updated_at, DateTime
-	property :solution_id, 	Integer, 
+	property :solution_id, 	Integer,
 		:required => true, :unique => :solution
 
   validates_presence_of      :solution
@@ -40,7 +40,7 @@ class Correction
   end
 
   def status
-    if grade.nil? 
+    if grade.nil?
       :correction_in_progress
     elsif approved?
       :correction_passed
@@ -50,12 +50,12 @@ class Correction
   end
 
   private
-  def is_a_teacher? 
-    if @teacher   
+  def is_a_teacher?
+    if @teacher
       return true if @teacher.is_teacher?
-    end 
+    end
 
     return [ false, 'Only a teacher is able to correct' ]
   end
-  
+
 end

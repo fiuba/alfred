@@ -4,10 +4,3 @@ before_script:
 - sh -e /etc/init.d/xvfb start
 script: PADRINO_ENV=travis padrino rake
 bundler_args: --without development
-deploy:
-  provider: heroku
-  api_key:
-    secure: UwPIT+7muEe3R0U64q/3WkaVhynGWiR61k9i51TPosR8joFc1EWgzTKCtNrl+vMOuW5YMUewJaKjj8zq5nfJRH5QaIBQkpHh8s/CcwDgT3Re8/v6kBu2dB4VKGfKhkUsHipPt/LSdIHERuAuCl+3b3dZu2Teju/35SfvNm1xj+Q=
-  app: alfred-preview
-  on:
-    branch: develop

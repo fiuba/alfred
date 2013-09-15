@@ -14,9 +14,9 @@ migration 18, :modify_test_script_field_type_to_assignment do
       end
     else
       modify_table :assignments do
-    		DataMapper.repository.adapter.execute(															\
-					'ALTER TABLE "assignments" ALTER COLUMN "test_script" TYPE text'	\
-				)
+        DataMapper.repository.adapter.execute(                              \
+          'ALTER TABLE "assignments" ALTER COLUMN "test_script" TYPE text'  \
+        )
       end
     end
   end
@@ -35,7 +35,7 @@ migration 18, :modify_test_script_field_type_to_assignment do
         column :course_id, Integer
       end
     else
-			# It will not work for Postgresql Adapter
+      # It will not work for Postgresql Adapter
       modify_table :assignments do
         change_column :test_script, 'text'
       end

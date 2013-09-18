@@ -1,9 +1,7 @@
 $(document).ready(function() {
-	$("[rel='tooltip']").tooltip();
-
 	// TODO: Fix editable grid
 
-	// editableGrid = new EditableGrid("DemoGridAttach"); 
+	// editableGrid = new EditableGrid("DemoGridAttach");
 
 	// // we build and load the metadata in Javascript
 	// editableGrid.load({ metadata: [

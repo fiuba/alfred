@@ -89,5 +89,10 @@
   </script>
 <% end %>
 <%= yield_content :additional_js %>
+<script type='text/javascript'>
+  $(document).ready(function() {
+    $("[rel='tooltip']").tooltip();
+  });
+</script>
 </body>
 </html>

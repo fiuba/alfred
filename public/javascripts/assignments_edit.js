@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	$("[rel='tooltip']").tooltip();
-
 	$("button.delete-file").click(function(e) {
 		e.preventDefault();
  		if (!confirm($(this).attr('data-confirmation'))) {

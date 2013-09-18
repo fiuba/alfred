@@ -57,6 +57,7 @@ group :test do
 
 	gem 'simplecov'
 	gem 'dm-sqlite-adapter'
+	gem 'dm-postgres-adapter'
 	gem 'rspec'
 	gem 'rspec_junit_formatter'
 	gem 'capybara'

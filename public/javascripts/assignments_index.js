@@ -11,12 +11,11 @@ $(document).ready(function() {
     { name: "Acciones", datatype: "html", editable: false }
   ]});
 
+  editableGrid.enableStore = false;
   // then we attach to the HTML table and render it
   editableGrid.attachToHTMLTable('assigmentsGrid');
 
   editableGrid.renderGrid();
-
-  $("[rel='tooltip']").tooltip();
 });
 
 $("form.delete-form").submit(function() {

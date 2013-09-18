@@ -14,12 +14,11 @@ $(document).ready(function() {
     { name: "Acciones", datatype: "html", editable: false }
   ]});
 
+  editableGrid.enableStore = false;
   // then we attach to the HTML table and render it
   editableGrid.attachToHTMLTable('correctionsGrid');
 
   editableGrid.renderGrid();
-
-  $("[rel='tooltip']").tooltip();
 
   // filter when something is typed into filter
   _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); };
@@ -60,5 +59,4 @@ function disableAssignToMeAction(actionsCell) {
   actionsCell.prepend(disabledAssignToMeElement);
 
   $('form', actionsCell).remove();
-  $("[rel='tooltip']").tooltip();
 }

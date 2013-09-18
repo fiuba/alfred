@@ -5,8 +5,8 @@ migration 20, :modify_public_private_comments_for_correction do
 
       create_table :corrections do
         column :id, Integer, :serial => true
-        column :public_comments, Text
-        column :private_comments, Text
+        column :public_comments, DataMapper::Property::Text
+        column :private_comments, DataMapper::Property::Text
         column :grade, Float
         column :created_at, DateTime  
         column :updated_at, DateTime

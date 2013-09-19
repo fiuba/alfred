@@ -45,7 +45,7 @@ Alfred::App.mailer :notification do
   end
 
 	email :solution_test_result do | solution |
-    from 'no_reply@algo3fiuba.com'
+    from ENV['MAIL_SUPPORT_ADDRESS']
     to solution.account.email
     subject '[FIUBA-ALGO] Resultado pruebas del trabajo practico'
     locals :solution => solution

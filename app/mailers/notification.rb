@@ -36,7 +36,7 @@
 Alfred::App.mailer :notification do
 
   email :correction_result do | correction |
-    from 'no_reply@algo3fiuba.com'
+    from correction.teacher.email
     to correction.solution.account.email
     subject '[FIUBA-ALGO] Correccion de trabajo practico'
     locals :correction => correction

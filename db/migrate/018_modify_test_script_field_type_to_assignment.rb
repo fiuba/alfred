@@ -14,7 +14,9 @@ migration 18, :modify_test_script_field_type_to_assignment do
       end
     else
       modify_table :assignments do
-        change_column :test_script, 'text'
+        DataMapper.repository.adapter.execute(                              \
+          'ALTER TABLE "assignments" ALTER COLUMN "test_script" TYPE text'  \
+        )
       end
     end
   end
@@ -34,7 +36,9 @@ migration 18, :modify_test_script_field_type_to_assignment do
       end
     else
       modify_table :assignments do
-        change_column :test_script, 'text'
+        DataMapper.repository.adapter.execute(                                      \
+          'ALTER TABLE "assignments" ALTER COLUMN "test_script" TYPE VARCHAR(255)'  \
+        )
       end
     end
   end

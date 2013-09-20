@@ -169,4 +169,19 @@ describe Correction do
       @correction.status.should eq :correction_passed
     end
   end
+
+  describe "support longer comments" do
+    let(:comment_length) { 512 }  # Twice string property max length  
+    it "should support public comment longer than 255 characters" do
+      @correction.public_comments = " " * comment_length
+      @correction.save.should == true
+    end
+
+    it "should support private comment longer than 255 characters" do
+      @correction.private_comments = " " * comment_length
+      @correction.save.should == true
+    end
+
+
+  end
 end

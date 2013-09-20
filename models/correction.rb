@@ -11,8 +11,8 @@ class Correction
 
   # property <name>, <type>
   property :id, Serial
-  property :public_comments, String
-  property :private_comments, String
+  property :public_comments, Text
+  property :private_comments, Text
   property :grade, Float
   property :teacher_id, Integer
   property :solution_id, Integer, :required => true, :unique => :solution

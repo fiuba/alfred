@@ -25,6 +25,7 @@ test/version_tmp
 tmp
 :memory
 .env
+cucumber_report.json
 
 # YARD artifacts
 .yardoc

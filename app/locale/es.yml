@@ -8,6 +8,7 @@ es:
   tag: 'turno'
   password: 'contraseña'
   password_confirmation: 'confirmación de contraseña'
+  change_password: 'cambiar contraseña'
   email: 'email'
   create_account: 'Crear cuenta'
   account_created: 'Cuenta creada'

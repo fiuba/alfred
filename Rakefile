@@ -25,7 +25,7 @@ if ['development', 'test', 'travis'].include?(PADRINO_ENV)
   end
 
   task :jenkins do
-  ["rake spec_report", "rake cucumber"].each do |cmd|
+  ["rake spec_report", "rake cucumber_report"].each do |cmd|
     puts "Starting to run #{cmd}..."
     system("export DISPLAY=:99.0 && bundle exec #{cmd}")
     raise "#{cmd} failed!" unless $?.exitstatus == 0
@@ -42,6 +42,12 @@ if ['development', 'test', 'travis'].include?(PADRINO_ENV)
   	Rake::Task['db:migrate'].invoke
   	task.cucumber_opts = ["features"]
 	end
+
+
+  Cucumber::Rake::Task.new(:cucumber_report) do |task|
+    Rake::Task['db:migrate'].invoke
+    task.cucumber_opts = ['features', '--format json -o reports/features/cucumber.json']
+  end
 
 	task :default => [:travis]
 end

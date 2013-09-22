@@ -76,6 +76,24 @@ Alfred::App.controllers :my do
     render 'my/correction'
   end
 
+  get :profile, :map => 'my/profile' do
+    @account = current_account
+    render 'my/profile'
+  end
+  
+
+  put :profile, :map => 'my/profile' do
+    @account = current_account
+    if @account.update(params[:account])
+      flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
+      redirect '/'
+    else
+      flash.now[:error] = pat(:update_error, :model => 'account')
+      render 'my/profile'
+    end
+  end
+
+
 =begin
   TODO: eso deberia ser para ver los detalles de una solución
   get '/assigments/:assignment_id/solutions/:solution_id' do

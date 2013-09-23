@@ -7,10 +7,10 @@
 
 <ul class="nav pull-right" id="main-menu-right">
     <% if (current_account) %>    
-    <li><a rel="tooltip" href="/" title="Inicio">Inicio</a></li>
-    <li><a rel="tooltip" href="/" title="Profile"><%= current_account.email %></a></li>
-    <li><a rel="tooltip" id="log_out_button" href="/logout" title="Salir">Salir</a><li>
+        <li><a rel="tooltip" href="/" title="Inicio">Inicio</a></li>
+        <li><a rel="tooltip" href="/my/profile" title="Profile"><%= current_account.email %></a></li>
+        <li><a rel="tooltip" id="log_out_button" href="/logout" title="Salir">Salir</a><li>
     <% else %>
-    <li><a rel="tooltip" href="/login" title="Entrar">Entrar</a><li>
+        <li><a rel="tooltip" href="/login" title="Entrar">Entrar</a><li>
     <% end %>
 </ul>

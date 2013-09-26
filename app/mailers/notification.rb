@@ -38,6 +38,7 @@ Alfred::App.mailer :notification do
   email :correction_result do | correction |
     from "#{correction.teacher.full_name} <#{correction.teacher.email}>"
     to correction.solution.account.email
+    bcc correction.teacher.email
     subject '[FIUBA-ALGO] Correccion de trabajo practico'
     locals :correction => correction
     content_type :plain

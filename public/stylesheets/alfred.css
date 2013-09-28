@@ -96,4 +96,12 @@ button.assign-to-me:hover {
   padding: 0;
 }
 
+.passed {
+  color:green;
+}
+
+
+.failed {
+  color:red;
+}
 

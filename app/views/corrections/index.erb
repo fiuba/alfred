@@ -20,7 +20,9 @@
       <td><%= ac.assignment_name %></td>
       <td><%= ac.student_buid %></td>
       <td><%= ac.student_full_name %></td>
-      <td><%= ac.solution_test_result %></td>
+      <td class="<%= ac.solution_test_result %>">
+        <%= t ac.solution_test_result %>
+      </td>
       <td><%= t ac.status %></td>
       <td><%= ac.grade %></td>
       <td>

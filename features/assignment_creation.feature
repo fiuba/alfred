@@ -4,11 +4,11 @@ Feature: Assigment creation
   To evaluate students which are enrolled in the course whose teacher I'm
 
   Background:
-  	Given the course "2013-1"
-  	And the teacher "John"
+    Given the course "2013-1"
+    And the teacher "John"
 
   Scenario: Main flow
-  	Given I am logged in as teacher
+    Given I am logged in as teacher
     And   I follow "Trabajos prácticos"
     And   I follow "Nuevo"
     And   I fill in "assignment_name" with "TP0" within ".form-horizontal"

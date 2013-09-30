@@ -1,9 +1,9 @@
 require 'uri'
 require 'cgi'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
-require File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "models", "course.rb"))
 #require_relative '../../models/course.rb'
-
+# Includes factories
+#Dir.glob(File.dirname(__FILE__) + "/../../spec/support/**/factory_*.rb").each { |f| require f }
 
 module WithinHelpers
   def with_scope(locator)
@@ -27,7 +27,7 @@ Given(/^the teacher "(.*?)"$/) do |teacher_name|
 		:password => 'Passw0rd!',
 		:password_confirmation => 'Passw0rd!'})
 	@account.courses << @course
-	puts @account.save
+  @account.save
 end
 
 Given(/^I am logged in as teacher$/) do

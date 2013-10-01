@@ -1,19 +1,13 @@
 Alfred::App.controllers :solutions do
   before do
     @assignment = Assignment.find_by_id( params[:assignment_id] )
-  end  
+  end
 
   # for teacher only
   get :index, :map => '/assignments/:assignment_id/students/:student_id/solutions'  do
     @student = Account.get(params[:student_id])
     @solutions = Solution.all(:account_id => params[:student_id], :assignment_id => params[:assignment_id])
     render 'solutions/index'
-  end
-
-  # for THE student
-  get :index, :map => '/assignments/:assignment_id/my/solutions'  do
-    @solutions = Solution.all(:account => current_account, :assignment_id => params[:assignment_id])
-    render 'solutions/my_index'
   end
 
   get :new, :map => '/assignments/:assignment_id/solutions/new' do
@@ -30,7 +24,7 @@ Alfred::App.controllers :solutions do
 
     DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
       if @solution.save
-        @solution_generic_file = SolutionGenericFile.new( :solution => @solution, 
+        @solution_generic_file = SolutionGenericFile.new( :solution => @solution,
               :name => input_file[:filename] )
         errors << @solution_generic_file.errors if not @solution_generic_file.save
         begin
@@ -49,7 +43,7 @@ Alfred::App.controllers :solutions do
     if errors.empty?
       @title = pat(:create_title, :model => "solution #{@solution.id}")
       flash[:success] = pat(:create_success, :model => 'Solution')
-      redirect(url(:solutions, :index, :assignment_id => @assignment.id )) 
+      redirect(url(:my, :solutions, :assignment_id => @assignment.id))
     else
       @title = pat(:create_title, :model => 'solution')
       flash.now[:error] = errors
@@ -60,7 +54,7 @@ Alfred::App.controllers :solutions do
   get :download, :map => '/solutions/:solution_id/download' do
     solution = Solution.find( params[:solution_id] )
 
-    if solution.nil?  
+    if solution.nil?
       conveys_warning( params[:id], 404 )
     end
 

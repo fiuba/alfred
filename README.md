@@ -2,6 +2,7 @@ Alfred
 ======
 
 [![Build Status](https://travis-ci.org/fiuba/alfred.png?branch=develop)](https://travis-ci.org/fiuba/alfred)
+[![Code Climate](https://codeclimate.com/github/fiuba/alfred.png)](https://codeclimate.com/github/fiuba/alfred)
 
 After cloning the repository:
 

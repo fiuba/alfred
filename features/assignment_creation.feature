@@ -11,10 +11,6 @@ Feature: Assigment creation
     Given I am logged in as teacher
     And   I follow "Trabajos prácticos"
     And   I follow "Nuevo"
-    And   I fill in "assignment_name" with "TP0" within ".form-horizontal"
-    And   I fill in "assignment_test_script" with "#!/bin/bash\necho $?" within ".form-horizontal"
-    And   I fill in "assignment_deadline" with "20/10/2013" within ".form-horizontal"
-    And   I attach the file "tp0.zip" to "assignment_file" within ".form-horizontal"
-    And   I press "Guardar y continuar" within ".form-horizontal" using "cassette_assignment_new"
+    And   I fill requeried data for assignment entitled "TP0"
     Then  I should see "Assignment creado exitosamente" 
 

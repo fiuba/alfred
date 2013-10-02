@@ -14,10 +14,6 @@ module WithinHelpers
     locator ? within(locator) { yield } : yield
   end
 
-  def address_to( path )
-    # Addresses files inside project_path/features/resources
-    File.join( File.dirname(__FILE__), "..", "resources", "/", path )
-  end
 end
 World(WithinHelpers)
 
@@ -27,19 +23,6 @@ end
 
 When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
-end
-
-When /^(?:|I )press "([^\"]*)"(?: within "([^\"]*)")(?: using "([^\"]*)")?$/ do |button, selector, cassette|
-  VCR.use_cassette(cassette) do
-    with_scope(selector) do
-      click_button(button)
-    end
-  end
-end
-
-# Custom step definition
-When /^I follow "([^\"]*)"$/ do |link|
-  click_link(link)
 end
 
 When /^I follow "([^\"]*)"(?: within "([^\"]*)")$/ do |link, selector|
@@ -105,7 +88,7 @@ end
 
 When /^(?:|I )attach the file "([^\"]*)" to "([^\"]*)"(?: within "([^\"]*)")?$/ do |path, field, selector|
   with_scope(selector) do
-    attach_file(field, address_to(path) )
+    attach_file(field, path )
   end
 end
 

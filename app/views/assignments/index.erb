@@ -5,23 +5,23 @@
 <% end %>
 
 <ul class="nav nav-tabs">
-  <li class=active>
+  <li class="active">
     <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index, :course_id => current_course.id) %></li>
   <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %></li>
 </ul>
-<div class=tabs-content>
+<div class="tabs-content">
   <table id="assigmentsGrid" class="table table-bordered table-striped table-hover">
     <thead>
       <tr>
-        <th class=header> <%= t('assignments.name').capitalize %></th>
-        <th class=header> <%= t('assignments.deadline').capitalize %></th>
-        <th class=header><%= t('assignments.actions').capitalize %></th>
+        <th class="header"> <%= t('assignments.name').capitalize %></th>
+        <th class="header"> <%= t('assignments.deadline').capitalize %></th>
+        <th class="header"><%= t('assignments.actions').capitalize %></th>
       </tr>
     </thead>
 
     <tbody>
       <% @assignments.each do |assignment| %>
-        <tr class=list-row>
+        <tr class="list-row">
           <td> <%= assignment.name %> </td>
           <td> <%= l assignment.deadline.to_date %> </td>
           <td class="list-column list-row-action">
@@ -45,6 +45,7 @@
               <% end %>
              </div>
           </td>
+        </tr>
       <% end %>
     </tbody>
   </table>

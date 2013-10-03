@@ -36,8 +36,9 @@
 Alfred::App.mailer :notification do
 
   email :correction_result do | correction |
-    from correction.teacher.email
+    from "#{correction.teacher.full_name} <#{correction.teacher.email}>"
     to correction.solution.account.email
+    bcc correction.teacher.email
     subject '[FIUBA-ALGO] Correccion de trabajo practico'
     locals :correction => correction
     content_type :plain
@@ -45,7 +46,7 @@ Alfred::App.mailer :notification do
   end
 
 	email :solution_test_result do | solution |
-    from ENV['MAIL_SUPPORT_ADDRESS']
+    from "Alfred <#{ENV['MAIL_SUPPORT_ADDRESS']}>"
     to solution.account.email
     subject '[FIUBA-ALGO] Resultado pruebas del trabajo practico'
     locals :solution => solution

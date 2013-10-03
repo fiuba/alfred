@@ -1,5 +1,6 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 es:
+  profile: 'perfil'
   registration: 'registración'
   name: 'nombre'
   surname: 'apellido'
@@ -7,6 +8,7 @@ es:
   tag: 'turno'
   password: 'contraseña'
   password_confirmation: 'confirmación de contraseña'
+  change_password: 'cambiar contraseña'
   email: 'email'
   create_account: 'Crear cuenta'
   account_created: 'Cuenta creada'
@@ -19,6 +21,7 @@ es:
   grade: 'nota'
   my_corrections: 'Mis correcciones'
   save_and_notify: 'Guardar y notificar'
+  save: 'Guardar'
   new: 'Nueva'
   solution:
     new: 'entregar solución'

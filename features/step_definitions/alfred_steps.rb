@@ -40,3 +40,10 @@ end
 Then(/^Log out menu option show be visible$/) do
   page.should have_content 'Salir'
 end
+
+When(/^I edit my profile with name "(.*?)" and lastname "(.*?)" and tag "(.*?)"$/) do |name, lastname, tag|
+	fill_in(:account_name, :with => name)
+	fill_in(:account_surname, :with => lastname)
+	fill_in(:account_tag, :with => tag)
+	click_button 'Guardar'
+end

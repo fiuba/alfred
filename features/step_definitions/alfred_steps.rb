@@ -1,3 +1,4 @@
+#encoding: utf-8
 require 'uri'
 require 'cgi'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
@@ -42,6 +43,12 @@ Given(/^the teacher "(.*?)"$/) do |teacher_name|
   @account.save
 end
 
+Given(/^the assignment entitled "(.*?)"$/) do |assignment_name|
+  @assignment = Factories::Assignment.name( assignment_name, @course )
+  @assignment.deadline = Date.today()
+  @assignment.save
+end
+
 Given(/^I am logged in as teacher$/) do
   visit '/login'
   fill_in(:email, :with => @account.email)
@@ -60,7 +67,31 @@ When(/^I edit my profile with name "(.*?)" and lastname "(.*?)" and tag "(.*?)"$
   click_button 'Guardar'
 end
 
+When /^I click edit button edit on "(.*?)"$/ do |assignment_name|
+  query = "" <<                                                                          \
+    "//table[@id='assigmentsGrid']" <<                                                   \
+    "/tbody/tr" <<                                                                       \
+    "/td[starts-with(normalize-space(.), '#{assignment_name}')]" <<                      \
+    "/.." <<                                                                             \
+    "/td[starts-with( normalize-space(@class), 'list-column list-row-action')]/div" <<   \
+    "/a[starts-with(normalize-space(@title), 'Editar trabajo práctico')]"
+  find(:xpath, query).click
+end
+
+When /^I update data intended to be updated for assignment "(.*?)"$/ do |assignment_name|
+  with_scope( '.form-horizontal' ) do
+    fill_in( :assignment_deadline,    :with => "22/10/2013")
+    fill_in( :assignment_test_script, :with => "")
+    click_button( "Guardar y continuar" )
+  end
+end
+
 When /^I follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
+And /^The assignment entitled "(.*?)" should be properly updated$/ do |assignment_name|
+  assignment = Assignment.all( :name => assignment_name ).first
+  assignment.deadline.should == "22/10/2013".to_date
+  assignment.name.should == assignment_name
+end

@@ -12,5 +12,5 @@ Feature: Assigment creation
     And   I follow "Trabajos prácticos"
     And   I follow "Nuevo"
     And   I fill requeried data for assignment entitled "TP0"
-    Then  I should see "Assignment creado exitosamente" 
+    Then  I should see "creado exitosamente" 
 

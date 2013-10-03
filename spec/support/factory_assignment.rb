@@ -1,8 +1,14 @@
 module Factories
   module Assignment
+    def self.name( name = "TP 0", course = nil )
+	    course ||=  \
+        Alfred::Admin::Course.find(:name => 'course 1') || \
+        Alfred::Admin::Course.create(:name => 'course 1')
+      Alfred::Admin::Assignment.create(:name => name, :course => course)
+    end
+
     def self.vending_machine
-	    course = Alfred::Admin::Course.find(:name => 'course 1') || Alfred::Admin::Course.create(:name => 'course 1')
-      Alfred::Admin::Assignment.create(:name => 'Vending Machine', :course => course)
+      self.name( 'Vending Machine' )
     end
 
     def self.withSolution

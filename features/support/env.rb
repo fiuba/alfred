@@ -8,6 +8,8 @@ require 'rspec/expectations'
 require 'simplecov'
 require 'webmock/rspec'
 
+require File.expand_path(File.dirname(__FILE__) + "/storage")
+
 ##
 # You can handle all padrino applications using instead:
 #   Padrino.application
@@ -21,11 +23,5 @@ end
 
 Before do
   DataMapper.auto_migrate!
-
-  ENV['DROPBOX_APP_KEY']='12345abcde'
-  ENV['DROPBOX_APP_SECRET']='12345abcde'
-  ENV['DROPBOX_REQUEST_TOKEN_KEY']='12345abcde'
-  ENV['DROPBOX_REQUEST_TOKEN_SECRET']='12345abcde'
-  ENV['DROPBOX_AUTH_TOKEN_KEY']='12345abcde'
-  ENV['DROPBOX_AUTH_TOKEN_SECRET']='12345abcde'
+  StorageHelpers.set_up_environment
 end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: put
-    uri: https://api-content.dropbox.com/1/files_put/sandbox/assignments/1/tp0.zip?overwrite=true
+    uri: https://api-content.dropbox.com/1/files_put/sandbox/assignments/3/tp2.zip?overwrite=true
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -70,7 +70,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 30 Sep 2013 19:33:22 GMT
+      - Sun, 06 Oct 2013 13:56:06 GMT
       Content-Type:
       - text/javascript
       Transfer-Encoding:
@@ -78,22 +78,22 @@ http_interactions:
       Connection:
       - keep-alive
       X-Server-Response-Time:
-      - '278'
+      - '383'
       X-Dropbox-Request-Id:
-      - 93ba99ee4f4e31ead3bd87401f7000ff
+      - 502f03c2af7a64359959ab12030e83d3
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache
       X-Requestid:
-      - 470e917e49766458b782f99359931a6a
+      - 030e1cb4926442745c5cbca526b75793
     body:
       encoding: US-ASCII
-      string: ! '{"revision": 148, "rev": "941157d138", "thumb_exists": false, "bytes":
-        1957, "modified": "Mon, 19 Aug 2013 19:24:19 +0000", "client_mtime": "Mon,
-        19 Aug 2013 19:24:19 +0000", "path": "/assignments/1/tp0.zip", "is_dir": false,
+      string: ! '{"revision": 205, "rev": "cd1157d138", "thumb_exists": false, "bytes":
+        1957, "modified": "Sun, 06 Oct 2013 13:56:05 +0000", "client_mtime": "Sun,
+        06 Oct 2013 13:56:05 +0000", "path": "/assignments/3/tp2.zip", "is_dir": false,
         "icon": "page_white_compressed", "root": "app_folder", "mime_type": "application/zip",
         "size": "1.9 KB"}'
     http_version: 
-  recorded_at: Mon, 30 Sep 2013 19:33:22 GMT
+  recorded_at: Sun, 06 Oct 2013 13:56:06 GMT
 recorded_with: VCR 2.5.0

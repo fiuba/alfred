@@ -60,40 +60,28 @@ http_interactions:
       Content-Length:
       - '1957'
       Authorization:
-      - OAuth oauth_version="1.0", oauth_signature_method="PLAINTEXT", oauth_consumer_key="69dovim8etuenys",
-        oauth_token="334v4ikeqya34g1", oauth_signature="zwsax6fzvoparqu&yhegmdwdfeo4hkg"
+      - OAuth oauth_version="1.0", oauth_signature_method="PLAINTEXT", oauth_consumer_key="12345abcde",
+        oauth_token="12345abcde", oauth_signature="12345abcde&12345abcde"
   response:
     status:
-      code: 200
-      message: OK
+      code: 401
+      message: Unauthorized
     headers:
       Server:
       - nginx
       Date:
-      - Sun, 06 Oct 2013 13:54:55 GMT
+      - Mon, 14 Oct 2013 23:04:53 GMT
       Content-Type:
-      - text/javascript
+      - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      X-Server-Response-Time:
-      - '369'
-      X-Dropbox-Request-Id:
-      - e31bc65d113e0b6fc4ebf035bc44a117
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache
-      X-Requestid:
-      - 549ab6a2060fcd086def9a014b065013
+      Www-Authenticate:
+      - OAuth realm="https://api.dropbox.com/"
     body:
       encoding: US-ASCII
-      string: ! '{"revision": 148, "rev": "941157d138", "thumb_exists": false, "bytes":
-        1957, "modified": "Mon, 19 Aug 2013 19:24:19 +0000", "client_mtime": "Mon,
-        19 Aug 2013 19:24:19 +0000", "path": "/assignments/1/tp0.zip", "is_dir": false,
-        "icon": "page_white_compressed", "root": "app_folder", "mime_type": "application/zip",
-        "size": "1.9 KB"}'
+      string: ! '{"error": "Unauthorized"}'
     http_version: 
-  recorded_at: Sun, 06 Oct 2013 13:54:55 GMT
+  recorded_at: Mon, 14 Oct 2013 23:04:53 GMT
 recorded_with: VCR 2.5.0

@@ -10,6 +10,13 @@ module WithinHelpers
     locator ? within(locator) { yield } : yield
   end
 
+  def log_in_as( email, password )
+    visit '/login'
+    fill_in(:email, :with => email)
+    fill_in(:password, :with => password )
+    click_button :sign_in
+  end
+
   def address_to( path )
     # Addresses files inside project_path/features/resources
     File.join( File.dirname(__FILE__), "..", "resources", "/", path )
@@ -81,6 +88,13 @@ Given /^the student "(.*?)"$/ do |student_name|
   @student.password_confirmation = 'Passw0rd!'
   @student.courses << @course
   @student.save
+end
+
+Then /^I log in as "(.*?)"$/ do |student_name|
+  student = Account.all( :name => student_name ).first
+  fill_in(:email, :with => student.email)
+  fill_in(:password, :with => 'foobar')
+  click_button :sign_in
 end
 
 Given /^I am logged in as student$/ do

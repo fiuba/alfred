@@ -16,7 +16,7 @@ module WithinHelpers
   end
 
   # Responses DOM object
-  def inquery_assignment_actions_for( assignment_name, action )
+  def as_teacher_for_assignment( assignment_name, action )
     query = "" <<                                                                          \
       "//table[@id='assigmentsGrid']" <<                                                   \
       "/tbody/tr" <<                                                                       \
@@ -26,35 +26,71 @@ module WithinHelpers
       "/a[starts-with(normalize-space(@title), '#{action}')]"
     find(:xpath, query)
   end
+
+  def as_student_for_assignment( assignment_name, action )
+    query = "" <<                                                                           \
+      "//table[@id='studentsGrid']"                                                         \
+      "/tbody/tr/td[starts-with(normalize-space(.), '#{assignment_name}')]"                 \
+      "/../td/a[starts-with(normalize-space(@title), '#{action}')]"
+    find(:xpath, query)
+  end
 end
 World(WithinHelpers)
 
-Given(/^the course "(.*?)"$/) do |course_name|
+# 
+# Courses' predicates
+#
+Given /^the course "(.*?)"$/ do |course_name|
   @course = Factories::Course.name( course_name )
 end
 
-Given(/^the teacher "(.*?)"$/) do |teacher_name|
-  @account = Factories::Account.teacher( teacher_name, "some_surname", 
-                "#{teacher_name}@someplace.com" )
-  @account.buid = 'xxxx'
-  @account.password = 'Passw0rd!'
-  @account.password_confirmation = 'Passw0rd!'
-  @account.courses << @course
-  @account.save
+Given /^the course with teacher and student enrolled$/ do 
+  step 'the course "2013-1"'
+  step 'the teacher "John"'
 end
 
-Given(/^I am logged in as teacher$/) do
+# 
+# Account's predicates 
+#
+Given /^the teacher "(.*?)"$/ do |teacher_name|
+  @teacher = Factories::Account.teacher( teacher_name, "some_surname", 
+                "#{teacher_name}@someplace.com" )
+  @teacher.buid = 'xxxx'
+  @teacher.password = 'Passw0rd!'
+  @teacher.password_confirmation = 'Passw0rd!'
+  @teacher.courses << @course
+  @teacher.save
+end
+
+Given /^the student "(.*?)"$/ do |student_name|
+  @student = Factories::Account.student( student_name, "some_surname", 
+                "#{student_name}@someplace.com" )
+  @student.buid = '77666'
+  @student.password = 'Passw0rd!'
+  @student.password_confirmation = 'Passw0rd!'
+  @student.courses << @course
+  @student.save
+end
+
+Given /^I am logged in as student$/ do
   visit '/login'
-  fill_in(:email, :with => @account.email)
+  fill_in(:email, :with => @student.email)
   fill_in(:password, :with => 'Passw0rd!')
   click_button :sign_in
 end
 
-Then(/^Log out menu option show be visible$/) do
+Given /^I am logged in as teacher$/ do
+  visit '/login'
+  fill_in(:email, :with => @teacher.email)
+  fill_in(:password, :with => 'Passw0rd!')
+  click_button :sign_in
+end
+
+Then /^Log out menu option show be visible$/ do
   page.should have_content 'Salir'
 end
 
-When(/^I edit my profile with name "(.*?)" and lastname "(.*?)" and tag "(.*?)"$/) do |name, lastname, tag|
+When /^I edit my profile with name "(.*?)" and lastname "(.*?)" and tag "(.*?)"$/ do |name, lastname, tag|
   fill_in(:account_name, :with => name)
   fill_in(:account_surname, :with => lastname)
   fill_in(:account_tag, :with => tag)
@@ -66,29 +102,41 @@ When /^I follow "([^\"]*)"$/ do |link|
 end
 
 # 
+# Solution's predicate
+#
+When /^I click submit solution for "(.*?)"$/ do |assignment_name|
+  as_student_for_assignment( assignment_name, 'Entregar solución' ).click
+end
+
+When /^I upload the solution's file for "(.*?)"$/ do |assignment_name|
+  VCR.use_cassette("cassette_solution_for_#{assignment_name.downcase}") do
+    attach_file(:solution_file, address_to("#{@student.buid}.zip"))
+    click_button( "Guardar" )
+  end
+end
+
+# 
 # Assignment's predicate
 #
 When /^I fill requeried data for assignment entitled "(.*?)"$/ do |assignment_name|
-  title_lowercase = assignment_name.downcase
-  VCR.use_cassette("cassette_assignment_#{title_lowercase}") do
+  VCR.use_cassette("cassette_assignment_#{assignment_name.downcase}") do
     with_scope( '.form-horizontal' ) do
       fill_in( :assignment_name,        :with => assignment_name)
       fill_in( :assignment_deadline,    :with => "20/10/2013")
       fill_in( :assignment_test_script, :with => "#!/bin/bash\necho $?")
-      attach_file(:assignment_file, address_to("#{title_lowercase}.zip"))
+      attach_file(:assignment_file, address_to("#{assignment_name.downcase}.zip"))
       click_button( "Guardar y continuar" )
     end
   end
 end
 
 When /^I click edit button edit on "(.*?)"$/ do |assignment_name|
-  inquery_assignment_actions_for( assignment_name, 'Editar trabajo práctico').click
+  as_teacher_for_assignment( assignment_name, 'Editar trabajo práctico').click
 end
 
 When  /^I click download assignment file button for "(.*?)"$/ do |assignment_name|
-  title_lowercase = assignment_name.downcase
-  VCR.use_cassette("cassette_assignment_download_#{title_lowercase}") do
-    inquery_assignment_actions_for( assignment_name, 'Bajar archivo').click
+  VCR.use_cassette("cassette_assignment_download_#{assignment_name.downcase}") do
+    as_teacher_for_assignment( assignment_name, 'Bajar archivo').click
   end
 end
 

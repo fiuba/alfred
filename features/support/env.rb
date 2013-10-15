@@ -17,7 +17,7 @@ require File.expand_path(File.dirname(__FILE__) + "/storage")
 Capybara.app = Alfred::App.tap { |app|  }
 
 VCR.configure do |c|  
-  c.cassette_library_dir = 'fixtures/asseptance_cassettes'
+  c.cassette_library_dir = 'fixtures/acceptance_cassettes'
   c.hook_into :webmock
 end
 

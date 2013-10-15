@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: put
-    uri: https://api-content.dropbox.com/1/files_put/sandbox/assignments/1/tp0.zip?overwrite=true
+    uri: https://api-content.dropbox.com/1/files_put/sandbox/assignments/3/tp2.zip?overwrite=true
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -60,28 +60,40 @@ http_interactions:
       Content-Length:
       - '1957'
       Authorization:
-      - OAuth oauth_version="1.0", oauth_signature_method="PLAINTEXT", oauth_consumer_key="12345abcde",
-        oauth_token="12345abcde", oauth_signature="12345abcde&12345abcde"
+      - OAuth oauth_version="1.0", oauth_signature_method="PLAINTEXT", oauth_consumer_key="69dovim8etuenys",
+        oauth_token="334v4ikeqya34g1", oauth_signature="zwsax6fzvoparqu&yhegmdwdfeo4hkg"
   response:
     status:
-      code: 401
-      message: Unauthorized
+      code: 200
+      message: OK
     headers:
       Server:
       - nginx
       Date:
-      - Mon, 14 Oct 2013 23:04:53 GMT
+      - Sun, 06 Oct 2013 13:56:06 GMT
       Content-Type:
-      - application/json
+      - text/javascript
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Www-Authenticate:
-      - OAuth realm="https://api.dropbox.com/"
+      X-Server-Response-Time:
+      - '383'
+      X-Dropbox-Request-Id:
+      - 502f03c2af7a64359959ab12030e83d3
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache
+      X-Requestid:
+      - 030e1cb4926442745c5cbca526b75793
     body:
       encoding: US-ASCII
-      string: ! '{"error": "Unauthorized"}'
+      string: ! '{"revision": 205, "rev": "cd1157d138", "thumb_exists": false, "bytes":
+        1957, "modified": "Sun, 06 Oct 2013 13:56:05 +0000", "client_mtime": "Sun,
+        06 Oct 2013 13:56:05 +0000", "path": "/assignments/3/tp2.zip", "is_dir": false,
+        "icon": "page_white_compressed", "root": "app_folder", "mime_type": "application/zip",
+        "size": "1.9 KB"}'
     http_version: 
-  recorded_at: Mon, 14 Oct 2013 23:04:53 GMT
+  recorded_at: Sun, 06 Oct 2013 13:56:06 GMT
 recorded_with: VCR 2.5.0

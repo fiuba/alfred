@@ -49,6 +49,17 @@ Given /^the course with teacher and student enrolled$/ do
   step 'the teacher "John"'
 end
 
+Given /^I enrole as student named "(.*?)"$/ do |student_name|
+  fill_in(:account_name, :with => student_name)
+  fill_in(:account_surname, :with => student_name + "Jr.")
+  fill_in(:account_buid, :with => "77666" )
+  fill_in(:account_email, :with => student_name.downcase + "@someplace.com" )
+  fill_in(:account_tag, :with => "mie" )
+  fill_in(:account_password, :with => "foobar" )
+  fill_in(:account_password_confirmation, :with => "foobar" )
+  click_button( "crear cuenta" )
+end
+
 # 
 # Account's predicates 
 #

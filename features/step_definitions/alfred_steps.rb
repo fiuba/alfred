@@ -10,13 +10,6 @@ module WithinHelpers
     locator ? within(locator) { yield } : yield
   end
 
-  def log_in_as( email, password )
-    visit '/login'
-    fill_in(:email, :with => email)
-    fill_in(:password, :with => password )
-    click_button :sign_in
-  end
-
   def address_to( path )
     # Addresses files inside project_path/features/resources
     File.join( File.dirname(__FILE__), "..", "resources", "/", path )
@@ -54,6 +47,7 @@ end
 Given /^the course with teacher and student enrolled$/ do 
   step 'the course "2013-1"'
   step 'the teacher "John"'
+  step 'the student "Richard"'
 end
 
 Given /^I enrole as student named "(.*?)"$/ do |student_name|
@@ -98,6 +92,7 @@ Then /^I log in as "(.*?)"$/ do |student_name|
 end
 
 Given /^I am logged in as student$/ do
+  @account = @student
   visit '/login'
   fill_in(:email, :with => @student.email)
   fill_in(:password, :with => 'Passw0rd!')
@@ -105,6 +100,7 @@ Given /^I am logged in as student$/ do
 end
 
 Given /^I am logged in as teacher$/ do
+  @account = @teacher
   visit '/login'
   fill_in(:email, :with => @teacher.email)
   fill_in(:password, :with => 'Passw0rd!')
@@ -160,8 +156,16 @@ When /^I click edit button edit on "(.*?)"$/ do |assignment_name|
 end
 
 When  /^I click download assignment file button for "(.*?)"$/ do |assignment_name|
+  action = { 
+    'teacher' => Proc.new { as_teacher_for_assignment( assignment_name, \
+        'Bajar archivo').click 
+    },
+    'student' => Proc.new { as_student_for_assignment( assignment_name, \
+        'Bajar archivo').click 
+    }
+  }
   VCR.use_cassette("cassette_assignment_download_#{assignment_name.downcase}") do
-    as_teacher_for_assignment( assignment_name, 'Bajar archivo').click
+    action[@account.role].call
   end
 end
 
@@ -194,6 +198,9 @@ Given /^there is a bunch of assignment already created$/ do
   end
 end
 
-Then /^I should get the file$/ do 
+Then /^I should get file of "(.*?)"$/ do |assignment_name|
+  file_name = "#{assignment_name.downcase}.zip"
   page.status_code.should be 200
+  page.response_headers["Content-Type"].should == "application/zip"
+  page.response_headers["Content-Disposition"].should include("filename=#{file_name}")
 end

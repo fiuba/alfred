@@ -5,7 +5,6 @@ Feature: Solution submition
   Background:
     Given the course with teacher and student enrolled 
     And there is a bunch of assignment already created
-    And the student "Richard"
 
   Scenario: Main flow
     Given I am logged in as student 

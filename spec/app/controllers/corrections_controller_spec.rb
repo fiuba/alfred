@@ -91,19 +91,31 @@ describe "CorrectionsController" do
       post '/solution/1/corrections/create', { :correction => correction_params }
     end
 
-    it "should create a new correction" do
-      teacher = Factories::Account.teacher
-      correction_double = double(:id => 101, :saved? => true)
-      Correction
-        .should_receive(:create)
-        .with({"public_comments"=>"my public comment", "private_comments"=>"my private comment", "grade"=>"10", "teacher_id"=>"123", 'solution_id'=>"1", 'teacher_id'=>teacher.id})
-        .and_return(correction_double)
-      Alfred::App.any_instance.stub(:current_account).and_return(teacher)
+    context 'correction successfully created' do
+      let(:teacher) { Factories::Account.teacher }
+      let(:created_correction) { double(:id => 101, :saved? => true, :teacher => teacher) }
+      let(:correction_params) { { 'public_comments' => 'my public comment', 'private_comments' => 'my private comment', 'grade' => '10' } }
+      let(:solution_id) { "123" }
 
-      correction_params = { :public_comments => 'my public comment', :private_comments => 'my private comment', :grade => '10' }
-      post '/solution/1/corrections/create', { :correction => correction_params }
+      before do
+        Correction
+          .should_receive(:create)
+          .with(correction_params.merge({'solution_id' => solution_id, 'teacher_id'=>teacher.id}))
+          .and_return(created_correction)
+      end
+
+      it "should create a new correction without notifying" do
+        Alfred::App.should_not_receive(:deliver)
+
+        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params }
+      end
+
+      it "should create a new correction and notify" do
+        Alfred::App.should_receive(:deliver).with(:notification, :correction_result, created_correction)
+
+        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params, :save_and_notify => 'true' }
+      end
     end
-
   end
 
   describe "edit" do

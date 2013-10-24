@@ -28,9 +28,10 @@ Alfred::App.controllers :corrections do
 
     if @correction.saved?
       flash[:success] = pat(:create_success, :model => 'Corrección', :id =>  "#{@correction.id}")
-      params[:save_and_continue] ?
-        redirect(url(:corrections, @correction.teacher.id, :index)) :
-        redirect(url(:corrections, :edit, :id => @correction.id))
+      if (params[:save_and_notify])
+        deliver(:notification, :correction_result, @correction)
+      end
+      redirect(url(:corrections, @correction.teacher.id, :index))
     else
       render 'corrections/new'
     end

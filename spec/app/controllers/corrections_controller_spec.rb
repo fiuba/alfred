@@ -42,7 +42,7 @@ describe "CorrectionsController" do
       }
     end
 
-    describe "student tries to create a solution" do
+    describe "student tries to create a correction" do
       it "should response 403" do
         Alfred::App.any_instance.stub(:current_account)
           .and_return(Factories::Account.student)

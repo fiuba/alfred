@@ -9,6 +9,8 @@ class Course
     # Allow a single course to be active
     if self.active
       Course.each { |c| c.update(active: false) if c != self  }
+    else
+      self.active = true if !Course.any? { |c| c.active }
     end
   end
 

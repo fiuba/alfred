@@ -14,6 +14,14 @@ describe Course do
       course1.reload
       course1.active.should be_false
     end
+
+    it "should force active course if none is active on save" do
+      course = Course.new(name: 'my course', active: false)
+
+      course.save.should be_true
+
+      course.active.should be_true
+    end
   end
 
 	describe 'students' do

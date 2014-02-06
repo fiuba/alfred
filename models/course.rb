@@ -14,6 +14,14 @@ class Course
     end
   end
 
+  after :create do
+    # Associate all Admins and Teachers with course
+    Account.find_by_roles([Account::ADMIN, Account::TEACHER]).each do |a|
+      a.courses << self
+      a.save
+    end
+  end
+
   def self.active
   	Course.find_by_active(true)
   end

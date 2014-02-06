@@ -32,11 +32,23 @@ class Account
   validates_format_of        :email,    :with => :email_address
   validates_format_of        :role,     :with => /[A-Za-z]/
 
-
   validates_with_method :tag, :method => :is_valid_tag?
 
+  after :create do
+    if self.role == ADMIN || self.role == TEACHER
+      # Associate all Courses with Teacher / Admin
+      Course.all.each do |c|
+        self.courses << c
+      end
+    elsif Course.active
+      self.courses << Course.active
+    end
+
+    self.save
+  end
+
   def is_valid_tag?
-    return true unless self.is_student?    
+    return true unless self.is_student?
 
     if Account.valid_tags.include? @tag
       return true
@@ -67,16 +79,20 @@ class Account
     get(id) rescue nil
   end
 
+  def self.find_by_roles(roles)
+    self.all(role: roles)
+  end
+
   def self.new_student(params)
-    account = Account.new(params)
-    account.role = STUDENT 
-    account
+    new_account_with_role params, STUDENT
   end
 
   def self.new_teacher(params)
-    account = Account.new(params)
-    account.role = TEACHER
-    account
+    new_account_with_role params, TEACHER
+  end
+
+  def self.new_admin(params)
+    new_account_with_role params, ADMIN
   end
 
   def has_password?(password)
@@ -97,12 +113,12 @@ class Account
 
   def status_for_assignment(assignment)
     solutions = Solution.all(:account => self, :assignment => assignment)
-    assignment_status = AssignmentStatus.new 
+    assignment_status = AssignmentStatus.new
     assignment_status.assignment_id = assignment.id
     assignment_status.name = assignment.name
     assignment_status.deadline = assignment.deadline
     if solutions.empty?
-      assignment_status.status = :solution_pending 
+      assignment_status.status = :solution_pending
       assignment_status.solution_count = 0
       return assignment_status
     end
@@ -126,7 +142,7 @@ class Account
   def prety_full_name
     "#{self.surname}, #{self.name}"
   end
-  
+
   private
   def password_required
     crypted_password.blank? || password.present?
@@ -134,6 +150,12 @@ class Account
 
   def encrypt_password
     self.crypted_password = ::BCrypt::Password.create(password) if password.present?
+  end
+
+  def self.new_account_with_role(params, role)
+    account = Account.new(params)
+    account.role = role
+    account
   end
 
 end

@@ -7,8 +7,6 @@ describe "CorrectionsController" do
   let(:solution) { Factories::Solution.for(assignment) }
 
   before (:each) do
-    DataMapper.auto_migrate!
-
     Alfred::App.any_instance.stub(:current_account)
       .and_return(Factories::Account.teacher)
     Alfred::App.any_instance.stub(:current_course)

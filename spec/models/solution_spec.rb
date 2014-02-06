@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Solution do
 
 	before (:all) do
-		DataMapper.auto_migrate!
 		course = Course.new( :name => "AlgoIII", :active => true )
     @student = Factories::Account.student
 		@assignment = Factories::Assignment.vending_machine
@@ -47,7 +46,7 @@ describe Solution do
       end
     end
 
-    describe "latest solution" do 
+    describe "latest solution" do
       latest = Solution.latest_by_student_and_assignment(@student, @assignment)
       latest.should == @final_solution
     end

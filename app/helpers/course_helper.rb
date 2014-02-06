@@ -1,7 +1,7 @@
 Alfred::App.helpers do
 
 	def current_course
-		Course.first
+		Course.active
 	end
 
 	def current_course=(course)

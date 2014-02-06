@@ -1,10 +1,9 @@
 Alfred::App.helpers do
-
 	def current_course
-		Course.active
+		session[:current_course] ||= Course.active
 	end
 
-	def current_course=(course)
+	def set_current_course(course)
 		session[:current_course] = course
 	end
 end

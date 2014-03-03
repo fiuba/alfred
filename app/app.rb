@@ -107,6 +107,7 @@ module Alfred
 
     get '/logout' do
       set_current_account(nil)
+      set_current_course(nil)
       redirect '/'
     end
 

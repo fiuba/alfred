@@ -8,9 +8,9 @@ describe "CorrectionsController" do
 
   before (:each) do
     Alfred::App.any_instance.stub(:current_account)
-      .and_return(Factories::Account.teacher)
+      .and_return(teacher)
     Alfred::App.any_instance.stub(:current_course)
-      .and_return(Factories::Course.algorithm)
+      .and_return(algorithm)
   end
 
   describe "index" do
@@ -23,7 +23,7 @@ describe "CorrectionsController" do
 
     it "should render index content" do
       CorrectionStatus.should_receive(:corrections_status_for_teacher)
-        .with(teacher)
+        .with(teacher, algorithm)
         .and_return([])
       Alfred::App.any_instance.should_receive(:render)
         .with('corrections/index')

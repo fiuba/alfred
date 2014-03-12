@@ -12,7 +12,7 @@ Alfred::App.controllers :corrections do
   end
 
   get :index, :parent => :courses do
-    @assigned_corrections = CorrectionStatus.corrections_status_for_teacher(current_account)
+    @assigned_corrections = CorrectionStatus.corrections_status_for_teacher(current_account, current_course)
 
     render 'corrections/index'
   end

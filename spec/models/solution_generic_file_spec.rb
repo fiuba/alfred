@@ -1,22 +1,18 @@
 require 'spec_helper'
 
 describe SolutionGenericFile do
-  before (:each) do
-    DataMapper.auto_migrate!
-  end
-
 	let(:solution) { Factories::Solution.for( Factories::Assignment.vending_machine ) }
 
 	it "should allow to set name" do
 	  file = SolutionGenericFile.new
-	  
+
 	  file.name = 'myfile'
 	  file.name.should == 'myfile'
 	end
 
 	it "should return nil on name if path is not set" do
 	  file = SolutionGenericFile.new
-		
+
 		file.path.should be_nil
 		file.name.should be_nil
 	end
@@ -36,7 +32,7 @@ describe SolutionGenericFile do
 	end
 
 	it "should set definitive path on save" do
-	  file = SolutionGenericFile.new 
+	  file = SolutionGenericFile.new
 
 	  file.name = 'myFile'
 

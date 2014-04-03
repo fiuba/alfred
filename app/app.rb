@@ -50,13 +50,13 @@ module Alfred
     end
 
     configure :staging, :production do
-      set :delivery_method, :smtp => { 
+      set :delivery_method, :smtp => {
         :address              => ENV['MAIL_SERVER'],
         :port                 => ENV['MAIL_PORT'],
         :user_name            => ENV['MAIL_USER'],
         :password             => ENV['MAIL_PASSWORD'],
         :authentication       => :plain,
-        :enable_starttls_auto => true  
+        :enable_starttls_auto => true
       }
     end
 
@@ -75,7 +75,7 @@ module Alfred
     #
 
     #set :allow_disabled_csrf, true
-      
+
     set :login_page, "/login"
 
     access_control.roles_for :any do |role|
@@ -107,7 +107,8 @@ module Alfred
 
     get '/logout' do
       set_current_account(nil)
-      redirect '/'      
+      set_current_course(nil)
+      redirect '/'
     end
 
     get :login do
@@ -153,14 +154,14 @@ module Alfred
     end
 
     get :course, :map => 'courses/:course_id' do
-      current_course = Course.first(:name => params[:course_id])
+      set_current_course Course.first(:name => params[:course_id])
       render 'home/index'
     end
 
 		def store_location
 			session[:return_to] = request.url
 		end
-  
+
   end
 
 end

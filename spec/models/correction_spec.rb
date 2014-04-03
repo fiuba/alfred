@@ -8,7 +8,6 @@ describe Correction do
   let(:student) { solution.account }
 
 	before (:each) do
-		DataMapper.auto_migrate!
     @correction = Correction.new(
       :teacher => teacher,
       :solution => solution,
@@ -171,7 +170,7 @@ describe Correction do
   end
 
   describe "support longer comments" do
-    let(:comment_length) { 512 }  # Twice string property max length  
+    let(:comment_length) { 512 }  # Twice string property max length
     it "should support public comment longer than 255 characters" do
       @correction.public_comments = " " * comment_length
       @correction.save.should == true

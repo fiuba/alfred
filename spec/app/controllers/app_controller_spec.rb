@@ -12,10 +12,6 @@ describe "AppController" do
   let(:student_pass)      { 'foobar' }
   let(:course)            { Factories::Course.algorithm }
 
-  before (:each) do
-    DataMapper.auto_migrate!
-  end
-
   describe "register" do
     before do
       @new_student = {

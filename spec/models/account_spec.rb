@@ -83,7 +83,7 @@ describe Account do
 
 				solution2 = Solution.new( :assignment => assignment )
 				solution2.created_at = DateTime.now
-				
+
 				solution3 = Solution.new( :assignment => assignment )
 				solution3.created_at = DateTime.now
 
@@ -194,35 +194,65 @@ describe Account do
   end
 
   describe "create" do
-    it "should allow creating admin account without tag" do
-      params = {
-        :name => 'admin',
-        :surname => 'admin',
-        :buid => 'a',
-        :email => 'admin@admin.com',
-        :password => 'foobar',
-        :password_confirmation => 'foobar',
-        :role => Alfred::Admin::Account::ADMIN
-      }
+    context 'admin' do
+      let(:admin_attributes) { { :name => 'admin', :surname => 'admin', :buid => 'a', :email => 'admin@admin.com', :password => 'foobar', :password_confirmation => 'foobar', :role => Alfred::Admin::Account::ADMIN } }
 
-      admin = Account.new( params )
-      admin.should be_valid
+      it "should allow creating admin account without tag" do
+        admin = Account.new( admin_attributes )
+        admin.should be_valid
+      end
+
+      it "should associate with all courses" do
+        course1 = Course.new(name: 'Course 1', active: true)
+        course1.save.should be_true
+        course2 = Course.new(name: 'Course 2', active: false)
+        course2.save.should be_true
+
+        admin = Account.new( admin_attributes )
+
+        admin.save.should be_true
+        admin.courses.should include(course1)
+        admin.courses.should include(course2)
+      end
     end
 
-    it "should allow creating student with valid tag" do
-      params = {
-        :name => 'Yoda',
-        :surname => '?',
-        :buid => 'y',
-        :email => 'yoda@student.com',
-        :password => 'foobar',
-        :password_confirmation => 'foobar',
-        :role => Alfred::Admin::Account::STUDENT,
-        :tag => Account.valid_tags.first
-      }
+    context 'teacher' do
+      let(:teacher_attributes) { { :name => 'teacher', :surname => 'teacher', :buid => 'a', :email => 'teacher@teacher.com', :password => 'foobar', :password_confirmation => 'foobar', :role => Alfred::Admin::Account::TEACHER } }
 
-      yoda = Account.new( params )
-      yoda.should be_valid
+      it "should associate with all courses" do
+        course1 = Course.new(name: 'Course 1', active: true)
+        course1.save.should be_true
+        course2 = Course.new(name: 'Course 2', active: false)
+        course2.save.should be_true
+
+        teacher = Account.new( teacher_attributes )
+
+        teacher.save.should be_true
+        teacher.courses.should include(course1)
+        teacher.courses.should include(course2)
+      end
+    end
+
+    context 'student' do
+      let(:student_attributes) { { :name => 'Yoda', :surname => '?', :buid => 'y', :email => 'yoda@student.com', :password => 'foobar', :password_confirmation => 'foobar', :role => Alfred::Admin::Account::STUDENT, :tag => Account.valid_tags.first } }
+
+      it "should allow creating student with valid tag" do
+        student = Account.new( student_attributes )
+
+        student.should be_valid
+      end
+
+      it "should associate only with active course" do
+        course1 = Course.new(name: 'Course 1', active: true)
+        course1.save.should be_true
+        course2 = Course.new(name: 'Course 2', active: false)
+        course2.save.should be_true
+
+        student = Account.new( student_attributes )
+
+        student.save.should be_true
+        student.courses.should include course1
+      end
     end
   end
 end

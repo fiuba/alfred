@@ -3,8 +3,6 @@ require 'spec_helper'
 describe "MyController" do
 
   before (:each) do
-    DataMapper.auto_migrate!
-
     Alfred::App.any_instance.stub(:current_account)
       .and_return(Factories::Account.student)
     Alfred::App.any_instance.stub(:current_course)

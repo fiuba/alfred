@@ -7,14 +7,13 @@ describe "SolutionsController" do
   let(:assignment) { Factories::Assignment.vending_machine}
 
   before (:each) do
-    DataMapper.auto_migrate!
     Storage::StorageGateways.stub(:get_gateway).and_return(gateway)
     Alfred::App.any_instance.stub(:current_account).and_return(student)
   end
 
-  describe "new" do 
+  describe "new" do
     before do
-      @solution = Factories::Solution.for( assignment ) 
+      @solution = Factories::Solution.for( assignment )
     end
 
     it "should render solution upload page of student's for specified assignment" do
@@ -32,10 +31,10 @@ describe "SolutionsController" do
     before do
       @file_name = 'submission.st'
       file_content = 'solution content'
-      @params = { 
-        :solution => { 
+      @params = {
+        :solution => {
           :file => {
-            :filename => @file_name, 
+            :filename => @file_name,
             :tempfile => file_content
           },
           :account_id => student.id,
@@ -46,8 +45,8 @@ describe "SolutionsController" do
 
     describe "without file specified" do
       before do
-        @params = { 
-          :solution => { 
+        @params = {
+          :solution => {
             :account_id => student.id,
             :assignment_id => assignment.id
           }
@@ -63,7 +62,7 @@ describe "SolutionsController" do
 
     describe "with valid provided datas" do
       before do
-        gateway.should_receive(:upload).with('/solutions/1/submission.st', 
+        gateway.should_receive(:upload).with('/solutions/1/submission.st',
            'solution content')
       end
 
@@ -74,7 +73,7 @@ describe "SolutionsController" do
 
         new_solution = Solution.all.first
         generic_file = new_solution.solution_generic_files.first
-      
+
         new_solution.file.should == @file_name
         generic_file.solution.should == new_solution
       end
@@ -99,14 +98,14 @@ describe "SolutionsController" do
     end
   end
 
-  describe "download" do 
-    let (:fake_metadata) { 
+  describe "download" do
+    let (:fake_metadata) {
       {  "revision" => 1, "rev" => "111111111",
-         "thumb_exists" => false, "bytes" => 29, 
-         "modified" => "Fri, 01 Jun 2013 00 =>00 =>00 +0000", 
-         "client_mtime" => "Fri, 01 Jun 2013 00 =>00 =>00 +0000", 
-         "path" => "/test.txt", "is_dir" => false, 
-         "icon" => "page_white_text", "root" => "app_folder", 
+         "thumb_exists" => false, "bytes" => 29,
+         "modified" => "Fri, 01 Jun 2013 00 =>00 =>00 +0000",
+         "client_mtime" => "Fri, 01 Jun 2013 00 =>00 =>00 +0000",
+         "path" => "/test.txt", "is_dir" => false,
+         "icon" => "page_white_text", "root" => "app_folder",
          "mime_type" => "text/plain", "size" => "29 bytes"
       }
     }
@@ -130,7 +129,7 @@ describe "SolutionsController" do
           .with("/solutions/#{@new_solution.id}/#{@file_name}")
         gateway.should_receive(:metadata)
           .with(@new_solution.solution_generic_files.first.path)
-          .and_return( fake_metadata ) 
+          .and_return( fake_metadata )
         get "/solutions/#{@new_solution.id}/download"
         last_response.status.should == 200
         last_response.headers['Content-Type'].should == fake_metadata['mime_type']
@@ -152,7 +151,7 @@ describe "SolutionsController" do
         before do
           @new_solution = Factories::Solution.for( assignment )
           @file_name = @new_solution.file
-          @teacher = Factories::Account.teacher 
+          @teacher = Factories::Account.teacher
           Alfred::App.any_instance.stub(:current_account).and_return(@teacher)
           gateway.stub(:metadata).and_return( fake_metadata )
         end

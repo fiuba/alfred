@@ -1,8 +1,16 @@
 class CorrectionStatus
   attr_accessor :assignment_id, :assignment_name, :student_id, :student_full_name, :student_buid, :solution_id, :solution_test_result, :correction_id, :status, :grade
 
-  def self.corrections_status_for_teacher(teacher)
-    assigned_corrections = repository(:default).adapter.select("SELECT DISTINCT s.account_id, s.assignment_id  FROM corrections c INNER JOIN solutions s ON s.id = c.solution_id WHERE c.teacher_id = #{teacher.id}")
+  def self.corrections_status_for_teacher(teacher, course)
+    query = <<-SQL
+      SELECT DISTINCT s.account_id,
+            s.assignment_id
+      FROM corrections c
+      INNER JOIN solutions s ON s.id = c.solution_id
+      INNER JOIN assignments a ON a.id = s.assignment_id
+      WHERE c.teacher_id = #{teacher.id} AND a.course_id = #{course.id}
+    SQL
+    assigned_corrections = repository(:default).adapter.select(query)
     assigned_corrections.collect do |ac|
       solution = Solution.last(:account_id => ac.account_id, :assignment_id => ac.assignment_id, :order => :created_at)
       create_from_latest_solution(solution)

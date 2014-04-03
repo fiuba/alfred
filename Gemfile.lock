@@ -243,6 +243,7 @@ DEPENDENCIES
   dm-transactions
   dm-types
   dm-validations
+  dotenv
   dropbox-sdk
   erubis (~> 2.7.0)
   foreman

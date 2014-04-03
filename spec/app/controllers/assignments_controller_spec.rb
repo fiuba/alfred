@@ -7,8 +7,10 @@ describe "AssignmentsController" do
 	end
 
 	it "should_return_all_assignments_on_index" do
-		course_double = double(:id => 202, :name => 'My Course')
-		Course.should_receive(:first).any_number_of_times.and_return(course_double)
+		course_double = OpenStruct.new
+    course_double.id = 202
+    course_double.name = 'My Course'
+		Course.should_receive(:active).any_number_of_times.and_return(course_double)
 		Assignment.should_receive(:all).with({ :course =>  course_double }).and_return([ ])
 
 		get '/courses/202/assignments'

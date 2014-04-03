@@ -88,6 +88,11 @@ Given /^I am logged in as teacher$/ do
   click_button :sign_in
 end
 
+Given /^I logged out$/ do
+  visit '/logout'
+  @account = nil
+end
+
 Then /^Log out menu option show be visible$/ do
   page.should have_content 'Salir'
 end

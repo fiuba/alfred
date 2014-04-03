@@ -37,6 +37,10 @@ When /^I click edit button edit on "(.*?)"$/ do |assignment_name|
   as_teacher_for_assignment( assignment_name, 'Editar trabajo práctico').click
 end
 
+And /^I click "(.*)" for "(.*?)"$/ do |action_name, assignment_name|
+  as_teacher_for_assignment( assignment_name, action_name).click
+end
+
 When  /^I click download assignment file button for "(.*?)"$/ do |assignment_name|
   action = { 
     'teacher' => Proc.new { as_teacher_for_assignment( assignment_name, \
@@ -86,3 +90,24 @@ Then /^I should get file of "(.*?)"$/ do |assignment_name|
   page.response_headers["Content-Type"].should == "application/zip"
   page.response_headers["Content-Disposition"].should include("filename=#{file_name}")
 end
+
+Given /^"(.*)" has solution submitted by student$/ do |assignment_name|
+    step 'I am logged in as student'
+    step 'I follow "Trabajos prácticos"'
+    step 'I click submit solution for "TP1"'
+    step 'I upload the solution\'s file for "TP1"'
+    step 'I logged out'
+end
+
+Then /^I should see "(.*)" correction's status by student$/ do |assignment_name| 
+  query = ""                                      <<  \
+    "//tr"                                        <<  \
+    "/td[contains(., '#{@student.full_name}')]"   <<  \
+    "/.."                                         <<  \
+    "/td[contains(., '#{@student.tag}')]"         <<  \
+    "/.."                                         <<  \
+    "/td[contains(., 'Corrección pendiente')]"
+
+  expect { find(:xpath, query) }.to_not raise_error(Capybara::ElementNotFound)
+end
+

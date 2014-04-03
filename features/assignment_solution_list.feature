@@ -1,15 +1,15 @@
-Feature: Solution submition
-  As a student 
-  I want to see the list of created assignments for the course where I'm enrolled
+Feature: Assignments's solution list
+  As teacher
+  I want to see solutions submitted by students
 
   Background:
     Given the course with teacher and student enrolled 
     And there is a bunch of assignment already created
 
   Scenario: Main flow
-    Given I am logged in as student 
+    Given "TP1" has solution submitted by student
+    And   I am logged in as teacher 
     And   I follow "Trabajos prácticos"
-    Then  I should see "TP0"
-    And   I should see "TP1"
-    And   I should see "TP2"
+    And   I click "Correcciones" for "TP1"
+    Then  I should see "TP1" correction's status by student
 

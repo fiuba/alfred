@@ -111,3 +111,6 @@ Then /^I should see "(.*)" correction's status by student$/ do |assignment_name|
   expect { find(:xpath, query) }.to_not raise_error(Capybara::ElementNotFound)
 end
 
+And /^I click 'Asignarme a mi' on the last submission$/ do
+  find( :xpath, "//button[last()]").click
+end

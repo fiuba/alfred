@@ -26,7 +26,8 @@ student = Account.new_student({:name => 'student_name',
 															 :surname => 'student_surname',
 															 :password => 'Passw0rd!',
 															 :password_confirmation => 'Passw0rd!',
-															 :buid => '12346', 
+															 :buid => '12346',
+															 :tag => 'mie',
 															 :email => 'student@test.com'})
 student.courses << course
 student.save

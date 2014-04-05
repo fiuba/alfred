@@ -72,6 +72,11 @@ class Account
     account && account.has_password?(password) ? account : nil
   end
 
+  def self.find_by_buid(buid)
+    account = first(:conditions => { :buid => buid })
+  end
+
+
   ##
   # This method is used by AuthenticationHelper
   #

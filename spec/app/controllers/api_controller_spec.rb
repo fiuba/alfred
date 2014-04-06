@@ -47,6 +47,36 @@ describe "ApiController" do
         end
       end
     end
+  
+
+  end
+
+  describe "karma" do
+
+    it "should return 404 when student not found" do
+      ENV['API_KEY'] = secret_key_value
+      post '/api/karma',
+          { :buid => 'yerba' }, 
+          { 'HTTP_API_KEY' => secret_key_value }
+      last_response.status.should == 404
+    end
+
+    it "should create karma" do
+      ENV['API_KEY'] = secret_key_value
+      student = Account.new_student({:buid => '12345'}) 
+      Account.should_receive(:find_by_buid).and_return(student)
+      Course.should_receive(:active).and_return(Course.new)
+      karma = Karma.new
+      Karma.should_receive(:new).and_return(karma)
+      karma.should_receive(:save)
+      post '/api/karma',
+          { :buid => student.buid, :value => 1, :description => 'good job!' }, 
+          { 'HTTP_API_KEY' => secret_key_value }
+      last_response.status.should == 200
+      karma.value.should == 1
+      karma.description.should == 'good job!'
+    end
+
   end
 
 end

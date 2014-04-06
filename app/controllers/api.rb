@@ -28,4 +28,12 @@ Alfred::App.controllers :api do
       unless MailNotifierConfig.has_to_prevent_notification_for( :test_result )
   end
 
+  post :karma,:csrf_protection => false do
+    student = Account.find_by_buid(params[:buid])
+    return 404 if student.nil?
+    karma = Karma.for_student_in_course(student, Course.active)
+    karma.description = params[:description]
+    karma.save
+  end 
+
 end

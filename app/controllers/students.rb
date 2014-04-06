@@ -11,6 +11,7 @@ Alfred::App.controllers :students, :parent => :courses do
     @student = Account.get(params[:student_id])
     assignments = Assignment.find_by_course(current_course)
     @assignment_status = []
+    @karma_count = Karma.count_for_student_in_course(@student, current_course)
     assignments.each do | assignment |
       @assignment_status << @student.status_for_assignment(assignment)
     end

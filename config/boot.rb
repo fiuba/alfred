@@ -15,8 +15,6 @@ Dotenv.load ".env.#{PADRINO_ENV}", '.env' if defined?(Dotenv)
 Padrino::Logger::Config[:development][:log_level]  = :devel
 Padrino::Logger::Config[:development][:log_static] = true
 
-Padrino::Logger::Config[:travis] = { }
-
 #
 # ## Configure your I18n
 I18n.default_locale = :es

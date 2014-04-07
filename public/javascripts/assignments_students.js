@@ -20,8 +20,10 @@ $(document).ready(function() {
 
   editableGrid.renderGrid();
 
+  countRows();
+
   // filter when something is typed into filter
-  _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); };
+  _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); countRows(); };
 
   $(".assign-to-me").click(function(e) {
     var url = $(this).closest("form").attr("action");
@@ -59,4 +61,11 @@ function disableAssignToMeAction(actionsCell) {
   actionsCell.prepend(disabledAssignToMeElement);
 
   $('form', actionsCell).remove();
+}
+
+function countRows() {
+  var rowCount = $('#correctionsGrid tr').filter(function() {
+      return $(this).css('display') != 'none';
+  }).length -1;
+  $('#rowCount').text(rowCount);
 }

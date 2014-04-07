@@ -1,6 +1,6 @@
 Feature: Correction creating
   As teacher
-  I want to assign myself on charged of solution's grading
+  I want to see my correction list
 
   Background:
     Given the course with teacher and student enrolled 
@@ -12,5 +12,7 @@ Feature: Correction creating
     And   I follow "Trabajos prácticos"
     And   I click "Correcciones" for "TP1"
     And   I click 'Asignarme a mi' on the last submission
-    Then  I should see "El TP fue asignado correctamente" 
+    And   I go to the homepage
+    And   I follow "Mis correcciones" 
+    Then  I should see correction entry for "TP1"
 

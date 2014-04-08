@@ -43,7 +43,11 @@ module Alfred
 
     # You can configure for a specified environment like:
     #
-    configure :development, :test do
+    configure :test do
+      set :delivery_method, :test
+    end
+
+    configure :development do
       set :delivery_method, :file => {
         :location => "#{Padrino.root}/tmp/emails",
       }

@@ -1,4 +1,4 @@
-Feature: Correction creating
+Feature: Correction list
   As teacher
   I want to see my correction list
 

@@ -1,4 +1,4 @@
-Feature: Correction creating
+Feature: Correction creation
   As teacher
   I want to assign myself on charged of solution's grading
 

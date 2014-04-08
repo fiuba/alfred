@@ -14,6 +14,7 @@ require File.expand_path(File.dirname(__FILE__) + "/storage")
 # You can handle all padrino applications using instead:
 #   Padrino.application
 #Capybara.default_driver = :selenium
+
 Capybara.app = Alfred::App.tap { |app|  }
 
 VCR.configure do |c|  
@@ -24,4 +25,5 @@ end
 Before do
   DataMapper.auto_migrate!
   StorageHelpers.set_up_environment
+  MailerHelper.clear
 end

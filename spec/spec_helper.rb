@@ -6,6 +6,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 require 'capybara'
 require 'capybara/dsl'
 require 'webmock/rspec'
+require 'vcr'
 
 # RSpec's helpers
 # It aims to add support for rspec tests

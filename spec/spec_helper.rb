@@ -1,4 +1,4 @@
-PADRINO_ENV = 'test' unless defined?(PADRINO_ENV)
+PADRINO_ENV  = ENV['PADRINO_ENV'] ||= ENV['RACK_ENV'] ||= 'development'  unless defined?(PADRINO_ENV)
 
 require 'simplecov'
 

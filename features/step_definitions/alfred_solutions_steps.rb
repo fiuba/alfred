@@ -11,3 +11,9 @@ When /^I upload the solution's file for "(.*?)"$/ do |assignment_name|
   end
 end
 
+Then /^I should see solution entry for "(.*)"$/ do |assignment_name|
+  expect( page.body ).to \
+    include( "Soluciones entregadas para #{assignment_name}" )
+  expect { find(:xpath, "//td[contains(., \"#{@student.buid}.zip\")]") }.to_not \
+    raise_error(Capybara::ElementNotFound)
+end

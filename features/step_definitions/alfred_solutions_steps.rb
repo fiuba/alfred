@@ -17,3 +17,8 @@ Then /^I should see solution entry for "(.*)"$/ do |assignment_name|
   expect { find(:xpath, "//td[contains(., \"#{@student.buid}.zip\")]") }.to_not \
     raise_error(Capybara::ElementNotFound)
 end
+
+And /^I click "(.*)" for last solution$/ do |action_name|
+  query = "//a[contains( @title, \"#{action_name}\")]"
+  find( :xpath, query ).click
+end

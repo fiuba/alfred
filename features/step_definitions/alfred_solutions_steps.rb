@@ -18,7 +18,14 @@ Then /^I should see solution entry for "(.*)"$/ do |assignment_name|
     raise_error(Capybara::ElementNotFound)
 end
 
-And /^I click "(.*)" for last solution$/ do |action_name|
+And /^I follow "(.*)" for the last solution$/ do |action_name|
   query = "//a[contains( @title, \"#{action_name}\")]"
   find( :xpath, query ).click
 end
+
+And /^I click on download for last solution$/ do
+  VCR.use_cassette("cassette_solution_download_#{@student.buid}") do
+    find(:xpath, "//a[contains(., \"#{@student.buid}.zip\")]" ).click
+  end
+end
+

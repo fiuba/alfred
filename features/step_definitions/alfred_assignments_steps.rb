@@ -37,7 +37,7 @@ When /^I click edit button edit on "(.*?)"$/ do |assignment_name|
   as_teacher_for_assignment( assignment_name, 'Editar trabajo práctico').click
 end
 
-And /^I click "(.*)" for "(.*?)"$/ do |action_name, assignment_name|
+And /^I follow "(.*)" for "(.*?)"$/ do |action_name, assignment_name|
   as_teacher_for_assignment( assignment_name, action_name).click
 end
 
@@ -85,10 +85,7 @@ Given /^there is a bunch of assignment already created$/ do
 end
 
 Then /^I should get file of "(.*?)"$/ do |assignment_name|
-  file_name = "#{assignment_name.downcase}.zip"
-  page.status_code.should be 200
-  page.response_headers["Content-Type"].should == "application/zip"
-  page.response_headers["Content-Disposition"].should include("filename=#{file_name}")
+  step "I should get file \"#{assignment_name.downcase}.zip\""
 end
 
 Given /^"(.*)" has solution submitted by student$/ do |assignment_name|

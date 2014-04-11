@@ -22,7 +22,7 @@ end
 Given /^a teacher assigned himself as on-charge of correction$/ do
   step 'I am logged in as teacher'
   step 'I follow "Trabajos prácticos"'
-  step 'I click "Correcciones" for "TP1"'
+  step 'I follow "Correcciones" for "TP1"'
   step 'I click "Asignarme a mi" on the last submission'
   step 'I logged out'
 end

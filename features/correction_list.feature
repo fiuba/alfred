@@ -10,7 +10,7 @@ Feature: Correction list
   Scenario: Main flow
     And   I am logged in as teacher 
     And   I follow "Trabajos prácticos"
-    And   I click "Correcciones" for "TP1"
+    And   I follow "Correcciones" for "TP1"
     And   I click "Asignarme a mi" on the last submission
     And   I go to the homepage
     And   I follow "Mis correcciones" 

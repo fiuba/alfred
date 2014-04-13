@@ -16,19 +16,11 @@ $(document).ready(function() {
 
 	editableGrid.renderGrid();
 
-	countRows();
+	countRows('#studentsGrid');
 	
   // filter when something is typed into filter
   _$('filter').onkeyup = function() {
    	editableGrid.filter(_$('filter').value);
-   	countRows();
+   	countRows('#studentsGrid');
  	};
 });
-
-function countRows() {
-	var rowCount = $('#studentsGrid tr').filter(function() {
-	    return $(this).css('display') != 'none';
-	}).length -1;
- 	$('#rowCount').text(rowCount);
-}
-

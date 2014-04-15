@@ -20,8 +20,10 @@ $(document).ready(function() {
 
   editableGrid.renderGrid();
 
+  countRows('#correctionsGrid');
+
   // filter when something is typed into filter
-  _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); };
+  _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); countRows('#correctionsGrid'); };
 
   $(".assign-to-me").click(function(e) {
     var url = $(this).closest("form").attr("action");

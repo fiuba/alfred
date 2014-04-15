@@ -2,6 +2,7 @@
   <input type="text" class="input-medium search-query" id="filter" placeholder="tipea para filtrar">
 </div>
 
+<div>Mostrando: <span id="rowCount"></span> registros</div>
 <table id="studentsGrid" class="table table-bordered table-striped table-hover"">
 	<tr>
 		<th><%= t('buid').capitalize %></th>
@@ -27,5 +28,6 @@
 
 <% content_for :additional_js do %>
 	<%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
+	<%= javascript_include_tag 'grid_extensions.js' %>
   <%= javascript_include_tag 'students_index.js' %>
 <% end %>

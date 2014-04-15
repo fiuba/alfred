@@ -16,6 +16,11 @@ $(document).ready(function() {
 
 	editableGrid.renderGrid();
 
+	countRows('#studentsGrid');
+	
   // filter when something is typed into filter
-  _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); };
+  _$('filter').onkeyup = function() {
+   	editableGrid.filter(_$('filter').value);
+   	countRows('#studentsGrid');
+ 	};
 });

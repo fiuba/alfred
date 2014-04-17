@@ -55,6 +55,7 @@ group :test do
 	# Guard gem eases running spec automatically
 	gem 'guard'
 	gem 'guard-rspec'
+	gem 'guard-cucumber'
 
 	gem 'simplecov'
 	gem 'dm-sqlite-adapter'

@@ -25,12 +25,12 @@ $(document).ready(function() {
   // filter when something is typed into filter
   _$('filter').onkeyup = function() { editableGrid.filter(_$('filter').value); countRows('#correctionsGrid'); };
 
-  $(".assign-to-me").click(function(e) {
+  $(document).on('click', ".assign-to-me", function(event) {
     var url = $(this).closest("form").attr("action");
     var actionsCell = $(this).closest("form").closest('td');
     var teacher_assigned_cell = $(this).closest("tr").find('td.teacher_assigned');
     var status_cell = $(this).closest("tr").find('td.status');
-    e.preventDefault();
+    event.preventDefault();
     $.ajax(url, {
       beforeSend: function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('input[name="authenticity_token"]').attr('value')) },
       method: 'POST',

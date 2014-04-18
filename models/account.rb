@@ -1,7 +1,6 @@
 class Account
   include DataMapper::Resource
   include DataMapper::Validate
-  attr_accessor :password, :password_confirmation
 
   # Available roles
   TEACHER = 'teacher'
@@ -45,6 +44,17 @@ class Account
     end
 
     self.save
+  end
+
+  [:password, :password_confirmation].each do |attr|
+    define_method "#{attr}" do
+      self.send(:instance_variable_get, "@#{attr}".to_sym)
+    end
+
+    define_method "#{attr}=" do |value|
+      self.send(:instance_variable_set, "@#{attr}".to_sym, value)
+      self.crypted_password = nil # Hack to force DM to mark object as dirty
+    end
   end
 
   def is_valid_tag?

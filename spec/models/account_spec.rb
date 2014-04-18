@@ -255,4 +255,32 @@ describe Account do
       end
     end
   end
+
+  describe 'update password' do
+    let(:account) { Factories::Account.teacher }
+    let(:new_password) { 'my_new_password' }
+
+    it "should update password if other attributes updated" do
+      account.password = new_password
+      account.password_confirmation = new_password
+      account.name = 'ANewName'
+
+      account.save.should be_true
+
+      authenticated_account = Account.authenticate(account.email, new_password)
+
+      authenticated_account.should eq(account)
+    end
+
+    it "should update password if only attribute updated" do
+      account.password = new_password
+      account.password_confirmation = new_password
+
+      account.save.should be_true
+
+      authenticated_account = Account.authenticate(account.email, new_password)
+
+      authenticated_account.should eq(account)
+    end
+  end
 end

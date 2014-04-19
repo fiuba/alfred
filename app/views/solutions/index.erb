@@ -16,6 +16,10 @@
 			<td><%= t s.test_result %></a></td>
       <td><%= t(s.correction.status) if s.correction %></td>
 			<td>
+		  	<% if s.test_output %>
+					<i class='icon-info-sign' data-content="<%= s.test_output %>" data-original-title="Salida pruebas" rel="tooltip" data></i>
+      	<% end %>      	
+
 				<% if s.correction %>
 					<%- link_to :href => url(:my, :show_correction, :assignment_id => @assignment.id, :correction_id => s.correction.id), :rel => :tooltip, :title => t('solutions.grid.view_correction'), :class => 'list-row-action-wrapper-link' do %>
 						<i class='icon-ok-sign'></i>

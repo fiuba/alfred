@@ -1,5 +1,9 @@
 $(document).ready(function() {
 	$('.icon-info-sign').click( function click() {
-			alert($(this).attr('data-content'));
+			var data = $(this).attr('data-content');
+			//alert(data);
+			var options = {};
+			$('#testOutput').text(data);
+			$('#myModal').modal('show');
 		});
 });

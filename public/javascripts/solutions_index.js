@@ -1,8 +1,6 @@
 $(document).ready(function() {
-	$('.icon-info-sign').click( function click() {
+	$('.icon-info-sign').click( function onInfoClick() {
 			var data = $(this).attr('data-content');
-			//alert(data);
-			var options = {};
 			$('#testOutput').text(data);
 			$('#myModal').modal('show');
 		});

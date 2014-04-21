@@ -1,37 +1,60 @@
 <h1><%= t(:profile).capitalize %></h1>
+
 <hr/>
-  <% form_for :account, url(:my, :profile), :method => :put, :class => 'form-horizontal' do |f| %>
 
-<% error = @account.errors.key?(:name) && @account.errors[:name].count > 0 %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label t(:name), :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :name, :class => 'input-xlarge input-with-feedback', :autofocus => true %>
-    <span class='help-inline'><%= error ? f.error_message_on(:name) : "" %></span>
+<% form_for :account, url(:my, :profile), :method => :put, :class => 'form-horizontal' do |f| %>
+  <% error = @account.errors.key?(:name) && @account.errors[:name].count > 0 %>
+  <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+    <%= f.label t(:name), :class => 'control-label' %>
+    <div class='controls'>
+      <%= f.text_field :name, :class => 'input-xlarge input-with-feedback', :autofocus => true %>
+      <span class='help-inline'><%= error ? f.error_message_on(:name) : "" %></span>
+    </div>
+  </fieldset>
+
+  <% error = @account.errors.key?(:surname) && @account.errors[:surname].count > 0 %>
+  <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+    <%= f.label t(:surname), :class => 'control-label' %>
+    <div class='controls'>
+      <%= f.text_field :surname, :class => 'input-xlarge input-with-feedback' %>
+      <span class='help-inline'><%= error ? f.error_message_on(:surname) : "" %></span>
+    </div>
+  </fieldset>
+
+  <% error = @account.errors.key?(:tag) && @account.errors[:tag].count > 0 %>
+  <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+    <%= f.label t(:tag), :class => 'control-label' %>
+    <div class='controls'>
+      <%= f.text_field :tag, :class => 'input-xlarge input-with-feedback', :placeholder => 'mie - jt - jn'%>
+      <span class='help-inline'><%= error ? f.error_message_on(:tag) : "" %></span>
+    </div>
+  </fieldset>
+
+  <% error = @account.errors.key?(:password) && @account.errors[:password].count > 0 %>
+  <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+    <%= f.label t(:password), :class => 'control-label' %>
+    <div class='controls'>
+      <%= f.password_field :password, :class => 'input-xlarge input-with-feedback' %>
+      <% if error %>
+        <span class='help-inline'><%= f.error_message_on(:password) %></span>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <% error = @account.errors.key?(:password_confirmation) && @account.errors[:password_confirmation].count > 0 %>
+  <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+    <%= f.label t(:password_confirmation), :class => 'control-label' %>
+    <div class='controls'>
+      <%= f.password_field :password_confirmation, :class => 'input-xlarge input-with-feedback' %>
+      <% if error %>
+        <span class='help-inline'><%= f.error_message_on(:password_confirmation) %></span>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <div class="form-actions">
+    <%= f.submit t(:save), :class => 'btn btn-primary' %>
+    &nbsp;
+    <a href="/" class='btn'>Cancelar</a>
   </div>
-</fieldset>
-
-<% error = @account.errors.key?(:surname) && @account.errors[:surname].count > 0 %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label t(:surname), :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :surname, :class => 'input-xlarge input-with-feedback' %>
-    <span class='help-inline'><%= error ? f.error_message_on(:surname) : "" %></span>
-  </div>
-</fieldset>
-
-<% error = @account.errors.key?(:tag) && @account.errors[:tag].count > 0 %>
-<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label t(:tag), :class => 'control-label' %>
-  <div class='controls'>
-    <%= f.text_field :tag, :class => 'input-xlarge input-with-feedback', :placeholder => 'mie - jt - jn'%>
-    <span class='help-inline'><%= error ? f.error_message_on(:tag) : "" %></span>
-  </div>
-</fieldset>
-
-<div class="form-actions">
-  <%= f.submit t(:save), :class => 'btn btn-primary' %>
-  &nbsp;
-  <a href="/" class='btn'>Cancelar</a>
-</div>
 <% end %>

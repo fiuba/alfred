@@ -18,6 +18,9 @@
       <td><a href="<%= url_for(:solutions, :download, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
       <td><%= t(s.test_result) %></a></td>
       <td>
+      	<% if s.test_output %>
+					<i class='icon-info-sign test-output' data-content="<%=h(s.test_output) %>" data-original-title="Salida pruebas" rel="tooltip" data></i>
+      	<% end %>      	
       	<% if s.correction %>
 					<%- link_to :href => url(:my, :show_correction, :assignment_id => @assignment.id, :correction_id => s.correction.id), :rel => :tooltip, :title => t('solutions.grid.view_correction'), :class => 'list-row-action-wrapper-link' do %>
 	          <i class='icon-ok-sign'></i>
@@ -31,6 +34,20 @@
 		</tr>
 	<% end %>
 </table>
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Salida de la ejecución de las pruebas</h4>
+      </div>
+			<div id="testOutput" class="modal-body">
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <% content_for :additional_js do %>
 	<%= javascript_include_tag 'editablegrid-2.0.1.js' %>
   <%= javascript_include_tag 'solutions_index.js' %>

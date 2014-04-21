@@ -17,7 +17,7 @@
       <td><%= t(s.correction.status) if s.correction %></td>
 			<td>
 		  	<% if s.test_output %>
-					<i class='icon-info-sign' data-content="<%= s.test_output %>" data-original-title="Salida pruebas" rel="tooltip" data></i>
+					<i class='icon-info-sign test-output' data-content="<%=h(s.test_output) %>" data-original-title="Salida pruebas" rel="tooltip" data></i>
       	<% end %>      	
 
 				<% if s.correction %>

@@ -40,7 +40,7 @@ Alfred::App.controllers :my do
 
       DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
         if @solution.save
-          @solution_generic_file = SolutionGenericFile.new( :solution => @solution, 
+          @solution_generic_file = SolutionGenericFile.new( :solution => @solution,
                 :name => input_file[:filename] )
           errors << @solution_generic_file.errors if not @solution_generic_file.save
           begin
@@ -62,7 +62,7 @@ Alfred::App.controllers :my do
     if errors.empty?
       @title = pat(:create_title, :model => "solution #{@solution.id}")
       flash[:success] = pat(:create_success, :model => 'Solution')
-      redirect(url(:my, :solutions, :assignment_id => @assignment.id )) 
+      redirect(url(:my, :solutions, :assignment_id => @assignment.id ))
     else
       @title = pat(:create_title, :model => 'solution')
       flash.now[:error] = errors
@@ -72,7 +72,7 @@ Alfred::App.controllers :my do
 
   get :show_correction, :map => '/my/assignments/:assignment_id/corrections/:correction_id' do
     @correction = Correction.get(params[:correction_id])
-    
+
     render 'my/correction'
   end
 
@@ -80,11 +80,18 @@ Alfred::App.controllers :my do
     @account = current_account
     render 'my/profile'
   end
-  
+
 
   put :profile, :map => 'my/profile' do
+    # remove password values if not provided to avoid updating if not required
+    account_params = params[:account]
+    if (account_params['password'].blank? && account_params['password_confirmation'].blank?)
+      account_params.delete('password')
+      account_params.delete('password_confirmation')
+    end
+
     @account = current_account
-    if @account.update(params[:account])
+    if @account.update(account_params)
       flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
       redirect '/'
     else
@@ -92,7 +99,6 @@ Alfred::App.controllers :my do
       render 'my/profile'
     end
   end
-
 
 =begin
   TODO: eso deberia ser para ver los detalles de una solución

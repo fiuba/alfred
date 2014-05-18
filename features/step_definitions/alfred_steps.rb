@@ -18,14 +18,14 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
-# 
+#
 # Courses' predicates
 #
 Given /^the course "(.*?)"$/ do |course_name|
   @course = Factories::Course.name( course_name )
 end
 
-Given /^the course with teacher and student enrolled$/ do 
+Given /^the course with teacher and student enrolled$/ do
   step 'the course "2013-1"'
   step 'the teacher "John"'
   step 'the student "Richard"'
@@ -42,11 +42,11 @@ Given /^I enrole as student named "(.*?)"$/ do |student_name|
   click_button( "crear cuenta" )
 end
 
-# 
-# Account's predicates 
+#
+# Account's predicates
 #
 Given /^the teacher "(.*?)"$/ do |teacher_name|
-  @teacher = Factories::Account.teacher( teacher_name, "some_surname", 
+  @teacher = Factories::Account.teacher( teacher_name, "some_surname",
                 "#{teacher_name}@someplace.com" )
   @teacher.buid = 'xxxx'
   @teacher.password = 'Passw0rd!'
@@ -56,7 +56,7 @@ Given /^the teacher "(.*?)"$/ do |teacher_name|
 end
 
 Given /^the student "(.*?)"$/ do |student_name|
-  @student = Factories::Account.student( student_name, "some_surname", 
+  @student = Factories::Account.student( student_name, "some_surname",
                 "#{student_name}@someplace.com" )
   @student.buid = '77666'
   @student.password = 'Passw0rd!'
@@ -101,6 +101,12 @@ When /^I edit my profile with name "(.*?)" and lastname "(.*?)" and tag "(.*?)"$
   fill_in(:account_name, :with => name)
   fill_in(:account_surname, :with => lastname)
   fill_in(:account_tag, :with => tag)
+  click_button 'Guardar'
+end
+
+When /^I edit my profile with password "(.*?)" and password confirmation "(.*?)"$/ do |password, password_confirmation|
+  fill_in(:account_password, :with => password)
+  fill_in(:account_password_confirmation, :with => password_confirmation)
   click_button 'Guardar'
 end
 

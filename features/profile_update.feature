@@ -11,5 +11,9 @@ Feature: Profile update
     When I go to "the profile page"
   	When I edit my profile with name "Juan" and lastname "perez" and tag "jt"
     Then I should see "actualizado correctamente"
-  	
 
+  Scenario: Password update
+    Given I am logged in as teacher
+    When I go to "the profile page"
+    When I edit my profile with password "Password!" and password confirmation "Password!"
+    Then I should see "actualizado correctamente"

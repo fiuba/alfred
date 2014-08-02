@@ -1,4 +1,4 @@
-PADRINO_ENV  = ENV['PADRINO_ENV'] ||= ENV['RACK_ENV'] ||= 'development'  unless defined?(PADRINO_ENV)
+PADRINO_ENV = ENV['PADRINO_ENV'] ||= ENV['RACK_ENV'] ||= 'test'  unless defined?(PADRINO_ENV)
 
 require 'simplecov'
 
@@ -11,6 +11,11 @@ require 'vcr'
 # RSpec's helpers
 # It aims to add support for rspec tests
 Dir.glob(File.dirname(__FILE__) + "/support/**/*.rb").each {|f| require f}
+
+# Support for localization during testing
+Dir.glob(File.dirname(__FILE__) + "/../app/locale/*.yml").each do |f|   
+  I18n.load_path << f
+end
 
 Capybara.app = Alfred::App
 

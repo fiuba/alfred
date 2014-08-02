@@ -35,7 +35,7 @@ describe Account do
 	describe 'status_for_assignment' do
     let(:course)      { Factories::Course.algorithm }
     let(:student)     { Factories::Account.student }
-    let(:assignment)  { Factories::Assignment.tp } 
+    let(:assignment)  { Factories::Assignment.tp }
 
 		describe 'solution_count' do
 
@@ -159,10 +159,8 @@ describe Account do
 			end
 
       describe "correction info" do
-        before (:all) do
-          @solution = Factories::Solution.for(assignment)
-          @teacher  = Factories::Account.teacher 
-        end
+        let(:solution) { Factories::Solution.for(assignment) }
+        let(:teacher) { Factories::Account.teacher }
 
         it "should not return neither grade nor teacher" do
 				  student.status_for_assignment(assignment).grade.should be_nil
@@ -170,22 +168,20 @@ describe Account do
         end
 
         describe "with a correction" do
-          before (:all) do
-            @correction = Factories::Correction.correctsBy( @solution, @teacher )
-          end
+          let!(:correction) { Factories::Correction.correctsBy(solution, teacher) }
 
           it "should return both grading and teacher name" do
             status = student.status_for_assignment(assignment)
 					  status.grade.should == 7.0
-					  status.corrector_name.should == @teacher.full_name
+					  status.corrector_name.should == teacher.full_name
           end
 
           it "should return teacher name" do
-            @correction.grade = nil
-            @correction.save
+            correction.grade = nil
+            correction.save
             status = student.status_for_assignment(assignment)
             status.grade.should be_nil
-					  status.corrector_name.should == @teacher.full_name
+					  status.corrector_name.should == teacher.full_name
           end
         end
       end

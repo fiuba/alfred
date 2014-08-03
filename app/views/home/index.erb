@@ -36,3 +36,10 @@
 Alfred está aún en construcción, si detectas algún error o tienes sugerencias, escríbenos a <a href="mailto:<%= ENV['MAIL_SUPPORT_ADDRESS'] %>"><%= ENV['MAIL_SUPPORT_ADDRESS'] %></a>.
 </div>
 
+<% if not current_account.is_enrolled?(Course.active) %>
+ <div class="alert centered">
+   <b>IMPORTANTE:</b> Uds. no está anotado en el curso activo '<%= Course.active.name %>'.  
+   Para anotarse haga click <%= link_to t(:here), :href => url( :my, :enroll )  %>
+  </div>
+ <% end %>
+

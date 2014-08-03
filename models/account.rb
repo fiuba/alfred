@@ -158,6 +158,14 @@ class Account
     "#{self.surname}, #{self.name}"
   end
 
+  def is_enrolled?(course)
+    self.courses.include?(course)
+  end
+
+  def enroll(course)
+   courses << course unless (course.nil? or self.is_enrolled?(course) )
+  end
+
   private
   def password_required
     crypted_password.blank? || password.present?
@@ -172,5 +180,5 @@ class Account
     account.role = role
     account
   end
-
+  
 end

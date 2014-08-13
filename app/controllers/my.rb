@@ -30,7 +30,7 @@ Alfred::App.controllers :my do
   get :enroll do
     current_account.enroll(Course.active)
     if current_account.save
-     flash[:success] = t('successfull_enrollment')
+      flash[:success] = t('successfull_enrollment')
       render 'home/index'
     else
       flash.now[:error] = pat(:update_error, :model => 'account')

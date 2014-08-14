@@ -27,7 +27,7 @@ Alfred::App.controllers :my do
     render 'my/new_solution'
   end
 
-  get :enroll do
+  put :enroll do
     current_account.enroll(Course.active)
     if current_account.save
       flash[:success] = t('successfull_enrollment')

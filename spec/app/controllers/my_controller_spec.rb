@@ -47,7 +47,7 @@ describe "MyController" do
       current_account.should_receive(:enroll).with(course)
       Alfred::App.any_instance.should_receive(:render).with('home/index')
       
-      get '/my/enroll'
+      put '/my/enroll'
 
     end    
   end

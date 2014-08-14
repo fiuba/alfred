@@ -11,7 +11,7 @@ Feature: Student enrollement
     And   I enrole as student named "Tom"
     Then  I should see "Cuenta creada"
     And   I log in as "Tom"
-    #Then  I should see "¡Bienvenido!"
+    Then  I should see "Mis trabajos prácticos"
 
 
   Scenario: Re-Enrollment
@@ -21,4 +21,4 @@ Feature: Student enrollement
     Then  I should see "Cuenta creada" 
     Given the course "2014-1"
     And   I log in as "Tom"
-    #Then I should see "IMPORTANTE" 
+    Then I should see "IMPORTANTE" 

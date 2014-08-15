@@ -27,6 +27,18 @@ Alfred::App.controllers :my do
     render 'my/new_solution'
   end
 
+  put :enroll do
+    current_account.enroll(Course.active)
+    if current_account.save
+      flash[:success] = t('successfull_enrollment')
+      render 'home/index'
+    else
+      flash.now[:error] = pat(:update_error, :model => 'account')
+      render 'home/index'
+    end
+
+  end
+  
   post :create_solution, :map => '/my/assignments/:assignment_id/solutions/create' do
     errors = []
 
@@ -80,7 +92,6 @@ Alfred::App.controllers :my do
     @account = current_account
     render 'my/profile'
   end
-
 
   put :profile, :map => 'my/profile' do
     # remove password values if not provided to avoid updating if not required

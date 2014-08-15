@@ -1,5 +1,7 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 es:
+  successfull_enrollment: 'Ha sido inscripto correctamente'
+  here: 'aquí'
   profile: 'perfil'
   registration: 'registración'
   name: 'nombre'

@@ -12,8 +12,7 @@ describe "MyController" do
   describe "get profile" do
 
     it "should render profile view" do
-      Alfred::App.any_instance.should_receive(:render)
-        .with('my/profile')
+      Alfred::App.any_instance.should_receive(:render).with('my/profile')
 
       get "/my/profile"
 
@@ -38,6 +37,19 @@ describe "MyController" do
 
       put '/my/profile', account: { name: updated_name, surname: updated_surname, tag: updated_tag, password: updated_password, password_confirmation: updated_password }
     end
+  end
+
+  describe 'enroll' do 
+
+    it 'should enroll the current_account in the active course' do
+      course = Course.new
+      Course.should_receive(:active).and_return(course)
+      current_account.should_receive(:enroll).with(course)
+      Alfred::App.any_instance.should_receive(:render).with('home/index')
+      
+      put '/my/enroll'
+
+    end    
   end
 
 end

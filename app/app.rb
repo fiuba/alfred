@@ -122,8 +122,8 @@ module Alfred
     post :login do
       if account = Account.authenticate(params[:email], params[:password])
         set_current_account(account)
-        if account.is_student?
-				  redirect_back_or_default("courses/#{current_course.name}/students/me")
+        if account.is_student? && account.is_enrolled?(Course.active)
+				  redirect_back_or_default("courses/#{current_course.name}/my/assigments")
         else
           redirect_back_or_default('/')
         end

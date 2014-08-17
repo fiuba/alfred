@@ -1,21 +1,27 @@
 require 'spec_helper'
 
 describe Assignment do
-	subject { Factories::Assignment.withSolution }
 
-	it "should not destroy if has solutions" do
-	  subject.destroy.should be_false
-	end
-
-  describe "Big test_script" do
-    before do
-      @vending = Factories::Assignment.vending_machine
-    end
-
-    it "shoud save successfuly when a large script is specified" do
-      string_capacity = 255
-      @vending.test_script = " " * ( string_capacity + 20 ) 
-      @vending.save.should be_true
-    end
+  before (:each) do
+    @assignment = Assignment.new
   end
+
+	subject { @assignment }
+
+  it { should respond_to( :course ) }
+  it { should respond_to( :assignment_file ) }
+  it { should respond_to( :solutions ) }
+  it { should respond_to( :name ) }
+  it { should respond_to( :deadline ) }
+  it { should respond_to( :test_script ) }
+  it { should respond_to( :is_auto_grading ) }
+
+  describe 'initialize' do
+    
+    it 'is_auto_grading should be false' do
+      @assignment.is_auto_grading.should be_false
+    end
+    
+  end
+
 end

@@ -21,8 +21,9 @@ Alfred::App.controllers :api do
   post :task_result,:csrf_protection => false do
     solution = Solution.get(params[:id]) 
     return if solution.nil?
-    solution.test_result = params[:test_result]
-    solution.test_output = params[:test_output]
+    result = params[:test_result]
+    output = params[:test_output]
+    solution.register_test_result(result, output)
     solution.save
     deliver(:notification, :solution_test_result, solution) \
       unless MailNotifierConfig.has_to_prevent_notification_for( :test_result )

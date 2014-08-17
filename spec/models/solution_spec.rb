@@ -3,10 +3,7 @@ require 'spec_helper'
 describe Solution do
 
 	before (:all) do
-		course = Course.new( :name => "AlgoIII", :active => true )
-    @student = Factories::Account.student
-		@assignment = Factories::Assignment.vending_machine
-		@solution = Factories::Solution.forBy( @assignment, @student )
+		@solution = Solution.new
 	end
 
 	subject { @solution }
@@ -18,38 +15,17 @@ describe Solution do
 	it { should respond_to( :test_result) }
 	it { should respond_to( :test_output) }
 
-	describe "should belongs to student" do
-		it { @solution.account.should == @student }
+	describe 'register_test_result' do
+
+		it 'should create correction when assigment is_auto_grading' do
+			assignment = Assignment.new
+			assignment.is_auto_grading = true
+			@solution.assignment = assignment
+			test_result = :passed
+			test_output = 'ok'
+			Correction.any_instance.should_receive(:save)
+			@solution.register_test_result(test_result, test_output)
+		end
+
 	end
-
-	describe "without file" do
-    before { @solution.file = nil }
-		it { should_not be_valid }
-	end
-
-	describe "with file" do
-		before { @solution.file = 'resource name' }
-    it { should be_valid }
-	end
-
-  describe "solutions by student for specified assignment" do
-    before do
-      @anohter_solution = Factories::Solution.forBy( @assignment, @student )
-      @final_solution = Factories::Solution.forBy( @assignment, @student )
-    end
-
-    describe "set of solutions" do
-      it "should response both solutions" do
-        solutions = Solution.get_by_student_and_assignment(@student, @assignment)
-        solutions.should include(@anohter_solution)
-        solutions.should include(@final_solution)
-      end
-    end
-
-    describe "latest solution" do
-      latest = Solution.latest_by_student_and_assignment(@student, @assignment)
-      latest.should == @final_solution
-    end
-  end
-
 end

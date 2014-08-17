@@ -9,6 +9,7 @@ class Assignment
   property :name, String
   property :test_script, Text
   property :deadline, DateTime
+  property :is_auto_grading, Boolean, :default => false
 
   def self.find_by_course (course)
   	Assignment.all(:course => course)

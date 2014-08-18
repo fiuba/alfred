@@ -17,9 +17,9 @@ describe Solution do
 
 	describe 'register_test_result' do
 
-		it 'should create correction when assigment is_auto_grading' do
+		it 'should create correction when assigment is_optional' do
 			assignment = Assignment.new
-			assignment.is_auto_grading = true
+			assignment.is_optional = true
 			@solution.assignment = assignment
 			test_result = :passed
 			test_output = 'ok'

@@ -1,4 +1,6 @@
-migration 22, :create_alfred_user do
+require 'securerandom'
+
+migration 23, :create_alfred_user do
   up do
     user = Account.new
     user.buid = 'alfred'
@@ -6,8 +8,9 @@ migration 22, :create_alfred_user do
     user.surname = 'alfred'
     user.email = 'alfred@algo3.com'
     user.role = Account::TEACHER
-    user.password = 'Passw0rd!'
-    user.password_confirmation = 'Passw0rd!'
+    password = SecureRandom.uuid
+    user.password = password
+    user.password_confirmation = password
     user.save
   end
 

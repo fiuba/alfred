@@ -122,6 +122,10 @@ class Account
     self.role == TEACHER
   end
 
+  def self.alfred_user
+    Account.first(:buid => 'alfred')  
+  end
+  
   def self.available_roles
     return [ STUDENT, TEACHER, ADMIN ]
   end

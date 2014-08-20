@@ -32,4 +32,16 @@ class Solution
     self.account == account
   end 
 
+  def register_test_result(result, output)
+    test_result = result
+    test_output = output
+    if (assignment.is_optional)
+      correction =  Correction.new
+      correction.solution = self
+      correction.teacher = Account.alfred_user
+      correction.grade = Correction.default_grade
+      correction.save
+    end
+  end
+
 end

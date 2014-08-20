@@ -14,6 +14,16 @@
     <span class='help-inline'><%= f.error_message_on(:test_script)  if error %></span>
   </div>
 </fieldset>
+
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :is_optional, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.check_box :is_optional, :class => 'input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= f.error_message_on(:is_optional) if error %></span>
+  </div>
+</fieldset>
+
+
 <% error = @assignment.errors.key?(:deadline) && @assignment.errors[:deadline].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :deadline, :class => 'control-label' %>

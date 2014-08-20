@@ -49,6 +49,10 @@ class Correction
     end
   end
 
+  def self.default_grade
+    10
+  end
+  
   private
   def is_a_teacher?
     if @teacher

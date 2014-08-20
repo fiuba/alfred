@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe 'Assignment Datamapper Integration' do
 
-  before (:each) do
-    @assignment = Assignment.new
-  end
-
-  subject { @assignment }
+  subject { Assignment.new }
   
 	it "should not destroy if has solutions" do
 	  subject.destroy.should be_false

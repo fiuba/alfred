@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe Assignment do
 
-  before (:each) do
-    @assignment = Assignment.new
-  end
-
-	subject { @assignment }
+	subject { Assignment.new }
 
   it { should respond_to( :course ) }
   it { should respond_to( :assignment_file ) }
@@ -19,7 +15,7 @@ describe Assignment do
   describe 'initialize' do
     
     it 'is_optional should be false' do
-      @assignment.is_optional.should be_false
+      subject.is_optional.should be_false
     end
     
   end

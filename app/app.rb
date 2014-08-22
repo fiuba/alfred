@@ -8,7 +8,8 @@ module Alfred
     enable :sessions
     enable :authentication
     enable :store_location
-    set :allow_disabled_csrf, true
+    enable :allow_disabled_csrf
+    #set :allow_disabled_csrf, true
 
     ##
     # Caching support

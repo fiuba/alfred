@@ -19,6 +19,7 @@ Alfred::App.controllers :api do
   end
 
   post :task_result,:csrf_protection => false do
+    puts 'registering task_result'
     solution = Solution.get(params[:id]) 
     return if solution.nil?
     result = params[:test_result]
@@ -30,6 +31,7 @@ Alfred::App.controllers :api do
   end
 
   post :karma,:csrf_protection => false do
+    puts 'registering karma'
     student = Account.find_by_buid(params[:buid])
     return 404 if student.nil?
     karma = Karma.for_student_in_course(student, Course.active)

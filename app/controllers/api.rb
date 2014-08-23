@@ -1,8 +1,6 @@
 Alfred::App.controllers :api do
 
   before do
-    puts "request key: #{request.env['HTTP_API_KEY']}"
-    puts "env key: #{ENV['API_KEY']}"
     halt 403 unless request.env['HTTP_API_KEY'] == ENV['API_KEY']
   end
 
@@ -21,6 +19,18 @@ Alfred::App.controllers :api do
   end
 
   post :task_result,:csrf_protection => false do
+    puts 'registering task_result'
+    solution = Solution.get(params[:id]) 
+    return if solution.nil?
+    result = params[:test_result]
+    output = params[:test_output]
+    solution.register_test_result(result, output)
+    solution.save
+    deliver(:notification, :solution_test_result, solution) \
+      unless MailNotifierConfig.has_to_prevent_notification_for( :test_result )
+  end
+
+  get :task_result do
     puts 'registering task_result'
     solution = Solution.get(params[:id]) 
     return if solution.nil?

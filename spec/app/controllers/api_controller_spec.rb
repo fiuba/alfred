@@ -30,7 +30,7 @@ describe "ApiController" do
 
       it "should notify author about test result" do
         Alfred::App.any_instance.should_receive(:deliver)
-        post '/api/task_result', 
+        get '/api/task_result', 
           { :id => solution.id }, 
           { 'HTTP_API_KEY' => secret_key_value }
       end
@@ -41,7 +41,7 @@ describe "ApiController" do
 
         it "should not notify author about test result" do
           Alfred::App.any_instance.should_not_receive(:deliver)
-          post '/api/task_result', 
+          get '/api/task_result', 
             { :id => solution.id }, 
             { 'HTTP_API_KEY' => secret_key_value }
         end

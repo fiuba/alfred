@@ -1,7 +1,7 @@
 Alfred::App.controllers :api do
 
   before do
-    #halt 403 unless request.env['HTTP_API_KEY'] == ENV['API_KEY']
+    halt 403 unless request.env['HTTP_API_KEY'] == ENV['API_KEY']
   end
 
   get :next_task do

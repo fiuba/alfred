@@ -16,8 +16,9 @@ Padrino::Logger::Config[:development][:log_level]  = :devel
 Padrino::Logger::Config[:development][:log_static] = true
 
 
+Padrino::Logger::Config[:production][:log_static] = false
 Padrino::Logger::Config[:production][:log_level]  = :debug
-Padrino::Logger::Config[:development][:stream] = :stdout
+Padrino::Logger::Config[:production][:stream] = :stdout
 
 #
 # ## Configure your I18n

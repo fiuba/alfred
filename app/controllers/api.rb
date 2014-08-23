@@ -34,10 +34,13 @@ Alfred::App.controllers :api do
     puts 'registering task_result'
     solution = Solution.get(params[:id]) 
     return if solution.nil?
+    puts 'solution found'
     result = params[:test_result]
     output = params[:test_output]
     solution.register_test_result(result, output)
+    puts 'resulted registered and about saving'
     solution.save
+    puts 'solution saved'
     deliver(:notification, :solution_test_result, solution) \
       unless MailNotifierConfig.has_to_prevent_notification_for( :test_result )
   end

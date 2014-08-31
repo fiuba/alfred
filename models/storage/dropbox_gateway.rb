@@ -37,10 +37,10 @@ end
 class Storage::DropboxGateway
 	def initialize
     @session = DropboxSession.new(ENV['DROPBOX_APP_KEY'], ENV['DROPBOX_APP_SECRET'])
-    @session.set_request_token(ENV['DROPBOX_REQUEST_TOKEN_KEY'], ENV['DROPBOX_REQUEST_TOKEN_SECRET'])
-    @session.set_access_token(ENV['DROPBOX_AUTH_TOKEN_KEY'], ENV['DROPBOX_AUTH_TOKEN_SECRET'])
-
-    @client = DropboxClient.new(@session, :app_folder)
+    #@session.set_request_token(ENV['DROPBOX_REQUEST_TOKEN_KEY'], ENV['DROPBOX_REQUEST_TOKEN_SECRET'])
+    #@session.set_access_token(ENV['DROPBOX_AUTH_TOKEN_KEY'], ENV['DROPBOX_AUTH_TOKEN_SECRET'])
+		#@client = DropboxClient.new(@session, :app_folder)		
+    @client = DropboxClient.new(ENV['DROPBOX_ACCESS_TOKEN'])
 	end
 
 	def upload(file_path, file)

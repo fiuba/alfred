@@ -31,7 +31,7 @@ gem 'dm-is-remixable'
 gem 'dm-ar-finders'
 gem 'dm-transactions'
 gem 'tilt', '1.3.7'
-gem 'dropbox-sdk', :require => 'dropbox_sdk'
+gem 'dropbox-sdk', '1.6.1', :require => 'dropbox_sdk'
 
 # Padrino Stable Gem
 gem 'padrino', '0.11.1'

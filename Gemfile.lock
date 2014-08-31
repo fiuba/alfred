@@ -74,7 +74,7 @@ GEM
     do_sqlite3 (0.10.12)
       data_objects (= 0.10.12)
     dotenv (0.8.0)
-    dropbox-sdk (1.5.1)
+    dropbox-sdk (1.6.1)
       json
     erubis (2.7.0)
     eventmachine (1.0.0)
@@ -244,7 +244,7 @@ DEPENDENCIES
   dm-types
   dm-validations
   dotenv
-  dropbox-sdk
+  dropbox-sdk (= 1.6.1)
   erubis (~> 2.7.0)
   foreman
   guard

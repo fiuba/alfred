@@ -3,12 +3,11 @@ class CorrectionStatus
 
   def self.corrections_status_for_teacher(teacher, course)
     query = <<-SQL
-      SELECT DISTINCT s.account_id,
-            s.assignment_id
+      SELECT DISTINCT 's.account_id','s.assignment_id'
       FROM corrections c
-      INNER JOIN solutions s ON s.id = c.solution_id
-      INNER JOIN assignments a ON a.id = s.assignment_id
-      WHERE c.teacher_id = #{teacher.id} AND a.course_id = #{course.id}
+      INNER JOIN solutions s ON s.id = 'c.solution_id'
+      INNER JOIN assignments a ON a.id = 's.assignment_id'
+      WHERE 'c.teacher_id' = #{teacher.id} AND 'a.course_id' = #{course.id}
     SQL
     assigned_corrections = repository(:default).adapter.select(query)
     assigned_corrections.collect do |ac|

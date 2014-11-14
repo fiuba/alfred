@@ -11,6 +11,7 @@ describe Assignment do
   it { should respond_to( :deadline ) }
   it { should respond_to( :test_script ) }
   it { should respond_to( :is_optional ) }
+  it { should respond_to( :is_blocking ) }
 
   describe 'initialize' do
     

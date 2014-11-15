@@ -43,6 +43,7 @@ es:
       file_absent: 'Debe seleccionar archivo'
     form:
       file: 'Archivo a entregar'
+      comments: 'Comentarios'
       assignment: 'Trabajo práctico'
     grid:
       file: 'Archivo entregado'

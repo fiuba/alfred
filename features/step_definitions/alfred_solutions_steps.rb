@@ -4,6 +4,10 @@ When /^I click submit solution for "(.*?)"$/ do |assignment_name|
   as_student_for_assignment( assignment_name, 'Entregar solución' ).click
 end
 
+When /^I click save button$/ do
+    click_button( "Guardar" )
+end
+
 When /^I upload the solution's file for "(.*?)"$/ do |assignment_name|
   VCR.use_cassette("cassette_solution_for_#{assignment_name.downcase}") do
     attach_file(:solution_file, address_to("#{@student.buid}.zip"))
@@ -29,3 +33,28 @@ And /^I click on download for last solution$/ do
   end
 end
 
+Given /^I comment "(.*?)"$/ do |comment|
+  fill_in :solution_comments, :with => '#{comment}'
+end
+
+Given /^a student submit solution for "(.*?)" with comment$/ do |tp, multiline|
+   mul = ''
+   multiline.split(/\n/).each do |phrase|
+     mul << phrase
+   end
+  step "a student submit solution for \"#{tp}\" with comment \"#{mul}\""
+end
+
+
+Given /^a student submit solution for "(.*?)" with comment "(.*?)"$/ do |tp, comment|
+  step 'I am logged in as student' 
+  step 'I follow "Trabajos prácticos"'
+  step "I click submit solution for \"#{tp}\""
+  step 'I comment "#{comment}"'
+  step "I upload the solution's file for \"#{tp}\""
+  step "solution should have comment: \"#{comment}\""
+end
+
+Then /^solution should have comment: "(.*?)"$/ do |comment|
+  pending
+end

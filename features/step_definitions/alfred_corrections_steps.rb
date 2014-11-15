@@ -61,3 +61,26 @@ And /^Mail has been sent to student$/ do
     "* Comentarios: #{Correction.last.public_comments}" 
   )
 end
+
+Then /^I should see comment:$/ do |multiline|
+  com = ''
+  multiline.split(/\n/).each do |phrase|
+    com << phrase
+  end
+  step "I should see comment: \"#{com}\""
+end
+
+Then /^I should see no comment$/ do
+  step 'I should see comment: ""'
+end
+
+When /^as a teacher I go to correct last correction$/ do
+  step 'I am logged in as teacher'
+  step 'I go to the homepage'
+  step 'I follow "Mis correcciones"' 
+  step 'I click "Corregir" on last correction'
+end
+
+Then /^I should see comment: "(.*?)"$/ do |arg1|
+  pending
+end

@@ -14,6 +14,12 @@
     <span class='help-inline'><%= error ? f.error_message_on(:file) : t('solution.upload_help') %></span>
   </div>
 </fieldset>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label t('solutions.form.comments'), :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_area :comments, :rows => 4, :class => 'span8' %>
+  </div>
+</fieldset>
 <%= f.hidden_field :account_id, :value => current_account.id %>
 <%= f.hidden_field :assignment_id, :value => @assignment.id %>
 

@@ -12,7 +12,7 @@ class Solution
   # property <name>, <type>
   property :id, Serial
   property :file, String
-  # TODO comment
+  property :comments, String
   property :created_at, DateTime 
   property :test_result, String, :default => 'not_available' # other possible results are 'passed' and 'failed'
   property :test_output, String 

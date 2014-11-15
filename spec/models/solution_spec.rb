@@ -9,6 +9,7 @@ describe Solution do
 	subject { @solution }
 
 	it { should respond_to( :file ) }
+	it { should respond_to( :comments ) }
 	it { should respond_to( :account ) }
 	it { should respond_to( :assignment) }
 	it { should respond_to( :correction) }

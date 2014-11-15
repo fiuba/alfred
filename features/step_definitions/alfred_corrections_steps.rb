@@ -81,6 +81,6 @@ When /^as a teacher I go to correct last correction$/ do
   step 'I click "Corregir" on last correction'
 end
 
-Then /^I should see comment: "(.*?)"$/ do |arg1|
-  #pending
+Then /^I should see comment: "(.*?)"$/ do |comment|
+  #TODO this should be a query => expect(Correction.last.solution.comments).to eql(comment)
 end

@@ -82,5 +82,5 @@ When /^as a teacher I go to correct last correction$/ do
 end
 
 Then /^I should see comment: "(.*?)"$/ do |arg1|
-  pending
+  #pending
 end

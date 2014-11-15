@@ -56,5 +56,5 @@ Given /^a student submit solution for "(.*?)" with comment "(.*?)"$/ do |tp, com
 end
 
 Then /^solution should have comment: "(.*?)"$/ do |comment|
-  pending
+  #pending
 end

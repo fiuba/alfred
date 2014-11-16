@@ -82,5 +82,5 @@ When /^as a teacher I go to correct last correction$/ do
 end
 
 Then /^I should see comment: "(.*?)"$/ do |comment|
-  #TODO this should be a query => expect(Correction.last.solution.comments).to eql(comment)
+  #step "I should see \"#{comment}\""
 end

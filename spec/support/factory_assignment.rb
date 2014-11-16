@@ -1,6 +1,6 @@
 module Factories
   module Assignment
-    def self.name( name = "TP 0", course = nil )
+    def self.name( name = "TP 0", course = nil, blocking_deadline = false )
 	    course ||=  \
         Alfred::Admin::Course.find(:name => 'course 1') || \
         Alfred::Admin::Course.create(:name => 'course 1')
@@ -8,6 +8,7 @@ module Factories
         assignment = Alfred::Admin::Assignment.new()
         assignment.name = name
         assignment.course = course
+        assignment.is_blocking = blocking_deadline
         assignment.save
         assignment
     end

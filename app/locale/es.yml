@@ -41,6 +41,7 @@ es:
       upload_failed: 'Error al intentar subir el archivo'
       delete_failed: 'Error al intentar borrar el archivo'
       file_absent: 'Debe seleccionar archivo'
+      deadline_passed: 'La fecha de entrega ha caducado'
     form:
       file: 'Archivo a entregar'
       comments: 'Comentarios'

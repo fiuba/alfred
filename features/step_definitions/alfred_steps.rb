@@ -114,6 +114,10 @@ When /^I follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
+When /^I click ".*?"$/ do |button|
+  click_button button
+end
+
 Then /^I should get file "(.*)"$/ do |file_name|
   page.status_code.should be 200
   page.response_headers["Content-Type"].should == "application/zip"

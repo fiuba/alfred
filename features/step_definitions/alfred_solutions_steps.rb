@@ -58,3 +58,7 @@ end
 Then /^solution should have comment: "(.*?)"$/ do |comment|
   #expect(Solution.last.comments).to eql(comment)
 end
+
+When(/^I see save is invalid because no file was saved$/) do
+  step 'I should see "Debe seleccionar archivo"'
+end

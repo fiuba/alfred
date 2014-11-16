@@ -84,14 +84,14 @@ end
 
 Given /^the assignment entitled "(.*?)"$/ do |assignment_name|
   @assignment = Factories::Assignment.name( assignment_name, @course )
-  @assignment.deadline = Date.today()
+  @assignment.deadline = Date.today() + 2
   @assignment.save
 end
 
 Given /the assignment entitled "(.*?)" with blocking deadline (not |)passed$/ do |passed, assignment_name|
   blocking = true
   @assignment = Factories::Assignment.name( assignment_name, @course )
-  @assignment.deadline = passed == "not " ? Date.today() : "22/10/2013".to_date
+  @assignment.deadline = passed == "not " ? Date.today() + 2 : "22/10/2013".to_date
   @assignment.save
 end
 

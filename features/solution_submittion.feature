@@ -77,6 +77,7 @@ Feature: Solution submission
     Given I am logged in as student 
     And   I follow "Trabajos prácticos"
     And   I click submit solution for "TP1"
+    And   I comment "This is my comment for this solution"
     When  I click save button
     And   I see save is invalid because no file was saved
     Then  I should see comment: "This is my comment for this solution"

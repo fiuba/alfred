@@ -7,7 +7,7 @@ Alfred::App.controllers :my do
   end
   
   define_method :is_blocked_by_date? do |assignment|
-    assignment.is_blocking && assignment.deadline > Date.today
+    assignment.is_blocking && assignment.deadline < Date.today
   end
 
   get :assigments, :parent => :courses do

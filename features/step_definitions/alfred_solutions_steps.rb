@@ -34,29 +34,19 @@ And /^I click on download for last solution$/ do
 end
 
 Given /^I comment "(.*?)"$/ do |comment|
-  fill_in :solution_comments, :with => '#{comment}'
+  fill_in :solution_comments, :with => comment
 end
-
-Given /^a student submit solution for "(.*?)" with comment$/ do |tp, multiline|
-   mul = ''
-   multiline.split(/\n/).each do |phrase|
-     mul << phrase
-   end
-  step "a student submit solution for \"#{tp}\" with comment \"#{mul}\""
-end
-
 
 Given /^a student submit solution for "(.*?)" with comment "(.*?)"$/ do |tp, comment|
   step 'I am logged in as student' 
   step 'I follow "Trabajos prácticos"'
   step "I click submit solution for \"#{tp}\""
-  step 'I comment "#{comment}"'
+  step "I comment \"#{comment}\""
   step "I upload the solution's file for \"#{tp}\""
-  step "solution should have comment: \"#{comment}\""
 end
 
 Then /^solution should have comment: "(.*?)"$/ do |comment|
-  #expect(Solution.last.comments).to eql(comment)
+  expect(Solution.last.comments).to eql(comment)
 end
 
 When(/^I see save is invalid because no file was saved$/) do

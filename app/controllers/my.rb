@@ -48,7 +48,7 @@ Alfred::App.controllers :my do
 
     @assignment = Assignment.get(params[:assignment_id])
     @solution= Solution.new( :account_id => current_account.id,
-            :assignment => @assignment )
+            :assignment => @assignment, :comments => params[:solution][:comments] )
     if is_blocked_by_date?(@assignment)
 	  errors << t('solutions.errors.deadline_passed')
     elsif is_file_specified?(params)

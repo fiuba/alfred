@@ -82,5 +82,5 @@ When /^as a teacher I go to correct last correction$/ do
 end
 
 Then /^I should see comment: "(.*?)"$/ do |comment|
-  #step "I should see \"#{comment}\""
+  step "I should see \"#{comment}\""
 end

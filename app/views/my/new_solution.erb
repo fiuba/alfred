@@ -15,7 +15,7 @@
   </div>
 </fieldset>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label t('solutions.form.comments'), :class => 'control-label' %>
+  <%= f.label I18n.translate('solutions.form.comments'), :class => 'control-label' %>
   <div class='controls'>
     <%= f.text_area :comments, :rows => 4, :class => 'span8' %>
   </div>

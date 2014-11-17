@@ -33,12 +33,14 @@ When /^I fill requeried data for assignment entitled "(.*?)"$/ do |assignment_na
   end
 end
 
-When /^I enter data for (not |)blocking assignment "(.*?)" with due date "(.*?)"$/ do |blocking, assignment_name, date|
+When /^I fill data for (non |)blocking assignment "(.*?)" with due date "(.*?)"$/ do |blocking, assignment_name, date|
   VCR.use_cassette("cassette_assignment_#{assignment_name.downcase}") do
     with_scope( '.form-horizontal' ) do
       fill_in( :assignment_name,        :with => assignment_name)
       fill_in( :assignment_deadline,    :with => date)
-      fill_in( :assignment_is_blocking, :with => blocking != 'not ')
+      if blocking != 'non '
+	check(:assignment_is_blocking)
+      end
       fill_in( :assignment_test_script, :with => "#!/bin/bash\necho $?")
       attach_file(:assignment_file, address_to("#{assignment_name.downcase}.zip"))
       click_button( "Guardar y continuar" )
@@ -88,13 +90,6 @@ Given /^the assignment entitled "(.*?)"$/ do |assignment_name|
   @assignment.save
 end
 
-Given /the assignment entitled "(.*?)" with blocking deadline (not |)passed$/ do |passed, assignment_name|
-  blocking = true
-  @assignment = Factories::Assignment.name( assignment_name, @course )
-  @assignment.deadline = passed == "not " ? Date.today() + 2 : "22/10/2013".to_date
-  @assignment.save
-end
-
 Given /^there is a bunch of assignment already created$/ do
   step 'I am logged in as teacher'
   step 'I follow "Trabajos prácticos"'
@@ -104,11 +99,11 @@ Given /^there is a bunch of assignment already created$/ do
   end
 end
 
-Given /^there is a (not |)blocking assignment "(.*?)" with due date "(.*?)" already created$/ do |block, assig_name, date|
+Given /^there is a (non |)blocking assignment "(.*?)" with due date "(.*?)" already created$/ do |block, assig_name, date|
   step 'I am logged in as teacher'
   step 'I follow "Trabajos prácticos"'
   step 'I follow "Nuevo"'
-  step "I enter data for #{block}blocking assignment \"#{assig_name}\" with due date \"#{date}\""
+  step "I fill data for #{block}blocking assignment \"#{assig_name}\" with due date \"#{date}\""
 end
 
 Then /^I should get file of "(.*?)"$/ do |assignment_name|

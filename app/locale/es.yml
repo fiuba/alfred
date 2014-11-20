@@ -24,6 +24,7 @@ es:
   my_corrections: 'Mis correcciones'
   save_and_notify: 'Guardar y notificar'
   save: 'Guardar'
+  cancel: 'Cancelar'
   new: 'Nueva'
   solution:
     new: 'entregar solución'
@@ -80,6 +81,7 @@ es:
       actions:
         assign_to_me: 'Asignarmelo a mi'
         view_solutions: 'Ver soluciones'
+        assign_to_other: 'Asignar a otro'
     show:
       title: 'Corrección para'
       submission_date: 'Fecha de entrega:'
@@ -89,6 +91,8 @@ es:
     creation_succeeded: 'El TP fue asignado correctamente'
     no_solutions_found: 'El alumno no presentó ninguna solución para el TP'
     solution_already_assigned: 'La solución ya fue asignada a otro docente'
+    teacher_selection_modal:
+      title: 'Asignar corrección a'
   my_assigments: 'Mis trabajos prácticos'
   my_solutions: 'Mis entregas'
   assignment: 'Trabajo práctico'

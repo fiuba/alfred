@@ -21,6 +21,14 @@ teacher = Account.new_teacher({:name => 'teacher_name',
 teacher.courses << course
 teacher.save
 
+teacher2 = Account.new_teacher({:name => 'teacher2_name', 
+															 :surname => 'teacher_surname',
+															 :password => 'Passw0rd!',
+															 :password_confirmation => 'Passw0rd!',
+															 :buid => '123456', 
+															 :email => 'teacher2@test.com'})
+teacher2.courses << course
+teacher2.save
 
 student = Account.new_student({:name => 'student_name', 
 															 :surname => 'student_surname',

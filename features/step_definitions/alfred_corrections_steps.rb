@@ -28,8 +28,6 @@ Given /^a teacher assigned himself as on-charge of correction$/ do
 end
 
 And /^I click "Asignarme a mi" on the last submission$/ do
-#  find( :xpath, "//button[last()]").click
-#  find_button('assign_to_me').click
   all(:xpath, "//button[@class='assign-to-me']").last.click
 end
 

@@ -1,26 +1,3 @@
-<!-- Modal -->
-<div class="modal fade" id="teacher_selection_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
-        <h4 class="modal-title" id="myModalLabel"><%= t('corrections.teacher_selection_modal.title')%></h4>
-      </div>
-      <div class="modal-body">
-    <select>
-      <% Account.find_by_roles('teacher').each do |teacher| %>
-        <option><%= teacher.name %></option>
-      <% end %>
-    </select>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('cancel')%></button>
-        <button type="button" class="btn btn-primary"><%= t('save')%></button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <h2><%= t('corrections.title_all') + " #{@assignment.name}" %></h2>
 
 <div class="well form-search">
@@ -56,13 +33,43 @@
 	    			<i class='icon-user'></i>
 	    		</span>
 	    	<% end %>
-		<a href="#" id="solution_teacher_assign_button" class="btn-mini" title="<%= t('corrections.grid_all.actions.assign_to_other') %>" rel='tooltip' data-toggle="modal" data-target="#teacher_selection_modal"><i class="icon-share"></i></a>
+		<a href="#" id="solution_teacher_assign_button" class="btn-mini" title="<%= t('corrections.grid_all.actions.assign_to_other') %>" rel='tooltip' data-toggle="modal" data-target="<%="#teacher_selection_modal"+(sas[:student].id.to_s) %>"><i class="icon-share"></i></a>
 	      <%- link_to :href => url(:solutions, :index, :assignment_id => sas[:assignment_status].assignment_id, :student_id =>sas[:student].id ), :rel => :tooltip, :title => t('corrections.grid_all.actions.view_solutions'), :class => 'list-row-action-wrapper-link' do %>
             <i class='icon-list'></i>
          <% end %>
 	    	</a>
 	    </td>
 		</tr>
+<!-- Modal -->
+<div class="modal fade" id="<%="teacher_selection_modal"+(sas[:student].id.to_s) %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= t('corrections.teacher_selection_modal.title')%></h4>
+      </div>
+        <% form_tag url('corrections/assign_to_teacher'), :method => :post, :class => 'form-horizontal' do %>
+	  <div class="modal-body">
+	    <%= hidden_field_tag :assignment_id, :value => sas[:assignment_status].assignment_id %>
+	    <%= hidden_field_tag :student_id, :value => sas[:student].id %>
+	    <fieldset class="control-group">
+	      <div class="controls">
+		<select id="teacher_id" name="teacher_id">
+		<% Account.find_by_roles('teacher').each do |teacher| %>
+		  <option value="<%= teacher.id %>"><%= teacher.name %></option>
+		<% end %>
+		</select>
+              </div>
+	    </fieldset>
+	  </div>
+	  <div class="modal-footer form-actions">
+	    <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('cancel')%></button>
+	    <button type="submit" class="btn btn-primary" data-dismiss="modal"><%= t('save')%></button>
+	  </div>
+        <% end %>
+    </div>
+  </div>
+</div>
 	<% end %>
 </table>
 

@@ -23,7 +23,7 @@
       <td class='teacher_assigned'><%= sas[:assignment_status].corrector_name %></td>
       <td>
       	<% if sas[:assignment_status].can_be_assigned? %>
-      		<%- form_tag url(:corrections, :assign, :to, :teacher, :assignment_id => sas[:assignment_status].assignment_id, :student_id => sas[:student].id, :teacher_id => current_account.id), :method => :post, :style => 'display:inline' do %>
+      		<%- form_tag url(:corrections, :assign, :to, :me, :assignment_id => sas[:assignment_status].assignment_id, :student_id => sas[:student].id, :teacher_id => current_account.id), :method => :post, :style => 'display:inline' do %>
       			<button type='submit' title="<%= t('corrections.grid_all.actions.assign_to_me') %>" rel='tooltip' class="assign-to-me">
               <i class='icon-user'></i>
             </button>
@@ -64,7 +64,7 @@
 	  </div>
 	  <div class="modal-footer form-actions">
 	    <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('cancel')%></button>
-	    <button type="submit" class="btn btn-primary" data-dismiss="modal"><%= t('save')%></button>
+	    <button type="submit" class="btn btn-primary"><%= t('save')%></button>
 	  </div>
         <% end %>
     </div>

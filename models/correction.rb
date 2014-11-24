@@ -39,6 +39,17 @@ class Correction
     Correction.create(:solution => latest, :teacher => teacher)
   end
 
+  def self.assign_to_teacher(teacher, student, assignment)
+    latest = Solution.latest_by_student_and_assignment(student,assignment)
+    raise I18n.t('corrections.no_solutions_found') if latest.nil?
+    if latest.correction.nil?
+      Correction.create(:solution => latest, :teacher => teacher)
+    else
+      latest.correction.teacher_id=teacher.id
+      latest.correction.save
+    end
+  end
+
   def status
     if grade.nil?
       :correction_in_progress

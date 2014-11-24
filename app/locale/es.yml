@@ -88,7 +88,7 @@ es:
       teacher: 'Corrector:'
       grade: 'Calificación:'
       comments: 'Comentarios:'
-    creation_succeeded: 'El TP fue asignado correctamente'
+    assignment_succeeded: 'El TP fue asignado correctamente'
     no_solutions_found: 'El alumno no presentó ninguna solución para el TP'
     solution_already_assigned: 'La solución ya fue asignada a otro docente'
     teacher_selection_modal:

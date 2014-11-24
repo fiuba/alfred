@@ -31,6 +31,10 @@ And /^I click "Asignarme a mi" on the last submission$/ do
   all(:xpath, "//button[@class='assign-to-me']").last.click
 end
 
+And /^I click "Asignar a otro" on the last submission$/ do
+  all(:xpath, "//a[@id='solution_teacher_assign_button']").last.click
+end
+
 And /^I click "(.*)" on last correction$/ do |action_name| 
   as_teacher_for_assignment( 'TP1', action_name ).click
 end
@@ -83,4 +87,12 @@ end
 
 Then /^I should see comment: "(.*?)"$/ do |comment|
   step "I should see \"#{comment}\""
+end
+
+Given(/^I choose "(.*?)" as teacher$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see "(.*?)" as "(.*?)" on the last submission$/) do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
 end

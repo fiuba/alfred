@@ -9,38 +9,28 @@ Feature: Correction creation
     And the teacher "Carla"
 
   Scenario: Main flow
-    And   I am logged in as teacher 
-    And   I follow "Trabajos prácticos"
+    Given   I am logged in as teacher 
+    When   I follow "Trabajos prácticos"
     And   I follow "Correcciones" for "TP1"
     And   I click "Asignarme a mi" on the last submission
     Then  I should see "El TP fue asignado correctamente" 
 
-  Scenario: Delegating to other teacher
-    When  I log in as "John"
-    And   I follow "Trabajos prácticos"
+  Scenario: Delegating to a teacher
+    Given I am logged in as teacher 
+    When  I follow "Trabajos prácticos"
     And   I follow "Correcciones" for "TP1"
     And   I click "Asignar a otro" on the last submission
-    And   I choose "Carla" as teacher
+    And   I choose "Carla" as teacher for the correction
     And   I click "Guardar"
     Then  I should see "El TP fue asignado correctamente"
     And   I should see "Carla" as "Corrector" on the last submission
 
-#  Scenario: Delegating to myself
-#    When  I log in as "John"
-#    And   I follow "Trabajos prácticos"
-#    And   I follow "Correcciones" for "TP1"
-#    And   I click "Asignar a otro" on the last submission
-#    And   I choose "John" as teacher
-#    And   I click "Guardar"
-#    Then  I should see "El TP fue asignado correctamente"
-#    And   I should see "John" as "Corrector" on the last submission
-
-#  Scenario: Canceling delegation
-#    When  I log in as "John"
-#    And   I follow "Trabajos prácticos"
-#    And   I follow "Correcciones" for "TP1"
-#    And   I click "Asignar a otro" on the last submission
-#    And   I choose "Carla" as teacher
-#    And   I click "Cancelar"
-#    Then  I should not see "El TP fue asignado correctamente"
+  Scenario: Canceling delegation
+    Given I am logged in as teacher 
+    When  I follow "Trabajos prácticos"
+    And   I follow "Correcciones" for "TP1"
+    And   I click "Asignar a otro" on the last submission
+    And   I choose "Carla" as teacher for the correction
+    And   I click "Cancelar"
+    Then  I should not see "El TP fue asignado correctamente"
 

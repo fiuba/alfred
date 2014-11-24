@@ -113,7 +113,7 @@ When /^I follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
-When /^I click ".*?"$/ do |button|
+When /^I click "(.*?)"$/ do |button|
   click_button button
 end
 

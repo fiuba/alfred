@@ -89,10 +89,15 @@ Then /^I should see comment: "(.*?)"$/ do |comment|
   step "I should see \"#{comment}\""
 end
 
-Given(/^I choose "(.*?)" as teacher$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+Given(/^I choose "(.*?)" as teacher for the correction$/) do |teacher_name|
+  select(teacher_name)
 end
 
-Then(/^I should see "(.*?)" as "(.*?)" on the last submission$/) do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+Then(/^I should see "(.*?)" as "(.*?)" on the last submission$/) do |teacher_name, column|
+  corrector=all(:xpath, "//table/tr/td[count(//table/tr/th[.=\"#{column}\"]/preceding-sibling::th)+1]").last
+  if corrector.respond_to? :should
+    corrector.should have_content(teacher_name)
+  else
+    assert corrector.has_content?(teacher_name)
+  end
 end

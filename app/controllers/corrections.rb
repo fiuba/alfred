@@ -55,7 +55,7 @@ Alfred::App.controllers :corrections do
 
     Correction.assign_to_teacher(teacher, student, assignment)
 
-    flash.now[:success] = t('corrections.assignment_succeeded')
+    flash[:success] = t('corrections.assignment_succeeded')
     redirect(url(:assignments, assignment.id, :students ))
   end
 

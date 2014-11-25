@@ -231,6 +231,9 @@ es:
     name: Nombre
     deadline: Fecha límite
     course: Curso
+    errors:
+      deadline_not_chosen: 'Se debe elegir fecha de entrega'
+      deadline_passed: 'La fecha de entrega debe ser posterior a hoy'
     delete:
       title: Borrar
       confirm: ¿Está seguro que desea eliminar el trabajo práctico?

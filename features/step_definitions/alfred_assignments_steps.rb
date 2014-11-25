@@ -21,11 +21,12 @@ module AssignmentHelpers
 end
 World(AssignmentHelpers)
 
-When /^I fill requeried data for assignment entitled "(.*?)"$/ do |assignment_name|
+When /^I fill required data for assignment entitled "(.*?)"$/ do |assignment_name|
+  @assignment_date = Date.today + 1
   VCR.use_cassette("cassette_assignment_#{assignment_name.downcase}") do
     with_scope( '.form-horizontal' ) do
       fill_in( :assignment_name,        :with => assignment_name)
-      fill_in( :assignment_deadline,    :with => "20/10/2013")
+      fill_in( :assignment_deadline,    :with => @assignment_date)
       fill_in( :assignment_test_script, :with => "#!/bin/bash\necho $?")
       attach_file(:assignment_file, address_to("#{assignment_name.downcase}.zip"))
       click_button( "Guardar y continuar" )
@@ -33,11 +34,12 @@ When /^I fill requeried data for assignment entitled "(.*?)"$/ do |assignment_na
   end
 end
 
-When /^I fill data for (non |)blocking assignment "(.*?)" with due date "(.*?)"$/ do |blocking, assignment_name, date|
+When /^I fill required data for (non )?blocking assignment "(.*?)" due to "(.*?)"$/ do |blocking, assignment_name, date|
+  @assignment_date = date == 'today' ? Date.today : date
   VCR.use_cassette("cassette_assignment_#{assignment_name.downcase}") do
     with_scope( '.form-horizontal' ) do
       fill_in( :assignment_name,        :with => assignment_name)
-      fill_in( :assignment_deadline,    :with => date)
+      fill_in( :assignment_deadline,    :with => @assignment_date)
       if blocking != 'non '
 	check(:assignment_is_blocking)
       end
@@ -71,22 +73,28 @@ When  /^I click download assignment file button for "(.*?)"$/ do |assignment_nam
 end
 
 When /^I update data intended to be updated for assignment "(.*?)"$/ do |assignment_name|
+  step "I update data with new date \"#{Date.today + 2}\" intended to be updated for assignment \"#{assignment_name}\""
+end
+
+When /^I update data with new date "(.*?)" intended to be updated for assignment "(.*?)"$/ do |date, assignment_name|
+  @assignment_date = date == 'today' ? Date.today : date.to_date
   with_scope( '.form-horizontal' ) do
-    fill_in( :assignment_deadline,    :with => "22/10/2013")
+    fill_in( :assignment_deadline,    :with => @assignment_date)
     fill_in( :assignment_test_script, :with => "")
     click_button( "Guardar y continuar" )
   end
 end
 
-And /^The assignment entitled "(.*?)" should be properly updated$/ do |assignment_name|
+And /^The assignment entitled "(.*?)" should (not )?be (properly )?updated$/ do |assignment_name, s_not, _|
   assignment = Assignment.all( :name => assignment_name ).first
-  assignment.deadline.should == "22/10/2013".to_date
+  expect(assignment.deadline == @assignment_date).to be (s_not != 'not ')
   assignment.name.should == assignment_name
 end
 
 Given /^the assignment entitled "(.*?)"$/ do |assignment_name|
   @assignment = Factories::Assignment.name( assignment_name, @course )
-  @assignment.deadline = Date.today() + 2
+  @assignment_date = Date.today() + 2
+  @assignment.deadline = @assignment_date.to_s
   @assignment.save
 end
 
@@ -95,15 +103,15 @@ Given /^there is a bunch of assignment already created$/ do
   step 'I follow "Trabajos prácticos"'
   (0..2).each do |n|
     step 'I follow "Nuevo"'
-    step "I fill requeried data for assignment entitled \"TP#{n}\""
+    step "I fill required data for assignment entitled \"TP#{n}\""
   end
 end
 
-Given /^there is a (non |)blocking assignment "(.*?)" with due date "(.*?)" already created$/ do |block, assig_name, date|
+Given /^there is a (non )?blocking assignment "(.*?)" with due date "(.*?)" already created$/ do |block, assig_name, date|
   step 'I am logged in as teacher'
   step 'I follow "Trabajos prácticos"'
   step 'I follow "Nuevo"'
-  step "I fill data for #{block}blocking assignment \"#{assig_name}\" with due date \"#{date}\""
+  step "I fill required data for #{block}blocking assignment \"#{assig_name}\" due to \"#{date}\""
 end
 
 Then /^I should get file of "(.*?)"$/ do |assignment_name|
@@ -130,3 +138,6 @@ Then /^I should see "(.*)" correction's status by student$/ do |assignment_name|
   expect { find(:xpath, query) }.to_not raise_error(Capybara::ElementNotFound)
 end
 
+Then /^I should see that date is incorrect$/ do
+  step 'I should see "La fecha de entrega debe ser posterior a hoy"'
+end

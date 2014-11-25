@@ -12,12 +12,11 @@ class Solution
   # property <name>, <type>
   property :id, Serial
   property :file, String
+  property :link, String
   property :comments, String
   property :created_at, DateTime 
   property :test_result, String, :default => 'not_available' # other possible results are 'passed' and 'failed'
   property :test_output, String 
-
-  validates_presence_of      :file
 
   def self.latest_by_student_and_assignment(student, assignment)
     solutions = self.get_by_student_and_assignment(student, assignment)

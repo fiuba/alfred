@@ -35,7 +35,6 @@ Alfred::App.controllers :assignments do
     Assignment.transaction do |trx|
       begin
         @assignment = Assignment.new(params[:assignment].merge({ :course_id => current_course.id }))
-
         if @assignment.deadline == ''
           errors << t('assignments.errors.deadline_not_chosen')
         elsif @assignment.deadline <= Date.today
@@ -87,7 +86,6 @@ Alfred::App.controllers :assignments do
     @title = pat(:update_title, :model => "assignment #{params[:id]}")
     @assignment = Assignment.get(params[:id].to_i)
     if @assignment
-      #params[:assignment]['deadline'] + 2
       Assignment.transaction do |trx|
         begin
           if params[:assignment]["deadline"] == ''

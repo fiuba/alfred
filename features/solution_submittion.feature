@@ -42,7 +42,7 @@ Feature: Solution submission
     When  I click save button
     And   I see save is invalid because no file was saved
     Then  I should see comment: "This is my comment for this solution"
-
+    
 #  Scenario: Submitting when blocking deadline has passed
 #    Given there is a blocking assignment "TP2" with due date "22/10/2013" already created
 #    And I am logged in as student 

@@ -27,4 +27,20 @@ Feature: Assigment creation
     And   I follow "Nuevo"
     And   I fill required data for non blocking assignment "TP0" due to "today"
     Then  I should see that date is incorrect
-
+    
+  Scenario: Choosing to have a file attached to solutions of assignment
+    Given I am logged in as teacher
+    And   I follow "Trabajos prácticos"
+    And   I follow "Nuevo"
+    When  I fill required data for assignment "TP0" to be delivered as "file"
+    Then  I should see that it was successfully created
+    And   assignment created should have "file" set as solution type
+  
+  Scenario: Choosing to have a link attached to solutions of assignment
+    Given I am logged in as teacher
+    And   I follow "Trabajos prácticos"
+    And   I follow "Nuevo"
+    When  I fill required data for assignment "TP0" to be delivered as "link"
+    Then  I should see that it was successfully created
+    And   assignment created should have "link" set as solution type
+  

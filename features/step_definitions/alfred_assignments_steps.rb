@@ -23,29 +23,32 @@ World(AssignmentHelpers)
 
 When /^I fill required data for assignment entitled "(.*?)"$/ do |assignment_name|
   @assignment_date = Date.today + 1
-  VCR.use_cassette("cassette_assignment_#{assignment_name.downcase}") do
-    with_scope( '.form-horizontal' ) do
-      fill_in( :assignment_name,        :with => assignment_name)
-      fill_in( :assignment_deadline,    :with => @assignment_date)
-      fill_in( :assignment_test_script, :with => "#!/bin/bash\necho $?")
-      attach_file(:assignment_file, address_to("#{assignment_name.downcase}.zip"))
-      click_button( "Guardar y continuar" )
-    end
-  end
+  step "I fill required data for non blocking assignment \"#{assignment_name}\" due to \"#{@assignment_date}\""
+end
+
+When /^I fill required data for assignment "(.*?)" to be delivered as "(.*?)"$/ do |assignment_name, solution_type|
+  @assignment_date = Date.today + 1
+  step "I fill data for non blocking assignment \"#{assignment_name}\" due to \"#{@assignment_date}\" to be delivered as \"#{solution_type}\""
 end
 
 When /^I fill required data for (non )?blocking assignment "(.*?)" due to "(.*?)"$/ do |blocking, assignment_name, date|
+  step "I fill data for #{blocking}blocking assignment \"#{assignment_name}\" due to \"#{date}\" to be delivered as \"file\""
+end
+
+When /^I fill data for (non )?blocking assignment "(.*?)" due to "(.*?)" to be delivered as "(.*?)"?$/ do |blocking, assignment_name, date, solution_type|
   @assignment_date = date == 'today' ? Date.today : date
+  type = solution_type(solution_type)
   VCR.use_cassette("cassette_assignment_#{assignment_name.downcase}") do
     with_scope( '.form-horizontal' ) do
       fill_in( :assignment_name,        :with => assignment_name)
       fill_in( :assignment_deadline,    :with => @assignment_date)
       if blocking != 'non '
-	check(:assignment_is_blocking)
+        check(:assignment_is_blocking)
       end
+      select(solution_type)
       fill_in( :assignment_test_script, :with => "#!/bin/bash\necho $?")
       attach_file(:assignment_file, address_to("#{assignment_name.downcase}.zip"))
-      click_button( "Guardar y continuar" )
+      step 'I click "Guardar y continuar"'
     end
   end
 end
@@ -81,7 +84,7 @@ When /^I update data with new date "(.*?)" intended to be updated for assignment
   with_scope( '.form-horizontal' ) do
     fill_in( :assignment_deadline,    :with => @assignment_date)
     fill_in( :assignment_test_script, :with => "")
-    click_button( "Guardar y continuar" )
+    step 'I click "Guardar y continuar"'
   end
 end
 
@@ -140,4 +143,24 @@ end
 
 Then /^I should see that date is incorrect$/ do
   step 'I should see "La fecha de entrega debe ser posterior a hoy"'
+end
+
+Then(/^I should see that it was successfully created$/) do
+  step 'I should see "creado exitosamente"'
+end
+
+Then(/^assignment created should have "(.*?)" set as solution type$/) do |type|
+  expect(Assignment.last.solution_type).to eq solution_type(type)
+end
+
+def solution_type(type)
+  case type
+  when 'file'
+    solution = Assignment.FILE
+  when 'link'
+    solution = Assignment.LINK
+  when ''
+    solution = Assignment.FILE
+  end
+  solution
 end

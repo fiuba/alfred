@@ -35,3 +35,4 @@ Feature: Assigment updating
     And   I update data with new date "11/04/2014" intended to be updated for assignment "TP2"
     Then  I should see that date is incorrect
     And   The assignment entitled "TP2" should not be updated
+

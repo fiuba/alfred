@@ -15,6 +15,11 @@ When /^I upload the solution's file for "(.*?)"$/ do |assignment_name|
   end
 end
 
+When(/^I fill in link to solution$/) do
+  fill_in :solution_link, :with => "http://www.mysolution.com/solution_for_assignment"
+end
+
+
 Then /^I should see solution entry for "(.*)"$/ do |assignment_name|
   expect( page.body ).to \
     include( "Soluciones entregadas para #{assignment_name}" )
@@ -51,4 +56,20 @@ end
 
 When(/^I see save is invalid because no file was saved$/) do
   step 'I should see "Debe seleccionar archivo"'
+end
+
+Then(/^I see save is invalid because no link was provided$/) do
+  step 'I should see "Debe especificar un link de entrega"'
+end
+
+Then(/^I should see solution was successfully created$/) do
+  step 'I should see "Solution creado exitosamente"'
+end
+
+Given(/^I (do not )?see there is a field to attach a file$/) do |seeing|
+  step "I should see #{seeing == 'do not ' ? 'no ' : ''}\"Archivo a entregar\""
+end
+
+Given(/^I (do not )?see there is a field to write a link$/) do |seeing|
+  step "I should see #{seeing == 'do not ' ? 'no ' : ''}\"Link a entrega\""
 end

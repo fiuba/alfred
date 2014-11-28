@@ -42,6 +42,43 @@ Feature: Solution submission
     When  I click save button
     And   I see save is invalid because no file was saved
     Then  I should see comment: "This is my comment for this solution"
+  
+    Scenario: Solution type: file - solution success
+    Given I am logged in as student 
+    And   I follow "Trabajos prácticos"
+    And   I click submit solution for "TP1"
+    And   I see there is a field to attach a file
+    And   I do not see there is a field to write a link 
+    When  I upload the solution's file for "TP1"
+    Then  I should see solution was successfully created
+
+  Scenario: Solution type: file - solution fail
+    Given I am logged in as student 
+    And   I follow "Trabajos prácticos"
+    And   I click submit solution for "TP1"
+    And   I see there is a field to attach a file
+    And   I do not see there is a field to write a link 
+    When  I click save button
+    Then  I see save is invalid because no file was saved
+    
+  Scenario: Solution type: link - solution success
+    Given I am logged in as student 
+    And   I follow "Trabajos prácticos"
+    And   I click submit solution for "TP2"
+    And   I do not see there is a field to attach a file
+    And   I see there is a field to write a link
+    When  I fill in link to solution
+    And   I click save button
+    Then  I should see solution was successfully created
+  
+  Scenario: Solution type: link - solution fail
+    Given I am logged in as student 
+    And   I follow "Trabajos prácticos"
+    And   I click submit solution for "TP2"
+    And   I do not see there is a field to attach a file
+    And   I see there is a field to write a link
+    When  I click save button
+    Then  I see save is invalid because no link was provided
     
 #  Scenario: Submitting when blocking deadline has passed
 #    Given there is a blocking assignment "TP2" with due date "22/10/2013" already created

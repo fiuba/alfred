@@ -104,10 +104,13 @@ end
 Given /^there is a bunch of assignment already created$/ do
   step 'I am logged in as teacher'
   step 'I follow "Trabajos prácticos"'
-  (0..2).each do |n|
+  (0..1).each do |n|
     step 'I follow "Nuevo"'
     step "I fill required data for assignment entitled \"TP#{n}\""
   end
+  @assignment_date = Date.today + 1
+  step 'I follow "Nuevo"'
+  step "I fill data for non blocking assignment \"TP2\" due to \"#{@assignment_date}\" to be delivered as \"link\""
 end
 
 Given /^there is a (non )?blocking assignment "(.*?)" with due date "(.*?)" already created$/ do |block, assig_name, date|

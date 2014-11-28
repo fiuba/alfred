@@ -38,10 +38,12 @@ es:
   solutions:
     delivered_for: 'soluciones entregadas para'
     student: 'Alumno:'
+    link: 'Link a entrega'
     errors:
       upload_failed: 'Error al intentar subir el archivo'
       delete_failed: 'Error al intentar borrar el archivo'
       file_absent: 'Debe seleccionar archivo'
+      link_absent: 'Debe especificar un link de entrega'
       deadline_passed: 'La fecha de entrega ha caducado'
     form:
       file: 'Archivo a entregar'

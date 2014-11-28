@@ -51,7 +51,18 @@ Alfred::App.controllers :my do
             :assignment => @assignment, :comments => params[:solution][:comments] )
     if is_blocked_by_date?(@assignment)
 	  errors << t('solutions.errors.deadline_passed')
-    elsif is_file_specified?(params)
+	elsif @assignment.solution_type == Assignment.LINK
+	  if params[:solution][:link] == ''
+	    errors << t('solutions.errors.link_absent')
+	  else
+	    DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
+          if not @solution.save
+            errors << @solution.errors
+          end
+          trx.rollback() if not errors.empty?
+        end
+      end
+    elsif @assignment.solution_type == Assignment.FILE && is_file_specified?(params)
       input_file = params[:solution][:file]
       @solution.file = input_file[:filename]
 

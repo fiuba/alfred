@@ -22,7 +22,7 @@ Feature: Assignments's solution list
     Then  I should see solution files attached for assignment
     
   Scenario: Seeing solution links for assignment
-    Given "TP2" has solution submitted by student
+    Given "TP2" has link solution submitted by student
     And   I am logged in as teacher 
     And   I follow "Trabajos prácticos"
     And   I follow "Correcciones" for "TP2"

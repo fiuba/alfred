@@ -43,6 +43,10 @@ class Solution
       correction.save
     end
   end
+  
+  def type
+    assignment.solution_type
+  end
 
   def is_overdue?
     created_at > assignment.deadline

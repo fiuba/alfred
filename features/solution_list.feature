@@ -21,3 +21,17 @@ Feature: List of solutions submitted
     And   I follow "Ver corrección" for the last solution
     Then  I should see "Corrección para TP1"
 
+  Scenario: Seeing solution files for assignment
+    Given I am logged in as student
+    And   I follow "Trabajos prácticos"
+    And   I follow "Ver todas las soluciones" for "TP1"
+    Then  I should see solution files attached for assignment
+    And   I should not see solution links provided for assignment
+  
+  Scenario: Seeing solution links for assignment
+    Given I am logged in as student
+    And   I follow "Trabajos prácticos"
+    And   I follow "Ver todas las soluciones" for "TP2"
+    Then  I should see solution links provided for assignment
+    And   I should not see solution files attached for assignment
+

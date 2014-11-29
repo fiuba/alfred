@@ -8,14 +8,26 @@
 <table id="solutionsGrid" class="table table-bordered table-striped table-hover">
 	<tr>
 		<th><%= t('solutions.grid.submission_date') %></th>
-		<th><%= t('solutions.grid.file') %></th>
+		<% if @assignment.solution_type == 'file' %>
+		  <th><%= t('solutions.grid.file') %></th>
+		<% else %>
+		  <% if @assignment.solution_type == 'link' %>
+		    <th><%= t('solutions.grid.link') %></th>
+		  <% end %>
+		<% end %>
 		<th><%= t('solutions.test_result') %></th>
 		<th><%= t('actions').capitalize %></th>
 	</tr>
 	<% @solutions.each do |s| %>
 		<tr> 
       <td><%= l s.created_at %></td>
-      <td><a href="<%= url_for(:solutions, :download, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
+      <% if @assignment.solution_type == 'file' %>
+        <td><a href="<%= url_for(:solutions, :download, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
+      <% else %>
+        <% if @assignment.solution_type == 'link' %>
+          <td><a href="<%= s.link %>"><%= s.link %></a></td>
+        <% end %>
+      <% end %>		
       <td><%= t(s.test_result) %></a></td>
       <td>
       	<% if s.test_output %>

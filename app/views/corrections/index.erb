@@ -26,9 +26,17 @@
       <td><%= t ac.status %></td>
       <td><%= ac.grade %></td>
       <td>
+      <% if ac.assignment_solution_type == 'file' %>
         <%- link_to :href => url(:solutions, :download, :solution_id => ac.solution_id), :rel => :tooltip, :title => t('corrections.download_solution_link'), :class => 'list-row-action-wrapper-link' do %>
           <i class='icon-download icon-white'></i>
         <% end %>
+      <% else %>
+        <% if ac.assignment_solution_type == 'link' %>
+        <%- link_to :href => ac.link, :rel => :tooltip, :title => t('corrections.go_to_solution_link'), :class => 'list-row-action-wrapper-link' do %>
+          <i class='icon-link icon-white'></i>
+        <% end %>
+        <% end %>
+      <% end %>
 				<%- link_to :href => url(:assignment, :file, :download, :assignment_id => ac.assignment_id), :rel => :tooltip, :title => t('corrections.download_assignment_link'), :class => 'list-row-action-wrapper-link' do %>
           <i class='icon-file'></i>
         <% end %>

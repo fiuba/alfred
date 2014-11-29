@@ -48,4 +48,23 @@ describe Solution do
 			end
 		end
 	end
+	
+	describe 'solution type' do
+
+		it 'should return file type of file solution' do
+			assignment = Assignment.new
+			assignment.solution_type = Assignment.FILE
+			@solution.assignment = assignment
+			expect(@solution.type).to eq Assignment.FILE
+		end
+		
+		it 'should return link type of link solution' do
+			assignment = Assignment.new
+			assignment.solution_type = Assignment.LINK
+			@solution.assignment = assignment
+			expect(@solution.type).to eq Assignment.LINK
+		end
+
+	end
+	
 end

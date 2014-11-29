@@ -27,6 +27,26 @@ Then /^I should see solution entry for "(.*)"$/ do |assignment_name|
     raise_error(Capybara::ElementNotFound)
 end
 
+Then(/^I should (not )?see solution files attached for assignment$/) do |seeing|
+  if(seeing == 'not ')
+    expect( page.body ).not_to \
+      include( "Archivo entregado" )  
+  else
+    expect( page.body ).to \
+      include( "Archivo entregado" )
+  end
+end
+
+Then(/^I should (not )?see solution links provided for assignment$/) do |seeing|
+  if(seeing == 'not ')
+    expect( page.body ).not_to \
+      include( "Link a entrega" )  
+  else
+    expect( page.body ).to \
+      include( "Link a entrega" )
+  end
+end
+
 And /^I follow "(.*)" for the last solution$/ do |action_name|
   query = "//a[contains( @title, \"#{action_name}\")]"
   find( :xpath, query ).click

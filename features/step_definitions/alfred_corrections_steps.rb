@@ -19,6 +19,28 @@ Then /^I should see correction entry for "(.*)"$/ do |assignment_name|
   expect { find(:xpath, query) }.to_not raise_error(Capybara::ElementNotFound)
 end
 
+Then(/^I should (not )?be able to go to solution link for "(.*?)"$/) do |seeing, assignment_name|
+  query = ""                                      <<  \
+    "//tr"                                        <<  \
+    "/td[contains(., '#{assignment_name}')]"   <<  \
+    "/.."                                         <<  \
+    "/td[contains(., '#{@student.buid}')]"   <<  \
+    "/.."                                         <<  \
+    "/td[contains(., '#{@student.full_name}')]"   <<  \
+    "/.."                                         <<  \
+    "/td[contains(., 'En progreso')]"
+
+  expect { find(:xpath, query) }.to_not raise_error(Capybara::ElementNotFound)
+  
+  if(seeing == 'not ')
+    expect( find(:xpath, query) ).not_to \
+      include( "Ir a solución" )  
+  else
+    expect( find(:xpath, query) ).to \
+      include( "Ir a solución" )
+  end
+end
+
 Given /^a teacher assigned himself as on-charge of correction$/ do
   step 'I am logged in as teacher'
   step 'I follow "Trabajos prácticos"'

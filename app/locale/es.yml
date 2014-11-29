@@ -51,6 +51,7 @@ es:
       assignment: 'Trabajo práctico'
     grid:
       file: 'Archivo entregado'
+      link: 'Link a entrega'
       assignment: 'Trabajo práctico'
       submission_date: 'Fecha de la entrega'
       view_correction: 'Ver corrección'
@@ -61,6 +62,7 @@ es:
     title_all: 'Entregas para'
     edit: 'Corregir'
     download_solution_link: 'Descargar solución'
+    go_to_solution_link: 'Ir a link de solución'
     download_assignment_link: 'Descargar TP'
     submission_date: 'Fecha de entrega'
     form:

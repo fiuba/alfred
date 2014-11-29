@@ -30,4 +30,22 @@ describe Solution do
 		end
 
 	end
+
+	describe 'is_overdue' do
+ 		context 'solution overdue depends on assignment deadline' do 
+		let(:assignment) { double(:id => 1, :name => 'TP', :deadline => DateTime.now) }
+
+			it 'should be overdue when solution was delivered after assignment deadline' do
+				@solution.assignment = assignment
+				@solution.created_at = DateTime.now+1
+				expect(@solution.is_overdue?).to be true
+			end
+
+			it 'should not  be overdue when solution was delivered before assignment deadline' do
+				@solution.assignment = assignment
+				@solution.created_at = DateTime.now-1
+				expect(@solution.is_overdue?).to be false
+			end
+		end
+	end
 end

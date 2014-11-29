@@ -16,7 +16,7 @@
     <th><%= t('corrections.grid.actions').capitalize %></th>
 	</tr>
 	<% @assigned_corrections.each do |ac| %>
-		<tr>
+		<tr class="<%= ac.is_overdue ? 'error' : '' %>">
       <td><%= ac.assignment_name %></td>
       <td><%= ac.student_buid %></td>
       <td><%= ac.student_full_name %></td>

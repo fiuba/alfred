@@ -44,4 +44,8 @@ class Solution
     end
   end
 
+  def is_overdue?
+    created_at > assignment.deadline
+  end
+
 end

@@ -15,7 +15,7 @@ When /^I upload the solution's file for "(.*?)"$/ do |assignment_name|
   end
 end
 
-When(/^I fill in link to solution$/) do
+When /^I fill in link to solution$/ do
   fill_in :solution_link, :with => "http://www.mysolution.com/solution_for_assignment"
 end
 
@@ -27,7 +27,7 @@ Then /^I should see solution entry for "(.*)"$/ do |assignment_name|
     raise_error(Capybara::ElementNotFound)
 end
 
-Then(/^I should (not )?see solution files attached for assignment$/) do |seeing|
+Then /^I should (not )?see solution files attached for assignment$/ do |seeing|
   if(seeing == 'not ')
     expect( page.body ).not_to \
       include( "Archivo entregado" )  
@@ -37,7 +37,7 @@ Then(/^I should (not )?see solution files attached for assignment$/) do |seeing|
   end
 end
 
-Then(/^I should (not )?see solution links provided for assignment$/) do |seeing|
+Then /^I should (not )?see solution links provided for assignment$/ do |seeing|
   if(seeing == 'not ')
     expect( page.body ).not_to \
       include( "Link a entrega" )  
@@ -74,22 +74,22 @@ Then /^solution should have comment: "(.*?)"$/ do |comment|
   expect(Solution.last.comments).to eql(comment)
 end
 
-When(/^I see save is invalid because no file was saved$/) do
+When /^I see save is invalid because no file was saved$/ do
   step 'I should see "Debe seleccionar archivo"'
 end
 
-Then(/^I see save is invalid because no link was provided$/) do
+Then /^I see save is invalid because no link was provided$/ do
   step 'I should see "Debe especificar un link de entrega"'
 end
 
-Then(/^I should see solution was successfully created$/) do
+Then /^I should see solution was successfully created$/ do
   step 'I should see "Solution creado exitosamente"'
 end
 
-Given(/^I (do not )?see there is a field to attach a file$/) do |seeing|
+Given /^I (do not )?see there is a field to attach a file$/ do |seeing|
   step "I should see #{seeing == 'do not ' ? 'no ' : ''}\"Archivo a entregar\""
 end
 
-Given(/^I (do not )?see there is a field to write a link$/) do |seeing|
+Given /^I (do not )?see there is a field to write a link$/ do |seeing|
   step "I should see #{seeing == 'do not ' ? 'no ' : ''}\"Link a entrega\""
 end

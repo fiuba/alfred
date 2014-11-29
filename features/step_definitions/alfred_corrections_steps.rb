@@ -3,6 +3,7 @@
 
 Given /^there are solutions submitted by students$/ do
   step '"TP1" has solution submitted by student'
+  step '"TP2" has link solution submitted by student'
 end
 
 Then /^I should see correction entry for "(.*)"$/ do |assignment_name|
@@ -19,25 +20,17 @@ Then /^I should see correction entry for "(.*)"$/ do |assignment_name|
   expect { find(:xpath, query) }.to_not raise_error(Capybara::ElementNotFound)
 end
 
-Then(/^I should (not )?be able to go to solution link for "(.*?)"$/) do |seeing, assignment_name|
-  query = ""                                      <<  \
-    "//tr"                                        <<  \
-    "/td[contains(., '#{assignment_name}')]"   <<  \
-    "/.."                                         <<  \
-    "/td[contains(., '#{@student.buid}')]"   <<  \
-    "/.."                                         <<  \
-    "/td[contains(., '#{@student.full_name}')]"   <<  \
-    "/.."                                         <<  \
-    "/td[contains(., 'En progreso')]"
+Then /^I should (not )?be able to go to solution link for "(.*?)"$/ do |seeing, assignment_name|
+  page.all('#correctionsGrid tr').each do |tr|
+    next unless tr.has_text?(assignment_name)
+    expect(tr.has_link?('Ir a link de solución')).to be (seeing != 'not ')
+  end
+end
 
-  expect { find(:xpath, query) }.to_not raise_error(Capybara::ElementNotFound)
-  
-  if(seeing == 'not ')
-    expect( find(:xpath, query) ).not_to \
-      include( "Ir a solución" )  
-  else
-    expect( find(:xpath, query) ).to \
-      include( "Ir a solución" )
+Then /^I should (not )?be able to download solution for "(.*?)"$/ do |seeing, assignment_name|
+  page.all('#correctionsGrid tr').each do |tr|
+    next unless tr.has_text?(assignment_name)
+    expect(tr.has_link?('Descargar solución')).to be (seeing != 'not ')
   end
 end
 
@@ -111,11 +104,11 @@ Then /^I should see comment: "(.*?)"$/ do |comment|
   step "I should see \"#{comment}\""
 end
 
-Given(/^I choose "(.*?)" as teacher for the correction$/) do |teacher_name|
+Given /^I choose "(.*?)" as teacher for the correction$/ do |teacher_name|
   select(teacher_name)
 end
 
-Then(/^I should see "(.*?)" as "(.*?)" on the last submission$/) do |teacher_name, column|
+Then /^I should see "(.*?)" as "(.*?)" on the last submission$/ do |teacher_name, column|
   corrector=all(:xpath, "//table/tr/td[count(//table/tr/th[.=\"#{column}\"]/preceding-sibling::th)+1]").last
   if corrector.respond_to? :should
     corrector.should have_content(teacher_name)

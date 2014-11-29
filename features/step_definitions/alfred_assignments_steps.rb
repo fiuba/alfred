@@ -61,7 +61,7 @@ And /^I follow "(.*)" for "(.*?)"$/ do |action_name, assignment_name|
   as_teacher_for_assignment( assignment_name, action_name).click
 end
 
-When  /^I click download assignment file button for "(.*?)"$/ do |assignment_name|
+When /^I click download assignment file button for "(.*?)"$/ do |assignment_name|
   action = { 
     'teacher' => Proc.new { as_teacher_for_assignment( assignment_name, \
         'Bajar archivo').click 
@@ -127,8 +127,17 @@ end
 Given /^"(.*)" has solution submitted by student$/ do |assignment_name|
     step 'I am logged in as student'
     step 'I follow "Trabajos prácticos"'
-    step 'I click submit solution for "TP1"'
-    step 'I upload the solution\'s file for "TP1"'
+    step "I click submit solution for \"#{assignment_name}\""
+    step "I upload the solution\'s file for \"#{assignment_name}\""
+    step 'I logged out'
+end
+
+Given /^"(.*)" has link solution submitted by student$/ do |assignment_name|
+    step 'I am logged in as student'
+    step 'I follow "Trabajos prácticos"'
+    step "I click submit solution for \"#{assignment_name}\""
+    step 'I fill in link to solution'
+    step 'I click save button'
     step 'I logged out'
 end
 
@@ -148,11 +157,11 @@ Then /^I should see that date is incorrect$/ do
   step 'I should see "La fecha de entrega debe ser posterior a hoy"'
 end
 
-Then(/^I should see that it was successfully created$/) do
+Then /^I should see that it was successfully created$/ do
   step 'I should see "creado exitosamente"'
 end
 
-Then(/^assignment created should have "(.*?)" set as solution type$/) do |type|
+Then /^assignment created should have "(.*?)" set as solution type$/ do |type|
   expect(Assignment.last.solution_type).to eq solution_type(type)
 end
 

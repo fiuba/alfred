@@ -93,3 +93,11 @@ end
 Given /^I (do not )?see there is a field to write a link$/ do |seeing|
   step "I should see #{seeing == 'do not ' ? 'no ' : ''}\"Link a entrega\""
 end
+
+Given(/^A overdue solution for "(.*?)" submitted by a student$/) do |assignment_name|
+#Force-modify solution submit date because upload page defaults to today
+  assignment = Assignment.all.select{|assignment| assignment.name == assignment_name}.first
+  overdue = Solution.all.select{|solution| solution.assignment == assignment}.first
+  overdue.created_at = assignment.deadline+10
+  overdue.save
+end

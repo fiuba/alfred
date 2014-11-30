@@ -116,3 +116,13 @@ Then /^I should see "(.*?)" as "(.*?)" on the last submission$/ do |teacher_name
     assert corrector.has_content?(teacher_name)
   end
 end
+
+Then(/^I should (not )?see last correction entry for "(.*?)" highlighted$/) do |highlighted, assignment_name|
+  row = page.all('#correctionsGrid tr').select{|row| row.has_text?(assignment_name)}.last
+  if highlighted != 'not '
+    expect(row[:class]).to include "error"
+  else
+    expect(row[:class]).to_not include "error"
+  end
+#  expect(row.has_css?("error")).to be (highlighted != 'not ')	#Should work but does not, dunno why.
+end

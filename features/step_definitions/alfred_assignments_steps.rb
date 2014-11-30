@@ -113,11 +113,11 @@ Given /^there is a bunch of assignment already created$/ do
   step "I fill data for non blocking assignment \"TP2\" due to \"#{@assignment_date}\" to be delivered as \"link\""
 end
 
-Given /^there is a (non )?blocking assignment "(.*?)" with due date "(.*?)" already created$/ do |block, assig_name, date|
-  step 'I am logged in as teacher'
-  step 'I follow "Trabajos prácticos"'
-  step 'I follow "Nuevo"'
-  step "I fill required data for #{block}blocking assignment \"#{assig_name}\" due to \"#{date}\""
+Given /^there is a blocking assignment "(.*?)" with due date "(.*?)" already created$/ do |assignment_name, date|
+  assignment = Assignment.all.select{|assignment| assignment.name == assignment_name}.first
+  assignment.is_blocking = true
+  assignment.deadline = date
+  assignment.save
 end
 
 Then /^I should get file of "(.*?)"$/ do |assignment_name|

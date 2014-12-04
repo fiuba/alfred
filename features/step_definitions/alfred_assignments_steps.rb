@@ -22,12 +22,12 @@ end
 World(AssignmentHelpers)
 
 When /^I fill required data for assignment entitled "(.*?)"$/ do |assignment_name|
-  @assignment_date = Date.today + 1
+  @assignment_date = Date.today + 2
   step "I fill required data for non blocking assignment \"#{assignment_name}\" due to \"#{@assignment_date}\""
 end
 
 When /^I fill required data for assignment "(.*?)" to be delivered as "(.*?)"$/ do |assignment_name, solution_type|
-  @assignment_date = Date.today + 1
+  @assignment_date = Date.today + 2
   step "I fill data for non blocking assignment \"#{assignment_name}\" due to \"#{@assignment_date}\" to be delivered as \"#{solution_type}\""
 end
 
@@ -108,7 +108,7 @@ Given /^there is a bunch of assignment already created$/ do
     step 'I follow "Nuevo"'
     step "I fill required data for assignment entitled \"TP#{n}\""
   end
-  @assignment_date = Date.today + 1
+  @assignment_date = Date.today + 2
   step 'I follow "Nuevo"'
   step "I fill data for non blocking assignment \"TP2\" due to \"#{@assignment_date}\" to be delivered as \"link\""
 end

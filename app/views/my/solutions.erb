@@ -25,7 +25,7 @@
         <td><a href="<%= url_for(:solutions, :download, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>
       <% else %>
         <% if @assignment.solution_type == 'link' %>
-          <td><a href="<%= s.link %>"><%= s.link %></a></td>
+          <td><a href="<%= s.link %>" target="_blank"><%= s.link %></a></td>
         <% end %>
       <% end %>		
       <td><%= t(s.test_result) %></a></td>

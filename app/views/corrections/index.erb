@@ -32,7 +32,7 @@
         <% end %>
       <% else %>
         <% if ac.assignment_solution_type == 'link' %>
-        <%- link_to :href => ac.link, :rel => :tooltip, :title => t('corrections.go_to_solution_link'), :class => 'list-row-action-wrapper-link' do %>
+        <%- link_to :href => ac.link, :target => "_blank", :rel => :tooltip, :title => t('corrections.go_to_solution_link'), :class => 'list-row-action-wrapper-link' do %>
           <i class='icon-link icon-white'></i>
         <% end %>
         <% end %>

@@ -35,8 +35,11 @@ Alfred::App.controllers :assignments do
     Assignment.transaction do |trx|
       begin
         @assignment = Assignment.new(params[:assignment].merge({ :course_id => current_course.id }))
-
-        if @assignment.save
+        if @assignment.deadline == ''
+          errors << t('assignments.errors.deadline_not_chosen')
+        elsif @assignment.deadline <= Date.today
+            errors << t('assignments.errors.deadline_passed')
+        elsif @assignment.save
           if params[:assignment_file]
             file_io = params[:assignment_file]['file']
             @assignment_file = AssignmentFile.new(:assignment => @assignment, :name => file_io[:filename])
@@ -61,7 +64,7 @@ Alfred::App.controllers :assignments do
 
     if errors.size > 0
       @title = pat(:create_title, :model => 'assignment')
-      flash.now[:error] = pat(:create_error, :model => 'assignment')
+      flash.now[:error] = errors #pat(:create_error, :model => 'assignment')
     end
 
     render 'assignments/new'
@@ -85,7 +88,13 @@ Alfred::App.controllers :assignments do
     if @assignment
       Assignment.transaction do |trx|
         begin
-          if @assignment.update(params[:assignment])
+          if params[:assignment]["deadline"] == ''
+            flash.now[:error] << t('assignments.errors.deadline_not_chosen')
+            render 'assignments/new'
+          elsif params[:assignment]["deadline"].to_date <= Date.today
+            flash.now[:error] = t('assignments.errors.deadline_passed')
+            render 'assignments/new'
+          elsif @assignment.update(params[:assignment])
             if params[:assignment_file]
               file_io = params[:assignment_file]['file']
               if file_io
@@ -95,7 +104,6 @@ Alfred::App.controllers :assignments do
                 @assignment_file.save
               end
             end
-
             flash[:success] = pat(:update_success, :model => 'Assignment', :id =>  "#{params[:id]}")
             params[:save_and_continue] ?
               redirect(url(:assignments, :index, :course_id => current_course.id)) :

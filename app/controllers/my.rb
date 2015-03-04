@@ -5,6 +5,10 @@ Alfred::App.controllers :my do
     return false unless solution_params.has_key?('file')
     true
   end
+  
+  define_method :is_blocked_by_date? do |assignment|
+    assignment.is_blocking && assignment.deadline < Date.today
+  end
 
   get :assigments, :parent => :courses do
     assignments = Assignment.find_by_course(current_course)
@@ -44,9 +48,22 @@ Alfred::App.controllers :my do
 
     @assignment = Assignment.get(params[:assignment_id])
     @solution= Solution.new( :account_id => current_account.id,
-            :assignment => @assignment )
-
-    if is_file_specified?(params)
+            :assignment => @assignment, :comments => params[:solution][:comments],
+            :link => params[:solution][:link] )
+    if is_blocked_by_date?(@assignment)
+	  errors << t('solutions.errors.deadline_passed')
+	elsif @assignment.solution_type == Assignment.LINK
+	  if params[:solution][:link] == ''
+	    errors << t('solutions.errors.link_absent')
+	  else
+	    DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
+          if not @solution.save
+            errors << @solution.errors
+          end
+          trx.rollback() if not errors.empty?
+        end
+      end
+    elsif @assignment.solution_type == Assignment.FILE && is_file_specified?(params)
       input_file = params[:solution][:file]
       @solution.file = input_file[:filename]
 

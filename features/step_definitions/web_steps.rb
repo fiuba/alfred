@@ -99,11 +99,16 @@ Then /^(?:|I )should see JSON:$/ do |expected_json|
   expected.should == actual
 end
 
-Then /^I should see "([^\"]*)"$/ do |text|
+Then /^I should see (no )?"([^\"]*)"$/ do |seeing, text|
+  should_not_see = seeing == 'no '
   if page.respond_to? :should
-    page.should have_content(text)
+    if should_not_see
+      page.should_not have_content(text)
+    else
+      page.should have_content(text)
+    end
   else
-    assert page.has_content?(text)
+    assert (page.has_content?(text) ^ should_not_see)
   end
 end
 

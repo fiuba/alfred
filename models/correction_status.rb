@@ -1,10 +1,10 @@
 class CorrectionStatus
-  attr_accessor :assignment_id, :assignment_name, :student_id, :student_full_name, :student_buid, :solution_id, :solution_test_result, :correction_id, :status, :grade
+
+  attr_accessor :assignment_id, :assignment_name, :student_id, :student_full_name, :student_buid, :solution_id, :solution_test_result, :correction_id, :status, :grade, :assignment_solution_type, :link, :is_overdue
 
   def self.corrections_status_for_teacher(teacher, course)
     query = <<-SQL
-      SELECT DISTINCT s.account_id,
-            s.assignment_id
+      SELECT DISTINCT s.account_id,s.assignment_id
       FROM corrections c
       INNER JOIN solutions s ON s.id = c.solution_id
       INNER JOIN assignments a ON a.id = s.assignment_id
@@ -28,6 +28,9 @@ class CorrectionStatus
     correction_status.student_buid = solution.account.buid
     correction_status.solution_id = solution.id
     correction_status.solution_test_result = solution.test_result
+    correction_status.is_overdue = solution.is_overdue?
+    correction_status.assignment_solution_type = solution.type
+    correction_status.link = solution.link
     if solution.correction.nil?
       correction_status.status = :correction_pending
     else

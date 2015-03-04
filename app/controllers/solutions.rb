@@ -19,8 +19,10 @@ Alfred::App.controllers :solutions do
   post :create, :map => '/assignments/:assignment_id/solutions/create' do
     errors = []
     input_file = params[:solution][:file]
+	comments = params[:comments]
     @solution= Solution.new( :account_id => current_account.id,
-            :assignment => @assignment, :file => input_file[:filename] )
+            :assignment => @assignment, :file => input_file[:filename],
+			:comments => comments )
 
     DataMapper::Transaction.new(DataMapper.repository(:default).adapter) do |trx|
       if @solution.save

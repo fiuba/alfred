@@ -9,6 +9,8 @@ describe Solution do
 	subject { @solution }
 
 	it { should respond_to( :file ) }
+	it { should respond_to( :link ) }
+	it { should respond_to( :comments ) }
 	it { should respond_to( :account ) }
 	it { should respond_to( :assignment) }
 	it { should respond_to( :correction) }
@@ -28,4 +30,41 @@ describe Solution do
 		end
 
 	end
+
+	describe 'is_overdue' do
+ 		context 'solution overdue depends on assignment deadline' do 
+		let(:assignment) { double(:id => 1, :name => 'TP', :deadline => DateTime.now) }
+
+			it 'should be overdue when solution was delivered after assignment deadline' do
+				@solution.assignment = assignment
+				@solution.created_at = DateTime.now+1
+				expect(@solution.is_overdue?).to be true
+			end
+
+			it 'should not  be overdue when solution was delivered before assignment deadline' do
+				@solution.assignment = assignment
+				@solution.created_at = DateTime.now-1
+				expect(@solution.is_overdue?).to be false
+			end
+		end
+	end
+	
+	describe 'solution type' do
+
+		it 'should return file type of file solution' do
+			assignment = Assignment.new
+			assignment.solution_type = Assignment.FILE
+			@solution.assignment = assignment
+			expect(@solution.type).to eq Assignment.FILE
+		end
+		
+		it 'should return link type of link solution' do
+			assignment = Assignment.new
+			assignment.solution_type = Assignment.LINK
+			@solution.assignment = assignment
+			expect(@solution.type).to eq Assignment.LINK
+		end
+
+	end
+	
 end

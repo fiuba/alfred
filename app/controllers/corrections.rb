@@ -24,8 +24,7 @@ Alfred::App.controllers :corrections do
   end
 
 	post :create, :parent => :solution do
-		@correction = Correction.create(params[:correction].merge({ 'solution_id' => params[:solution_id], 'teacher_id' => current_account.id }))
-
+		@correction = Correction.create(params[:correction].merge({ 'solution_id' => params[:solution_id], 'teacher_id' => params[:teacher_id].to_i }))
     if @correction.saved?
       flash[:success] = pat(:create_success, :model => 'Corrección', :id =>  "#{@correction.id}")
       if (params[:save_and_notify])
@@ -37,7 +36,7 @@ Alfred::App.controllers :corrections do
     end
 	end
 
-  post :assign_to_teacher, :provides => :json, :with => [:student_id, :assignment_id, :teacher_id] do
+  post :assign_to_me, :provides => :json, :with => [:student_id, :assignment_id, :teacher_id] do
     student = Account.get(params[:student_id])
     assignment = Assignment.get(params[:assignment_id])
     teacher = Account.get(params[:teacher_id])
@@ -45,7 +44,18 @@ Alfred::App.controllers :corrections do
     Correction.create_for_teacher(teacher, student, assignment)
 
     new_status = I18n.translate(student.status_for_assignment(assignment.reload).status)
-    Oj.dump({ 'message' => t('corrections.creation_succeeded'), 'assigned_teacher' => current_account.full_name, 'new_status' => new_status })
+    Oj.dump({ 'message' => t('corrections.assignment_succeeded'), 'assigned_teacher' => teacher.full_name, 'new_status' => new_status })
+  end
+
+  post :assign_to_teacher, :map => '/corrections/assign_to_teacher' do
+    student = Account.get(params[:student_id])
+    assignment = Assignment.get(params[:assignment_id])
+    teacher = Account.get(params[:teacher_id])
+
+    Correction.assign_to_teacher(teacher, student, assignment)
+
+    flash[:success] = t('corrections.assignment_succeeded')
+    redirect(url(:assignments, assignment.id, :students ))
   end
 
   get :edit, :with => :id do

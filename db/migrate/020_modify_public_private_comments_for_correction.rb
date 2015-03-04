@@ -10,6 +10,8 @@ migration 20, :modify_public_private_comments_for_correction do
         column :grade, Float
         column :created_at, DateTime  
         column :updated_at, DateTime
+	column :teacher_id, Integer
+	column :solution_id, Integer
       end
     else
       DataMapper.repository.adapter.execute(                                   \

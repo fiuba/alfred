@@ -12,7 +12,7 @@
 		<th><%= I18n.translate('corrections.grid_all.upload_date') %></th>
 		<th><%= I18n.translate('corrections.grid_all.status') %></th>
 		<th><%= I18n.translate('corrections.grid_all.teacher_assigned') %></th>
-		<th class="header list-row-action-header"></th>
+		<th class="header list-row-action-header"><%= t('assignments.actions').capitalize %></th>
 	</tr>
 	<% @students_with_assignment_status.each do |sas| %>
 		<tr> 

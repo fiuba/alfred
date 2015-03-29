@@ -105,3 +105,6 @@ button.assign-to-me:hover {
   color:red;
 }
 
+.inline-text {
+	display:inline;
+}

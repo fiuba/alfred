@@ -5,6 +5,10 @@
   <a href="mailto:#"><%= @correction.solution.account.email %></a> | 
   <%= @correction.solution.account.tag %>
   </p>
+  <p>
+  <%= "#{t('solutions.form.comments')}" %>: 
+  <%= @correction.solution.comments %>
+  </p>
   <br>
   <% form_for :correction, url(:corrections, :create, @correction.solution.id), :method => :post, :class => 'form-horizontal' do |f| %>
     <%= partial 'corrections/form', :locals => { :f => f } %>

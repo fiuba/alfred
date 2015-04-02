@@ -23,7 +23,7 @@ describe 'Solution DataMapper Integration' do
 
 		describe "without file" do
 	    before { @solution.file = nil }
-			it { should_not be_valid }
+			it { should be_valid }
 		end
 
 		describe "with file" do

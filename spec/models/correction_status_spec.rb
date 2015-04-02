@@ -9,12 +9,13 @@ describe CorrectionStatus do
       let(:student) { double(:id => 99, :full_name => 'Juan Perez', :buid => '1234567') }
       let(:assignment) { double(:id => 1, :name => 'TP') }
       let(:correction) { double(:id => 500, :status => :correction_passed, :grade => 10.0, :teacher => teacher) }
-      let(:solution) { double(:id => 1000, :assignment => assignment, :account => student, :test_result => 'passed') }
+      let(:solution) { double(:id => 1000, :assignment => assignment, :account => student, :test_result => 'passed', :type => 'file', :link => '') }
 
       it "should use last solution for creating CorrectionStatus" do
         repository(:default).adapter.stub(:select).and_return([ double(:account_id => student.id, :assignment_id => assignment.id) ])
         Solution.should_receive(:last).with(:account_id => student.id, :assignment_id => assignment.id, :order => :created_at).and_return(solution)
         solution.stub(:correction).and_return(correction)
+        solution.stub(:is_overdue?).and_return(false)
 
         corrections_statuses = CorrectionStatus.corrections_status_for_teacher(teacher, course)
 
@@ -27,15 +28,19 @@ describe CorrectionStatus do
         corrections_status.student_buid.should == student.buid
         corrections_status.solution_id.should == solution.id
         corrections_status.solution_test_result.should == solution.test_result
+        corrections_status.assignment_solution_type.should == solution.type
+        corrections_status.link.should == solution.link
         corrections_status.correction_id.should == solution.correction.id
         corrections_status.status.should == solution.correction.status
         corrections_status.grade.should == solution.correction.grade
+	expect(corrections_status.is_overdue).to be false
       end
 
       it "should create CorrectionStatus even if last solution has not correction associated" do
         repository(:default).adapter.stub(:select).and_return([ double(:account_id => student.id, :assignment_id => assignment.id) ])
         Solution.should_receive(:last).with(:account_id => student.id, :assignment_id => assignment.id, :order => :created_at).and_return(solution)
         solution.stub(:correction).and_return(nil)
+        solution.stub(:is_overdue?).and_return(false)
 
         corrections_statuses = CorrectionStatus.corrections_status_for_teacher(teacher, course)
 
@@ -48,20 +53,25 @@ describe CorrectionStatus do
         corrections_status.student_buid.should == student.buid
         corrections_status.solution_id.should == solution.id
         corrections_status.solution_test_result.should == solution.test_result
+        corrections_status.assignment_solution_type.should == solution.type
+        corrections_status.link.should == solution.link
         corrections_status.correction_id.should be_nil
         corrections_status.status.should == :correction_pending
         corrections_status.grade.should be_nil
+	expect(corrections_status.is_overdue).to be false
       end
 
       it "should create CorrectionStatus for all assigned corrections" do
         student2 = double(:id => 100, :full_name => 'Jose Rodriguez', :buid => '7654321')
         assignment2 = double(:id => 2, :name => 'TP 2')
         correction2 = double(:id => 600, :status => :correction_failed, :grade => 2.0, :teacher => teacher)
-        solution2 = double(:id => 2000, :assignment => assignment2, :account => student2, :test_result => 'passed', :correction => correction2)
+        solution2 = double(:id => 2000, :assignment => assignment2, :account => student2, :test_result => 'passed', :correction => correction2, :type => 'link', :link => 'http://www.test.com/link')
         repository(:default).adapter.stub(:select).and_return([ double(:account_id => student.id, :assignment_id => assignment.id), double(:account_id => student2.id, :assignment_id => assignment2.id) ])
         Solution.should_receive(:last).with(:account_id => student.id, :assignment_id => assignment.id, :order => :created_at).and_return(solution)
         Solution.should_receive(:last).with(:account_id => student2.id, :assignment_id => assignment2.id, :order => :created_at).and_return(solution2)
         solution.stub(:correction).and_return(nil)
+        solution.stub(:is_overdue?).and_return(false)
+	solution2.stub(:is_overdue?).and_return(true)
 
         corrections_statuses = CorrectionStatus.corrections_status_for_teacher(teacher, course)
 
@@ -73,9 +83,12 @@ describe CorrectionStatus do
         corrections_statuses[0].student_buid.should == student.buid
         corrections_statuses[0].solution_id.should == solution.id
         corrections_statuses[0].solution_test_result.should == solution.test_result
+        corrections_statuses[0].assignment_solution_type.should == solution.type
+        corrections_statuses[0].link.should == solution.link
         corrections_statuses[0].correction_id.should be_nil
         corrections_statuses[0].status.should == :correction_pending
         corrections_statuses[0].grade.should be_nil
+	expect(corrections_statuses[0].is_overdue).to be false
         corrections_statuses[1].assignment_id.should == assignment2.id
         corrections_statuses[1].assignment_name.should == assignment2.name
         corrections_statuses[1].student_id.should == student2.id
@@ -86,6 +99,7 @@ describe CorrectionStatus do
         corrections_statuses[1].correction_id.should == solution2.correction.id
         corrections_statuses[1].status.should == :correction_failed
         corrections_statuses[1].grade.should == 2.0
+	expect(corrections_statuses[1].is_overdue).to be true
       end
     end
   end

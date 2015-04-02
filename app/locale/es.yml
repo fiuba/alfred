@@ -24,6 +24,7 @@ es:
   my_corrections: 'Mis correcciones'
   save_and_notify: 'Guardar y notificar'
   save: 'Guardar'
+  cancel: 'Cancelar'
   new: 'Nueva'
   solution:
     new: 'entregar solución'
@@ -37,15 +38,20 @@ es:
   solutions:
     delivered_for: 'soluciones entregadas para'
     student: 'Alumno:'
+    link: 'Link a entrega'
     errors:
       upload_failed: 'Error al intentar subir el archivo'
       delete_failed: 'Error al intentar borrar el archivo'
       file_absent: 'Debe seleccionar archivo'
+      link_absent: 'Debe especificar un link de entrega'
+      deadline_passed: 'La fecha de entrega ha caducado'
     form:
       file: 'Archivo a entregar'
+      comments: 'Comentarios'
       assignment: 'Trabajo práctico'
     grid:
       file: 'Archivo entregado'
+      link: 'Link a entrega'
       assignment: 'Trabajo práctico'
       submission_date: 'Fecha de la entrega'
       view_correction: 'Ver corrección'
@@ -56,6 +62,7 @@ es:
     title_all: 'Entregas para'
     edit: 'Corregir'
     download_solution_link: 'Descargar solución'
+    go_to_solution_link: 'Ir a link de solución'
     download_assignment_link: 'Descargar TP'
     submission_date: 'Fecha de entrega'
     form:
@@ -78,15 +85,18 @@ es:
       actions:
         assign_to_me: 'Asignarmelo a mi'
         view_solutions: 'Ver soluciones'
+        assign_to_other: 'Asignar a otro'
     show:
       title: 'Corrección para'
       submission_date: 'Fecha de entrega:'
       teacher: 'Corrector:'
       grade: 'Calificación:'
       comments: 'Comentarios:'
-    creation_succeeded: 'El TP fue asignado correctamente'
+    assignment_succeeded: 'El TP fue asignado correctamente'
     no_solutions_found: 'El alumno no presentó ninguna solución para el TP'
     solution_already_assigned: 'La solución ya fue asignada a otro docente'
+    teacher_selection_modal:
+      title: 'Asignar corrección a'
   my_assigments: 'Mis trabajos prácticos'
   my_solutions: 'Mis entregas'
   assignment: 'Trabajo práctico'
@@ -225,6 +235,9 @@ es:
     name: Nombre
     deadline: Fecha límite
     course: Curso
+    errors:
+      deadline_not_chosen: 'Se debe elegir fecha de entrega'
+      deadline_passed: 'La fecha de entrega debe ser posterior a hoy'
     delete:
       title: Borrar
       confirm: ¿Está seguro que desea eliminar el trabajo práctico?

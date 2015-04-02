@@ -69,7 +69,7 @@ describe "CorrectionsController" do
         Correction.all.size.should == 0
 
         @params[:teacher_id] = teacher.id
-        post "/corrections/assign_to_teacher/#{solution.account.id}/#{assignment.id}/#{teacher.id}.json"
+        post "/corrections/assign_to_me/#{solution.account.id}/#{assignment.id}/#{teacher.id}.json"
 
         last_response.status.should == 200
         created_correction = Correction.all.last
@@ -83,10 +83,10 @@ describe "CorrectionsController" do
       failed_correction_double = double(:id => nil, :errors => {:grade => ['cannot be blank']}, :solution => solution)
       failed_correction_double.should_receive(:saved?).and_return(false)
       Correction.should_receive(:create).with(any_args).and_return(failed_correction_double)
-      Alfred::App.any_instance.stub(:current_account).and_return(teacher)
+#      Alfred::App.any_instance.stub(:current_account).and_return(teacher)
 
       correction_params = { :public_comments => 'my public comment', :private_comments => 'my private comment', :grade => '10' }
-      post '/solution/1/corrections/create', { :correction => correction_params }
+      post '/solution/1/corrections/create', { :correction => correction_params, :teacher_id => teacher.id }
     end
 
     context 'correction successfully created' do
@@ -105,13 +105,13 @@ describe "CorrectionsController" do
       it "should create a new correction without notifying" do
         Alfred::App.should_not_receive(:deliver)
 
-        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params }
+        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params, :teacher_id => teacher.id }
       end
 
       it "should create a new correction and notify" do
         Alfred::App.should_receive(:deliver).with(:notification, :correction_result, created_correction)
 
-        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params, :save_and_notify => 'true' }
+        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params, :save_and_notify => 'true', :teacher_id => teacher.id }
       end
     end
   end

@@ -7,11 +7,28 @@
 	<% form_for :solution, url(:my, :create_solution, :assignment_id => @assignment.id), :multipart => true, :class => 'form-horizontal' do |f| %>
 
 <% error = @solution.errors.key?(:file) && @solution.errors[:file].count > 0 %>
+
+<% if @assignment.solution_type == 'file' %>
+  <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+    <%= f.label I18n.translate('solutions.form.file'), :class => 'control-label' %>
+    <div class='controls'>
+      <%= f.file_field :file, :class => 'input-large input-with-feedback', :autofocus => true %>
+      <span class='help-inline'><%= error ? f.error_message_on(:file) : t('solution.upload_help') %></span>
+    </div>
+  </fieldset>
+<% else %>
+  <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+    <%= f.label I18n.translate('solutions.link'), :class => 'control-label' %>
+    <div class='controls'>
+      <%= f.text_field :link, :class => 'span8' %>
+    </div>
+  </fieldset>
+<% end %>
+
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label I18n.translate('solutions.form.file'), :class => 'control-label' %>
+  <%= f.label I18n.translate('solutions.form.comments'), :class => 'control-label' %>
   <div class='controls'>
-    <%= f.file_field :file, :class => 'input-large input-with-feedback', :autofocus => true %>
-    <span class='help-inline'><%= error ? f.error_message_on(:file) : t('solution.upload_help') %></span>
+    <%= f.text_area :comments, :rows => 4, :class => 'span8' %>
   </div>
 </fieldset>
 <%= f.hidden_field :account_id, :value => current_account.id %>

@@ -37,6 +37,31 @@
     <span class='help-inline'><%= f.error_message_on(:deadline) if error %></span>
   </div>
 </fieldset>
+
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :blocking_deadline, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.check_box :is_blocking, :class => 'input-xlarge input-with-feedback' %>
+    <span class='help-inline'><%= f.error_message_on(:is_blocking) if error %></span>
+  </div>
+</fieldset>
+
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :solution_type, :class => 'control-label' %>
+  <div class='controls'>
+    <select id="assignment_solution_type" name="assignment[solution_type]">
+      <% Assignment.solution_types.each do |type| %>
+          <% if @assignment.solution_type != type %>
+            <option value="<%= type %>"><%= type %></option>
+          <% else %>
+            <option selected="selected" value="<%= type %>"><%= type %></option>
+          <% end %>
+      <% end %>
+    </select>
+    <span class='help-inline'><%= f.error_message_on(:solution_types) if error %></span>
+  </div>
+</fieldset>
+
 <% error = @assignment.errors.key?(:course_id) && @assignment.errors[:course_id].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :file, :class => 'control-label' %>

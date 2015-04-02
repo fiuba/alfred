@@ -15,6 +15,10 @@ module WithinHelpers
     File.join( File.dirname(__FILE__), "..", "resources", "/", path )
   end
 
+  def default_password
+    "Passw0rd!"
+  end
+
 end
 World(WithinHelpers)
 
@@ -37,8 +41,8 @@ Given /^I enrole as student named "(.*?)"$/ do |student_name|
   fill_in(:account_buid, :with => "77666" )
   fill_in(:account_email, :with => student_name.downcase + "@someplace.com" )
   fill_in(:account_tag, :with => "mie" )
-  fill_in(:account_password, :with => "foobar" )
-  fill_in(:account_password_confirmation, :with => "foobar" )
+  fill_in(:account_password, :with => default_password )
+  fill_in(:account_password_confirmation, :with => default_password )
   click_button( "crear cuenta" )
 end
 
@@ -49,8 +53,8 @@ Given /^the teacher "(.*?)"$/ do |teacher_name|
   @teacher = Factories::Account.teacher( teacher_name, "some_surname",
                 "#{teacher_name}@someplace.com" )
   @teacher.buid = 'xxxx'
-  @teacher.password = 'Passw0rd!'
-  @teacher.password_confirmation = 'Passw0rd!'
+  @teacher.password = default_password
+  @teacher.password_confirmation = default_password
   @teacher.courses << @course
   @teacher.save
 end
@@ -59,33 +63,28 @@ Given /^the student "(.*?)"$/ do |student_name|
   @student = Factories::Account.student( student_name, "some_surname",
                 "#{student_name}@someplace.com" )
   @student.buid = '77666'
-  @student.password = 'Passw0rd!'
-  @student.password_confirmation = 'Passw0rd!'
+  @student.password = default_password
+  @student.password_confirmation = default_password
   @student.courses << @course
   @student.save
 end
 
-Then /^I log in as "(.*?)"$/ do |student_name|
-  student = Account.all( :name => student_name ).first
-  fill_in(:email, :with => student.email)
-  fill_in(:password, :with => 'foobar')
+Then /^I log in as "(.*?)"$/ do |user_name|
+  @account = Account.all( :name => user_name ).first
+  visit '/login'
+  fill_in(:email, :with => @account.email)
+  fill_in(:password, :with => default_password)
   click_button :sign_in
 end
 
 Given /^I am logged in as student$/ do
-  @account = @student
-  visit '/login'
-  fill_in(:email, :with => @student.email)
-  fill_in(:password, :with => 'Passw0rd!')
-  click_button :sign_in
+  step 'I log in as "Richard"'
+  @student = @account
 end
 
 Given /^I am logged in as teacher$/ do
-  @account = @teacher
-  visit '/login'
-  fill_in(:email, :with => @teacher.email)
-  fill_in(:password, :with => 'Passw0rd!')
-  click_button :sign_in
+  step 'I log in as "John"'
+  @teacher = @account
 end
 
 Given /^I logged out$/ do
@@ -112,6 +111,10 @@ end
 
 When /^I follow "([^\"]*)"$/ do |link|
   click_link(link)
+end
+
+When /^I click "(.*?)"$/ do |button|
+  click_button button
 end
 
 Then /^I should get file "(.*)"$/ do |file_name|

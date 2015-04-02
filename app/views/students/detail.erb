@@ -2,9 +2,19 @@
 	<%= @student.full_name %> (<%= @student.buid %>)
 </h2>
 <p> <%= @student.email %> | <%= t('tag') %> <%= @student.tag %> </p>
-<p> Karma: <%= @karma_count %> </p>
 
 
+	<%- form_tag url(:karmas, :register, :student_id => @student.id), :method => :post, :style => 'display:inline' do %>
+		<div>
+		Karma: <div id="karma-counter" class="inline-text"><%= @karma_count %></div>
+		
+			<button title="asignar karma" rel='tooltip' class="assign-to-me" id="karma-button">
+      	<i class='icon-plus-sign'></i>
+			</button>
+
+		</div>
+  <% end %>
+	
 <table id="studentsGrid" class="table table-bordered table-striped table-hover"">
 	<tr>
 		<th><%= t('assignment').capitalize %></th>
@@ -29,3 +39,7 @@
 	</tr>
 	<% end %>
 </table>
+
+<% content_for :additional_js do %>
+	<%= javascript_include_tag 'karma.js' %>
+<% end %>

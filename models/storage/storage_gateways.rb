@@ -1,7 +1,11 @@
 module Storage
 	module StorageGateways
 		def self.get_gateway
-			Storage::DropboxGateway.new
+			if PADRINO_ENV=='development'
+				Storage::StubGateway.new
+			else
+				Storage::DropboxGateway.new
+			end
 		end
 	end
 end

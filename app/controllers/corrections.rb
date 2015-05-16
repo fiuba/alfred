@@ -24,7 +24,7 @@ Alfred::App.controllers :corrections do
   end
 
 	post :create, :parent => :solution do
-		@correction = Correction.create(params[:correction].merge({ 'solution_id' => params[:solution_id], 'teacher_id' => params[:teacher_id].to_i }))
+		@correction = Correction.create(params[:correction].merge({ 'solution_id' => params[:solution_id] }))
     if @correction.saved?
       flash[:success] = pat(:create_success, :model => 'Corrección', :id =>  "#{@correction.id}")
       if (params[:save_and_notify])

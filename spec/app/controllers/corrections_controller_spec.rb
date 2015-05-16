@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe "CorrectionsController" do
@@ -80,13 +81,11 @@ describe "CorrectionsController" do
     end
 
     it "should display error message if correction cannot be created" do
-      failed_correction_double = double(:id => nil, :errors => {:grade => ['cannot be blank']}, :solution => solution)
-      failed_correction_double.should_receive(:saved?).and_return(false)
-      Correction.should_receive(:create).with(any_args).and_return(failed_correction_double)
-#      Alfred::App.any_instance.stub(:current_account).and_return(teacher)
+      correction_params = { :public_comments => 'my public comment', :private_comments => 'my private comment', :grade => '' }
 
-      correction_params = { :public_comments => 'my public comment', :private_comments => 'my private comment', :grade => '10' }
       post '/solution/1/corrections/create', { :correction => correction_params, :teacher_id => teacher.id }
+
+      last_response.body.should =~ /No se pudo crear Corrección/i
     end
 
     context 'correction successfully created' do

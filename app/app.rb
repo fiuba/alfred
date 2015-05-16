@@ -127,11 +127,6 @@ module Alfred
         else
           redirect_back_or_default('/')
         end
-
-      #elsif Padrino.env == :development && params[:bypass]
-      #  account = Account.first
-      #  set_current_account(account)
-      #  redirect url(:base, :index)
       else
         params[:email], params[:password] = h(params[:email]), h(params[:password])
         flash[:error] = pat('login.error')

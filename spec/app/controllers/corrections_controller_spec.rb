@@ -81,9 +81,9 @@ describe "CorrectionsController" do
     end
 
     it "should display error message if correction cannot be created" do
-      correction_params = { :public_comments => 'my public comment', :private_comments => 'my private comment', :grade => '' }
+      correction_params = { :public_comments => 'my public comment', :private_comments => 'my private comment', :grade => '', :teacher_id => teacher.id }
 
-      post '/solution/1/corrections/create', { :correction => correction_params, :teacher_id => teacher.id }
+      post '/solution/1/corrections/create', { :correction => correction_params }
 
       last_response.body.should =~ /No se pudo crear Corrección/i
     end
@@ -91,26 +91,26 @@ describe "CorrectionsController" do
     context 'correction successfully created' do
       let(:teacher) { Factories::Account.teacher }
       let(:created_correction) { double(:id => 101, :saved? => true, :teacher => teacher) }
-      let(:correction_params) { { 'public_comments' => 'my public comment', 'private_comments' => 'my private comment', 'grade' => '10' } }
+      let(:correction_params) { { 'public_comments' => 'my public comment', 'private_comments' => 'my private comment', 'grade' => '10', 'teacher_id' => teacher.id.to_s } }
       let(:solution_id) { "123" }
 
       before do
         Correction
           .should_receive(:create)
-          .with(correction_params.merge({'solution_id' => solution_id, 'teacher_id'=>teacher.id}))
+          .with(correction_params.merge({'solution_id' => solution_id}))
           .and_return(created_correction)
       end
 
       it "should create a new correction without notifying" do
         Alfred::App.should_not_receive(:deliver)
 
-        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params, :teacher_id => teacher.id }
+        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params }
       end
 
       it "should create a new correction and notify" do
         Alfred::App.should_receive(:deliver).with(:notification, :correction_result, created_correction)
 
-        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params, :save_and_notify => 'true', :teacher_id => teacher.id }
+        post "/solution/#{solution_id}/corrections/create", { :correction => correction_params, :save_and_notify => 'true' }
       end
     end
   end

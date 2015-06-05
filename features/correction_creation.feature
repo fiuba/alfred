@@ -14,23 +14,23 @@ Feature: Correction creation
     And   I follow "Correcciones" for "TP1"
     And   I click "Asignarme a mi" on the last submission
     Then  I should see "El TP fue asignado correctamente" 
-
+@wip
   Scenario: Delegating to a teacher
     Given I am logged in as teacher 
     When  I follow "Trabajos prácticos"
     And   I follow "Correcciones" for "TP1"
     And   I click "Asignar a otro" on the last submission
-    And   I choose "Carla" as teacher for the correction
+    And   I choose "Carla some_surname" as teacher for the correction
     And   I click "Guardar"
     Then  I should see "El TP fue asignado correctamente"
-    And   I should see "Carla" as "Corrector" on the last submission
-
+    And   I should see "Carla some_surname" as "Corrector" on the last submission
+@wip
   Scenario: Canceling delegation
     Given I am logged in as teacher 
     When  I follow "Trabajos prácticos"
     And   I follow "Correcciones" for "TP1"
     And   I click "Asignar a otro" on the last submission
-    And   I choose "Carla" as teacher for the correction
+    And   I choose "Carla some_surename" as teacher for the correction
     And   I click "Cancelar"
     Then  I should not see "El TP fue asignado correctamente"
 

@@ -281,7 +281,7 @@ describe Account do
     end
   end
 
-  it "should return 'John Green' when asking for full name" do
+  it 'should return \'John Green\' when asking for full name' do
     student = Account.new(:name => "John", :surname => "Green")
     student.full_name.should eq 'John Green'
   end

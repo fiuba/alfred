@@ -186,6 +186,10 @@ When(/^I cancel it$/) do
   end
 end
 
+Then(/^assignment "(.*?)" is not deleted$/) do |assignment_name|
+  expect(page).to have_content(assignment_name)
+end
+
 def solution_type(type)
   case type
   when 'file'

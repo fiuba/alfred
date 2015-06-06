@@ -165,6 +165,31 @@ Then /^assignment created should have "(.*?)" set as solution type$/ do |type|
   expect(Assignment.last.solution_type).to eq solution_type(type)
 end
 
+And(/^I click delete button for "(.*?)"$/) do |tp_name|
+  @tp_name = tp_name
+  click_button "Borrar #{@tp_name}"
+end
+
+When(/^I confirm it$/) do
+  within "#delete-#{@tp_name}-assignment-modal" do
+    click_button "Yes"
+  end
+end
+
+Then(/^assignment "(.*?)" is deleted$/) do |assignment_name|
+  expect(page).to_not have_content(assignment_name)
+end
+
+When(/^I cancel it$/) do
+  within "#delete-#{@tp_name}-assignment-modal" do
+    click_button "No"
+  end
+end
+
+Then(/^assignment "(.*?)" is not deleted$/) do |assignment_name|
+  expect(page).to have_content(assignment_name)
+end
+
 def solution_type(type)
   case type
   when 'file'

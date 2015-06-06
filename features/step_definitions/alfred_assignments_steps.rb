@@ -180,6 +180,12 @@ Then(/^assignment "(.*?)" is deleted$/) do |assignment_name|
   expect(page).to_not have_content(assignment_name)
 end
 
+When(/^I cancel it$/) do
+  within "#delete-#{@tp_name}-assignment-modal" do
+    click_button "No"
+  end
+end
+
 def solution_type(type)
   case type
   when 'file'

@@ -166,7 +166,18 @@ Then /^assignment created should have "(.*?)" set as solution type$/ do |type|
 end
 
 And(/^I click delete button for "(.*?)"$/) do |tp_name|
-  click_button "Borrar #{tp_name}"
+  @tp_name = tp_name
+  click_button "Borrar #{@tp_name}"
+end
+
+When(/^I confirm it$/) do
+  within "#delete-#{@tp_name}-assignment-modal" do
+    click_button "Yes"
+  end
+end
+
+Then(/^assignment "(.*?)" is deleted$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
 end
 
 def solution_type(type)

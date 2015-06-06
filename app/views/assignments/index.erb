@@ -6,8 +6,11 @@
 
 <ul class="nav nav-tabs">
   <li class="active">
-    <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index, :course_id => current_course.id) %></li>
-  <li> <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %></li>
+    <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index, :course_id => current_course.id) %>
+  </li>
+  <li>
+    <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %>
+  </li>
 </ul>
 <div class="tabs-content">
   <table id="assigmentsGrid" class="table table-bordered table-striped table-hover">
@@ -38,12 +41,14 @@
                       :class => 'list-row-action-wrapper-link' do %>
                 <i class='icon-save'></i>
               <% end %>
-              <%- form_tag url(:assignments, :destroy, :id => assignment.id, :course_id => current_course.id), :method => :delete, :class => 'delete-form', :data => { :confirmation => t('assignments.delete.confirm') }, :style => 'display:inline' do %>
-                <button type='submit' title="<%= t('assignments.delete.title') + " #{assignment.name}" %>" rel='tooltip' class="btn btn-mini btn-danger">
-                  <i class='icon-white icon-trash'></i>
-                </button>
-              <% end %>
-             </div>
+
+              <button type="button" data-toggle="modal" rel="tooltip" title="<%= t('assignments.delete.title') + " #{assignment.name}" %>"
+                      data-target="#assignment-delete-modal" class="btn btn-mini btn-danger">
+                <i class='icon-white icon-trash'></i>
+              </button>
+
+              <%= partial("assignments/delete_assignment_confirmation", locals: {assignment: assignment}) %>
+            </div>
           </td>
         </tr>
       <% end %>

@@ -176,8 +176,8 @@ When(/^I confirm it$/) do
   end
 end
 
-Then(/^assignment "(.*?)" is deleted$/) do |arg1|
-  expect(page).to_not have_content("TP0")
+Then(/^assignment "(.*?)" is deleted$/) do |assignment_name|
+  expect(page).to_not have_content(assignment_name)
 end
 
 def solution_type(type)

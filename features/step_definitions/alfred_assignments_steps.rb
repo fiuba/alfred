@@ -172,7 +172,7 @@ end
 
 When(/^I confirm it$/) do
   within "#delete-#{@tp_name}-assignment-modal" do
-    click_button "Yes"
+    click_button "Si"
   end
 end
 

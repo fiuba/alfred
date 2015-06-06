@@ -12,7 +12,6 @@ Feature: Having a confirm window on deleting assignment
     When I confirm it
     Then assignment "TP0" is deleted
 
-  @wip
   Scenario: Cancelling deletion
     When I cancel it
     Then assignment "TP0" is not deleted

@@ -165,6 +165,10 @@ Then /^assignment created should have "(.*?)" set as solution type$/ do |type|
   expect(Assignment.last.solution_type).to eq solution_type(type)
 end
 
+And(/^I click delete button for "(.*?)"$/) do |tp_name|
+  click_button "Borrar #{tp_name}"
+end
+
 def solution_type(type)
   case type
   when 'file'

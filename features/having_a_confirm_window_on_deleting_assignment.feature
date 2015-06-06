@@ -8,7 +8,6 @@ Feature: Having a confirm window on deleting assignment
     When I follow "Lista"
     And I click delete button for "TP0"
 
-  @wip
   Scenario: Confirming deletion
     When I confirm it
     Then assignment "TP0" is deleted

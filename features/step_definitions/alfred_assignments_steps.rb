@@ -177,7 +177,7 @@ When(/^I confirm it$/) do
 end
 
 Then(/^assignment "(.*?)" is deleted$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+  expect(page).to_not have_content("TP0")
 end
 
 def solution_type(type)

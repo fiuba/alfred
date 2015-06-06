@@ -126,7 +126,7 @@ Alfred::App.controllers :assignments do
     @title = "Assignments"
     assignment = Assignment.get(params[:id].to_i)
     if assignment
-      if assignment.destroy
+      if assignment.destroy!
         flash[:success] = pat(:delete_success, :model => 'Assignment', :id => "#{params[:id]}")
       else
         flash[:error] = pat(:delete_error, :model => 'assignment')

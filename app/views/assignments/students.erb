@@ -56,7 +56,7 @@
 	      <div class="controls">
 		<select id="teacher_id" name="teacher_id">
 		<% Account.find_by_roles('teacher').each do |teacher| %>
-		  <option value="<%= teacher.id %>"><%= teacher.name %></option>
+		  <option value="<%= teacher.id %>"><%= teacher.full_name %></option>
 		<% end %>
 		</select>
               </div>

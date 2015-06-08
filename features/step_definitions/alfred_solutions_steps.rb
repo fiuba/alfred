@@ -70,6 +70,15 @@ Given /^a student submit solution for "(.*?)" with comment "(.*?)"$/ do |tp, com
   step "I upload the solution's file for \"#{tp}\""
 end
 
+And(/^a student submit solution for "(.*?)" with link$/) do |assignment_name|
+  step 'I am logged in as student'
+  step 'I follow "Trabajos prácticos"'
+  step "I click submit solution for \"#{assignment_name}\""
+  step "I fill in link to solution"
+  click_button "Guardar"
+end
+
+
 Then /^solution should have comment: "(.*?)"$/ do |comment|
   expect(Solution.last.comments).to eql(comment)
 end

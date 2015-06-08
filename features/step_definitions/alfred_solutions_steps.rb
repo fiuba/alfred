@@ -110,3 +110,9 @@ Given(/^A overdue solution for "(.*?)" submitted by a student$/) do |assignment_
   overdue.created_at = assignment.deadline+10
   overdue.save
 end
+
+Then(/^the solution for "(.*?)" is marked as "(.*?)"$/) do |assignment_name, status|
+  within("#status-for-#{assignment_name}") do
+    expect(page).to have_content(status)
+  end
+end

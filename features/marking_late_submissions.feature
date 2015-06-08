@@ -9,7 +9,6 @@ Feature: Marking late submissions
     And a student submit solution for "TP0" with link
     And A overdue solution for "TP0" submitted by a student
 
-  @wip
   Scenario: Submitting a solution overdue
     Given I am logged in as teacher
     And I follow "Trabajos prácticos"

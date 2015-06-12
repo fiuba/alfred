@@ -12,7 +12,7 @@
 		<th><%= t('actions').capitalize %></th>
 	</tr>
 	<% @students.each do |s|%>
-	<tr id="<%= s.id %>">
+	<tr id="<%= s.name %>">
 		<td><%= s.buid %></td>
 		<td><%= s.full_name %></td>
 		<td><%= s.email %></td>

@@ -122,3 +122,8 @@ Then /^I should get file "(.*)"$/ do |file_name|
   page.response_headers["Content-Type"].should == "application/zip"
   page.response_headers["Content-Disposition"].should include("filename=#{file_name}")
 end
+
+Then(/^there should be (\d+) karma points$/) do |points|
+  pending
+end
+

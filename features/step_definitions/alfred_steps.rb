@@ -124,6 +124,6 @@ Then /^I should get file "(.*)"$/ do |file_name|
 end
 
 Then(/^there should be (\d+) karma points$/) do |points|
-  pending
+  page.should have_content 'Karma: 1'
 end
 

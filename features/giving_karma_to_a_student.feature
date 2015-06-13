@@ -7,7 +7,6 @@ Feature: Giving karma to a student
     And I follow "Ver estado de los TP" within "Richard"
     And I click "asignar karma"
 
-  @wip
   Scenario: Student seeing his karma
     Given I am logged in as student
     And I follow "Trabajos prácticos"

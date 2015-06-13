@@ -17,4 +17,7 @@ Alfred::App.helpers do
     "#{t('corrections.submission_date')}: #{submission_date.strftime("%Y-%m-%d %H:%M:%S")}"
   end
 
+  def correction_template
+    @correction.solution.assignment.correction_template || ""
+  end
 end

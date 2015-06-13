@@ -15,6 +15,15 @@
   </div>
 </fieldset>
 
+<% error = errors_for :correction_template %>
+<fieldset class='control-group <%= error ? 'has-error' : ''%>'>
+  <%= f.label :correction_template, :class => 'control-label' %>
+  <div class='controls'>
+    <%= f.text_area :correction_template, :class => 'input-xxlarge input-with-feedback', :rows => 10 %>
+    <span class='help-inline'><%= f.error_message_on(:correction_template)  if error %></span>
+  </div>
+</fieldset>
+
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
   <%= f.label :is_optional, :class => 'control-label' %>
   <div class='controls'>

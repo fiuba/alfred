@@ -23,4 +23,16 @@ describe Assignment do
     
   end
 
+  describe "correction template" do
+
+    let!(:assignment) {
+      Assignment.create correction_template: "A correction template"
+    }
+
+    it "should have a correction template" do
+      expect(assignment.correction_template).to eq "A correction template"
+    end
+
+  end
+
 end

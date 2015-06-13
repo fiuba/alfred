@@ -122,6 +122,12 @@ Then /^I should see "([^\"]*)"(?: within "([^\"]*)")$/ do |text, selector|
   end
 end
 
+Then(/^I should see "(.*?)" within field "(.*?)"$/) do |text, field|
+  field = find_field(field)
+
+  expect(field.value).to eq text
+end
+
 Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^\"]*)")?$/ do |regexp, selector|
   regexp = Regexp.new(regexp)
   with_scope(selector) do

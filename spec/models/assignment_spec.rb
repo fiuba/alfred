@@ -13,6 +13,7 @@ describe Assignment do
   it { should respond_to( :is_optional ) }
   it { should respond_to( :is_blocking ) }
   it { should respond_to( :solution_type ) }
+  it { should respond_to( :correction_template ) }
 
   describe 'initialize' do
     
@@ -20,6 +21,18 @@ describe Assignment do
       subject.is_optional.should be_false
     end
     
+  end
+
+  describe "correction template" do
+
+    let!(:assignment) {
+      Assignment.create correction_template: "A correction template"
+    }
+
+    it "should have a correction template" do
+      expect(assignment.correction_template).to eq "A correction template"
+    end
+
   end
 
 end

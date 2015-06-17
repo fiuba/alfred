@@ -61,6 +61,16 @@ And /^I follow "(.*)" for "(.*?)"$/ do |action_name, assignment_name|
   as_teacher_for_assignment( assignment_name, action_name).click
 end
 
+And(/^I fill information for "(.*?)" with template "(.*?)"$/) do |assignment_name, template|
+
+  with_scope( '.form-horizontal' ) do
+    fill_in :assignment_name, with: assignment_name
+    fill_in :assignment_deadline, with: (Date.today + 1)
+    fill_in :assignment_correction_template, with: template
+    select("link")
+  end
+end
+
 When /^I click download assignment file button for "(.*?)"$/ do |assignment_name|
   action = { 
     'teacher' => Proc.new { as_teacher_for_assignment( assignment_name, \

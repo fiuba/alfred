@@ -1,8 +1,8 @@
 <% error = @correction.errors.key?(:grade) && @correction.errors[:grade].count > 0 %>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>
-  <%= f.label t('corrections.form.public_comments'), :class => 'control-label' %>
+  <%= f.label t('corrections.form.public_comments'), for: :correction_public_comments, :class => 'control-label' %>
   <div class='controls'>
-    <%= f.text_area :public_comments, :class => 'span8', :autofocus => true %>
+    <%= f.text_area :public_comments, title: t('corrections.form.public_comments'), value: correction_template ,:class => 'span8', :autofocus => true %>
   </div>
 </fieldset>
 <fieldset class='control-group <%= error ? 'has-error' : ''%>'>

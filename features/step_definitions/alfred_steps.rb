@@ -113,8 +113,8 @@ When /^I follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
-When /^I click "(.*?)"$/ do |button|
-  click_button button
+When /^I click "(.*?)"$/ do |button_or_link|
+  click_on button_or_link
 end
 
 Then /^I should get file "(.*)"$/ do |file_name|

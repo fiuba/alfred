@@ -21,8 +21,10 @@
       <td><%= l sas[:assignment_status].latest_solution_date unless sas[:assignment_status].latest_solution_date.nil? %></td>
 	  <td class='status' id=<%= "status-for-#{sas[:assignment_status].name}"%>>
 		<%= t sas[:assignment_status].status %>
-		<% if sas[:assignment_status].latest_solution_date > sas[:assignment_status].deadline %>
-			-overdue
+		<% if sas[:assignment_status].latest_solution_date %>
+			<% if sas[:assignment_status].latest_solution_date > sas[:assignment_status].deadline%>
+				-overdue
+			<%end%>
 		<%end%>
 	  </td>
       <td class='teacher_assigned'><%= sas[:assignment_status].corrector_name %></td>

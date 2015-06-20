@@ -12,14 +12,20 @@ describe Storage::LocalGateway do
 
   describe "#upload" do
 
+    let!(:complete_file_path) { ENV["HOME_PATH"]+file_path }
+
     before :each do
       local_gateway.upload(file_path, file)
     end
 
     it "should create a file into the file path" do
-      complete_file_path = ENV["HOME_PATH"]+file_path
 
       expect(File.exists?(complete_file_path)).to be_true
+    end
+
+    it "should not modify the file content after upload it" do
+
+      expect(file_content_of complete_file_path).to eq("A simple content")
     end
 
   end

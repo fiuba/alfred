@@ -1,4 +1,3 @@
-@wip
 Feature: Students having a profile picture
 
   Background:
@@ -12,7 +11,7 @@ Feature: Students having a profile picture
     And I follow "Alumnos"
     And I follow "Ver estado de los TP" within "Richard"
     Then I should see an image for "Richard"
-
+@wip
   Scenario: Student seeing teacher profile picture
     Given I am logged in as student
     And I follow "Trabajos prácticos"

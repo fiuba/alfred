@@ -265,17 +265,6 @@ Then /^deberia ver "([^"]*)"$/ do |esperado|
     end
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Then(/^I should see an image for "(.*?)"$/) do |user_name|
+  pending
+end

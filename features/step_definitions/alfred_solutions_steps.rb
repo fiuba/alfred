@@ -116,3 +116,7 @@ Then(/^the solution for "(.*?)" is marked as "(.*?)"$/) do |assignment_name, sta
     expect(page).to have_content(status)
   end
 end
+
+Given(/^I click on "(.*?)" for solution (\d+)$/) do |link, solution_number|
+  pending
+end

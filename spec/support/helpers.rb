@@ -5,3 +5,10 @@ def login
 	click_button(I18n.translate('padrino.admin.login.sign_in'))
 end
 
+def simple_file name, content
+	file = File.new(name, "w")
+	file.puts(content)
+	file.close
+
+	file
+end

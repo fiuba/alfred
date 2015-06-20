@@ -43,7 +43,7 @@
               <% end %>
 
               <button type="button" data-toggle="modal" rel="tooltip" title="<%= t('assignments.delete.title') + " #{assignment.name}" %>"
-                      data-target="<%= "#delete-#{assignment.name}-assignment-modal" %>" class="btn btn-mini btn-danger">
+                      data-target="<%= "#delete-#{assignment.name.delete(' ')}-assignment-modal" %>" class="btn btn-mini btn-danger">
                 <i class='icon-white icon-trash'></i>
               </button>
 

@@ -40,6 +40,14 @@ describe Storage::LocalGateway do
       expect(FileUtils.compare_file(downloaded_file, original_file)).to be_true
     end
 
+    context "try to download with an invalid path" do
+
+      it "should return a file not found error" do
+
+        expect{ local_gateway.download("/invalid/path") }.to raise_error FileExceptions::FileNotFound
+      end
+
+    end
   end
 
 end

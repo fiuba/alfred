@@ -12,3 +12,8 @@ def simple_file name, content
 
 	file
 end
+
+def file_content_of file_path
+	file_to_read = File.open(file_path)
+	File.read(file_to_read).delete("\n")
+end

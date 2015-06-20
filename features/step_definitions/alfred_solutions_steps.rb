@@ -118,5 +118,7 @@ Then(/^the solution for "(.*?)" is marked as "(.*?)"$/) do |assignment_name, sta
 end
 
 Given(/^I click on "(.*?)" for solution (\d+)$/) do |link, solution_number|
-  pending
+  with_scope("##{solution_number}") do
+    click_link(link)
+  end
 end

@@ -5,7 +5,7 @@
 	<dd><%= l @correction.solution.created_at.to_datetime %></dd>
 
 	<dt><%= t('corrections.show.teacher') %></dt>
-	<dd><%= @correction.teacher.full_name %> (<%= mail_to @correction.teacher.email %>)</dd>
+	<dd><%= image_tag gravatar_url_for(@correction.teacher.email), class: "img-circle", width: "30px" %> <%= @correction.teacher.full_name %> (<%= mail_to @correction.teacher.email %>)</dd>
 
 	<dt><%= t('corrections.show.grade') %></dt>
 	<dd><%= @correction.grade %></dd>

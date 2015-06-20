@@ -14,7 +14,7 @@
 
   <tbody>
 		<% @assignment_status.each do | as|%>
-		<tr>
+		<tr id="<%= as.name.delete(' ') %>">
 			<td><%= as.name %></td>
 			<td><%= l as.deadline.to_date %></td>
 			<td><%= t(as.status) %></td>

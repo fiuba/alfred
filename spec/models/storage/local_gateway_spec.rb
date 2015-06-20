@@ -30,4 +30,16 @@ describe Storage::LocalGateway do
 
   end
 
+  describe "#download" do
+
+    it "should be exactly the same file that has been saved" do
+      original_file = File.open(file)
+
+      downloaded_file = local_gateway.download(file_path)
+
+      expect(FileUtils.compare_file(downloaded_file, original_file)).to be_true
+    end
+
+  end
+
 end

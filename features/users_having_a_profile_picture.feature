@@ -9,8 +9,8 @@ Feature: Students having a profile picture
 
   Scenario: Teacher seeing student profile picture
     Given I am logged in as teacher
-    And I follow "Trabajos prácticos"
-    And I follow "Ver estado de los tps" within "Richard"
+    And I follow "Alumnos"
+    And I follow "Ver estado de los TP" within "Richard"
     Then I should see an image for "Richard"
 
   Scenario: Student seeing teacher profile picture

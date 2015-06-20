@@ -8,6 +8,7 @@
 require 'uri'
 require 'cgi'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
+require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
 module WithinHelpers
   def with_scope(locator)
@@ -266,5 +267,7 @@ Then /^deberia ver "([^"]*)"$/ do |esperado|
 end
 
 Then(/^I should see an image for "(.*?)"$/) do |user_name|
-  pending
+  user = Account.all( :name => user_name ).first
+  img_link = 'http://www.gravatar.com/avatar/' + Digest::MD5.hexdigest(user.email.delete(" ").downcase)
+  expect(page).to have_selector("img[src$='#{img_link}']")
 end

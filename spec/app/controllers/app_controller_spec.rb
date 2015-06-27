@@ -69,7 +69,7 @@ describe "AppController" do
 
         expect(last_response).to be_redirect
         follow_redirect!
-        last_request.url.should == 'http://example.org/restore_password'
+        expect(last_request.url).to eq "http://example.org/restore_password"
       end
 
     end

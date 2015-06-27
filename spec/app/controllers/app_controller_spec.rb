@@ -62,7 +62,7 @@ describe "AppController" do
 
   describe "POST #restore_password" do
 
-    context "when email invalid" do
+    context "invalid email" do
 
       it "should redirect to restore password" do
         post :restore_password, { account: {email: "invalid@email.com"} }
@@ -70,6 +70,23 @@ describe "AppController" do
         expect(last_response).to be_redirect
         follow_redirect!
         expect(last_request.url).to eq "http://example.org/restore_password"
+      end
+
+    end
+
+    context "valid email" do
+
+      let!(:account_password) { "123123123" }
+      let!(:account_email) { "m.f.melendi@gmail.com" }
+      let!(:account) { Account.create!(name: "Matias Melendi", email: account_email,
+                                       password: account_password, password_confirmation: account_password) }
+
+      it "should change the account password" do
+        post :restore_password, { account: {email: account_email} }
+
+        modified_account = Account.find_by_email(account_email)
+
+        expect(modified_account.password).to_not eq account_password
       end
 
     end

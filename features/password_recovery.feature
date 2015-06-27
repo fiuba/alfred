@@ -2,7 +2,7 @@
 Feature: Password recovery
 
   Background:
-    Given I am on “login”
+    Given I am on login
     And I follow "Olvidó su contraseña?"
     And I fill in "Email" with "Richard@someplace.com"
     And I click "Restablecer"

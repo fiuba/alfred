@@ -12,6 +12,7 @@ es:
   password_confirmation: 'confirmación de contraseña'
   change_password: 'cambiar contraseña'
   restore_password: "Restablecer Contraseña"
+  restore: "Restablecer"
   password_restored_successfully: "La contraseña ha sido restablecida exitosamente!"
   forgot_password: "Olvidó su contraseña?"
   email: 'email'

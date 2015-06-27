@@ -128,5 +128,11 @@ Then(/^there should be (\d+) karma points$/) do |points|
 end
 
 Then(/^I should see "(.*?)" on "(.*?)" for "(.*?)"$/) do |info, label, user_name|
-  pending
+  name = user_name.split(' ', 2)
+  user = Account.all( :name => name[0], :surname => name[1] ).first
+    within("##{user.buid}") do
+      within("##{label}") do
+        page.should have_content info
+      end
+  end
 end

@@ -11,6 +11,7 @@ es:
   password: 'contraseña'
   password_confirmation: 'confirmación de contraseña'
   change_password: 'cambiar contraseña'
+  forgot_password: "Olvidó su contraseña?"
   email: 'email'
   create_account: 'Crear cuenta'
   account_created: 'Cuenta creada'

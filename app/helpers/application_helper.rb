@@ -9,6 +9,10 @@ Alfred::App.helpers do
     "http://www.gravatar.com/avatar/#{hash}"
   end
 
+  def generate_password
+    SecureRandom.hex(40)
+  end
+
   private
   def gravatar_hash_for email
     Digest::MD5.hexdigest(email.delete(" ").downcase)

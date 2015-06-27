@@ -35,6 +35,7 @@ es:
     students: 'Alumnos'
     submissions: 'Mis entregas'
     corrections: 'Mis correcciones'
+    teachers: 'Equipo docente'
   solutions:
     delivered_for: 'soluciones entregadas para'
     student: 'Alumno:'

@@ -88,6 +88,7 @@ module Alfred
       role.allow   '/register'
       role.allow   '/api'
       role.allow   '/health'
+      role.allow   '/restore_password'
     end
 
     access_control.roles_for :teacher do |role|
@@ -138,6 +139,10 @@ module Alfred
       @title = pat(:new_title, :model => 'account')
       @account = Account.new
       render 'home/register'
+    end
+
+    get :restore_password do
+      render "/home/restore_password"
     end
 
     post :register do

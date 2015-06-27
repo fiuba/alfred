@@ -60,4 +60,19 @@ describe "AppController" do
     end
   end
 
+  describe "POST #restore_password" do
+
+    context "when email invalid" do
+
+      it "should redirect to restore password" do
+        post :restore_password, { account: {email: "invalid@email.com"} }
+
+        expect(last_response).to be_redirect
+        follow_redirect!
+        last_request.url.should == 'http://example.org/restore_password'
+      end
+
+    end
+
+  end
 end

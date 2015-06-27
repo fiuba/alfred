@@ -1,3 +1,4 @@
+@wip
 Feature: Password recovery
 
   Background:

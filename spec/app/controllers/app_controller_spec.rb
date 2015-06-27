@@ -89,6 +89,14 @@ describe "AppController" do
         expect(modified_account.password).to_not eq account_password
       end
 
+      it "should redirect to the login page" do
+        post :restore_password, { account: {email: account_email} }
+
+        expect(last_response).to be_redirect
+        follow_redirect!
+        expect(last_request.url).to eq "http://example.org/login"
+      end
+
     end
 
   end

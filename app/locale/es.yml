@@ -129,7 +129,7 @@ es:
     teacher: 'Docente'
     status: 'Estado'
   reports:
-    title: 'Reportes'
+    title: 'Estadísticas de trabajos prácticos'
   date:
     abbr_day_names:
     - dom

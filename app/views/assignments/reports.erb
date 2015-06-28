@@ -12,7 +12,7 @@
     <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %>
   </li>
   <li class="active">
-    <%= link_to tag_icon(:tasks, pat(:reportes)), url(:assignments, :reports, :course_id => current_course.id) %>
+    <%= link_to tag_icon(:tasks, pat(:estadísticas)), url(:assignments, :reports, :course_id => current_course.id) %>
   </li>
 </ul>
 <div class="tabs-content">
@@ -31,7 +31,7 @@
     <% @assignments.each do |assignment| %>
         <tr id="<%= assignment.name.delete(' ') %>" class="list-row">
           <td id="<%= t('assignments.name').capitalize %>"> <%= assignment.name %> </td>
-          <td id="<%= t('assignments.submitted').capitalize %>"> <%= assignment.solutions.count %> </td>
+          <td id="<%= t('assignments.submitted').capitalize %>" style="text-align:right"> <%= assignment.solutions.count %> </td>
           <% passed = 0 %>
           <% failed = 0 %>
           <% average = 0 %>
@@ -45,9 +45,9 @@
                   <% end %>
               <% end %>
           <% end %>
-          <td id="<%= t('assignments.pass').capitalize %>"> <%= passed %> </td>
-          <td id="<%= t('assignments.fail').capitalize %>"> <%= failed %> </td>
-          <td id="<%= t('assignments.average').capitalize %>">
+          <td id="<%= t('assignments.pass').capitalize %>" style="text-align:right"> <%= passed %> </td>
+          <td id="<%= t('assignments.fail').capitalize %>" style="text-align:right"> <%= failed %> </td>
+          <td id="<%= t('assignments.average').capitalize %>" style="text-align:right">
             <% if average =! 0 %>
               <%= average/passed %>
             <% else %>

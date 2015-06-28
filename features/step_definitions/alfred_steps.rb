@@ -134,3 +134,7 @@ And(/^I should receive a reset password email after clicking "(.*?)"$/) do |link
 
   click_on link_or_button_name
 end
+
+And(/^I fill in password with the new one generated$/) do
+  fill_in "password", with: "123123123"
+end

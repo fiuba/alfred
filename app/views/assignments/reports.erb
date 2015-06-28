@@ -31,29 +31,10 @@
     <% @assignments.each do |assignment| %>
         <tr id="<%= assignment.name.delete(' ') %>" class="list-row">
           <td id="<%= t('assignments.name').capitalize %>"> <%= assignment.name %> </td>
-          <td id="<%= t('assignments.submitted').capitalize %>" style="text-align:right"> <%= assignment.solutions.count %> </td>
-          <% passed = 0 %>
-          <% failed = 0 %>
-          <% average = 0 %>
-          <% assignment.solutions.each do |solution| %>
-              <% if !solution.correction.nil? %>
-                  <% if solution.correction.approved? %>
-                      <% passed += 1 %>
-                      <% average += solution.correction.grade %>
-                  <% else %>
-                      <% failed += 1 %>
-                  <% end %>
-              <% end %>
-          <% end %>
-          <td id="<%= t('assignments.pass').capitalize %>" style="text-align:right"> <%= passed %> </td>
-          <td id="<%= t('assignments.fail').capitalize %>" style="text-align:right"> <%= failed %> </td>
-          <td id="<%= t('assignments.average').capitalize %>" style="text-align:right">
-            <% if average =! 0 %>
-              <%= average/passed %>
-            <% else %>
-              --
-            <% end %>
-          </td>
+          <td id="<%= t('assignments.submitted').capitalize %>" style="text-align:right"> <%= total_solutions_for assignment %> </td>
+          <td id="<%= t('assignments.pass').capitalize %>" style="text-align:right"> <%= passed_for assignment %> </td>
+          <td id="<%= t('assignments.fail').capitalize %>" style="text-align:right"> <%= failed_for assignment %> </td>
+          <td id="<%= t('assignments.average').capitalize %>" style="text-align:right"> <%= average_for assignment %> </td>
         </tr>
     <% end %>
     </tbody>

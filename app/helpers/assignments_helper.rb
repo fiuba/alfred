@@ -9,7 +9,7 @@ Alfred::App.helpers do
   end
 
   def failed_for assignment
-    assignment.solutions.reject{ |solution| solution.correction.try(:approved?) }.count
+    corrected_solutions_for(assignment).reject{ |solution| solution.correction.approved? }.count
   end
 
   def total_solutions_for assignment
@@ -24,11 +24,16 @@ Alfred::App.helpers do
     end
   end
 
+  def corrected_solutions_for assignment
+    assignment.solutions.select{ |solution| solution.correction.present? }
+  end
+
   def solutions_approved_for assignment
-    assignment.solutions.select{ |solution| solution.correction.try(:approved?) }
+    corrected_solutions_for(assignment).select{ |solution| solution.correction.approved? }
   end
 
   def approved_grades_sum(assignment)
     solutions_approved_for(assignment).map{ |solution| solution.correction.grade }.reduce(:+) || 0
   end
+
 end

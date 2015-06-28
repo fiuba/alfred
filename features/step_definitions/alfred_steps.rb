@@ -127,3 +127,7 @@ Then(/^there should be (\d+) karma points$/) do |points|
   page.should have_content 'Karma: 1'
 end
 
+Then(/^I should see "(.*?)" on "(.*?)" for "(.*?)"$/) do |value, label, assignment|
+  pending
+end
+

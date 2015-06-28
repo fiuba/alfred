@@ -1,6 +1,8 @@
 #encoding: utf-8
 require 'uri'
 require 'cgi'
+require 'cucumber/rspec/doubles'
+
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 # Includes factories
 Dir.glob(File.dirname(__FILE__) + "/../../spec/support/**/factory_*.rb").each { |f| require f }
@@ -127,8 +129,8 @@ Then(/^there should be (\d+) karma points$/) do |points|
   page.should have_content 'Karma: 1'
 end
 
-require 'cucumber/rspec/doubles'
+And(/^I should receive a reset password email after clicking "(.*?)"$/) do |link_or_button_name|
+  Alfred::App.should_receive(:deliver).with(:notification, :password_has_been_reset, "Richard@someplace.com", "123123123")
 
-And(/^I received a reset password email$/) do
-  Alfred::App.should_receive(:deliver).with(:notification, :password_has_been_reset, "Richard@someplace.com", anything)
+  click_on link_or_button_name
 end

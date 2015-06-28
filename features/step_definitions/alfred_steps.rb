@@ -127,3 +127,8 @@ Then(/^there should be (\d+) karma points$/) do |points|
   page.should have_content 'Karma: 1'
 end
 
+require 'cucumber/rspec/doubles'
+
+And(/^I received a reset password email$/) do
+  Alfred::App.should_receive(:deliver).with(:notification, :password_has_been_reset, "Richard@someplace.com", anything)
+end

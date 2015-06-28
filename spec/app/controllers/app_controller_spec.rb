@@ -81,6 +81,8 @@ describe "AppController" do
       let!(:account) { Account.create!(name: "Matias Melendi", email: account_email,
                                        password: account_password, password_confirmation: account_password) }
 
+      let!(:mailer) { Alfred::App.mailer :notification do end }
+
       it "should change the account password" do
         post :restore_password, { account: {email: account_email} }
 
@@ -90,11 +92,24 @@ describe "AppController" do
       end
 
       it "should redirect to the login page" do
+        Alfred::App.should_receive(:deliver)
+
         post :restore_password, { account: {email: account_email} }
 
         expect(last_response).to be_redirect
         follow_redirect!
         expect(last_request.url).to eq "http://example.org/login"
+      end
+
+      it "should send an email notification to the forgotten account email with the generated password" do
+        generated_password = anything
+        Alfred::App.should_receive(:deliver).with(:notification, :password_has_been_reset, account_email, generated_password)
+
+        post :restore_password, { account: {email: account_email} }
+
+        expect(last_response).to be_redirect
+        follow_redirect!
+        expect(last_response).to be_ok
       end
 
     end

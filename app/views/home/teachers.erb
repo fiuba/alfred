@@ -1,0 +1,21 @@
+<h2><%= t('menu.teachers') %></h2>
+
+<table id="teachersGrid" class="table table-bordered table-striped table-hover">
+  <thead>
+  <tr>
+    <th width="40px"></th>
+    <th width="45%"><%= t('name').capitalize %></th>
+    <th width="45%"><%= t('email').capitalize %></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @teachers.each do | teacher |%>
+      <tr id="<%= teacher.buid %>">
+        <td><%= image_tag gravatar_url_for(teacher.email), class: "img-circle", width: "40px" %></td>
+        <td><%= teacher.full_name %></td>
+        <td id="Email"><%= teacher.email %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

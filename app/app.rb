@@ -97,6 +97,7 @@ module Alfred
       role.project_module :corrections, '/corrections'
       role.project_module :students, '/courses/.+/students'
       role.project_module :solutions, '/.+/file'
+      role.project_module :my, '/courses/.+/my'
     end
 
     access_control.roles_for :student do |role|
@@ -159,7 +160,12 @@ module Alfred
 
 		def store_location
 			session[:return_to] = request.url
-		end
+    end
+
+    get :teachers, :parent => :courses do
+      @teachers = Course.first(:id => params[:course_id]).teachers
+      render 'home/teachers'
+    end
 
   end
 

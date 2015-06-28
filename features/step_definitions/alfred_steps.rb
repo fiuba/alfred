@@ -124,6 +124,15 @@ Then /^I should get file "(.*)"$/ do |file_name|
 end
 
 Then(/^there should be (\d+) karma points$/) do |points|
-  page.should have_content 'Karma: 1'
+  page.should have_content 'Karma: ' + points
 end
 
+Then(/^I should see "(.*?)" on "(.*?)" for "(.*?)"$/) do |info, label, user_name|
+  name = user_name.split(' ', 2)
+  user = Account.all( :name => name[0], :surname => name[1] ).first
+    within("##{user.buid}") do
+      within("##{label}") do
+        page.should have_content info
+      end
+  end
+end

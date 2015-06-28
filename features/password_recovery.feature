@@ -1,4 +1,3 @@
-@wip
 Feature: Password recovery
 
   Background:
@@ -7,7 +6,7 @@ Feature: Password recovery
     And I fill in "Email" with "Richard@someplace.com"
     And I click "Restablecer"
     And I received a reset password email
-
+@wip
   Scenario: Accessing with new password
     And I fill in "Email" with "Richard@someplace.com"
     And I fill in password with the new one generated

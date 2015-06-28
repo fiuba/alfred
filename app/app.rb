@@ -150,7 +150,7 @@ module Alfred
 
       begin
         @account = Account.find_by_email(params[:account][:email])
-        @account.update!(password: password_generated, password_confirmation: password_generated)
+        @account.update(password: password_generated, password_confirmation: password_generated)
 
         deliver(:notification, :password_has_been_reset, params[:account][:email], password_generated)
 

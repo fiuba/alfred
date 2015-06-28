@@ -5,6 +5,19 @@ Alfred::App.controllers :assignments do
     render 'assignments/index'
   end
 
+  get :reports, :parent => :courses do
+    errors = []
+    @assignments = Assignment.all(:course => current_course)
+    if @assignments.count == 0
+      errors << t('assignments.errors.noassignments')
+    end
+    if errors.size > 0
+      @title = pat(:create_title, :model => 'assignment')
+      flash.now[:error] = errors #pat(:create_error, :model => 'assignment')
+    end
+    render 'assignments/reports'
+  end
+
   get :students, :map => '/assignments/:assignment_id/students'  do
     @assignment = Assignment.get(params[:assignment_id])
 

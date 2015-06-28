@@ -127,3 +127,10 @@ Then(/^there should be (\d+) karma points$/) do |points|
   page.should have_content 'Karma: 1'
 end
 
+Then(/^I should see "(.*?)" on "(.*?)" for "(.*?)"$/) do |info, label, assignment|
+  within("##{assignment.delete(' ')}") do
+    within("##{label}") do
+      page.should have_content info
+    end
+  end
+end

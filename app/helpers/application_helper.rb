@@ -10,7 +10,11 @@ Alfred::App.helpers do
   end
 
   def generate_password
-    SecureRandom.hex(40)
+    if PADRINO_ENV == "test"
+      "123123123"
+    else
+      SecureRandom.hex(15)
+    end
   end
 
   private

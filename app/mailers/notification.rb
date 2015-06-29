@@ -54,4 +54,13 @@ Alfred::App.mailer :notification do
     render 'notification/solution_test_result.text'
 	end
 
+  email :password_has_been_reset do |email, new_password|
+    from "Alfred <#{ENV['MAIL_SUPPORT_ADDRESS']}>"
+    to email
+    subject '[Alfred] Tu password ha sido restablecido'
+    locals new_password: new_password
+    content_type :plain
+    render 'notification/password_has_been_reset.text'
+  end
+
 end

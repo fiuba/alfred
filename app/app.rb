@@ -88,6 +88,7 @@ module Alfred
       role.allow   '/register'
       role.allow   '/api'
       role.allow   '/health'
+      role.allow   '/restore_password'
     end
 
     access_control.roles_for :teacher do |role|
@@ -139,6 +140,27 @@ module Alfred
       @title = pat(:new_title, :model => 'account')
       @account = Account.new
       render 'home/register'
+    end
+
+    get :restore_password do
+      render "/home/restore_password"
+    end
+
+    post :restore_password do
+      password_generated = generate_password
+
+      begin
+        @account = Account.find_by_email(params[:account][:email])
+        @account.update(password: password_generated, password_confirmation: password_generated)
+
+        deliver(:notification, :password_has_been_reset, params[:account][:email], password_generated)
+
+        flash[:success] = "Tu password ha sido restablecida, pronto recibiras un email con tu nueva clave."
+        redirect("/login")
+      rescue
+        flash[:error] = "Ocurrio un error y no se pudo completar el restablecimiento de tu password, intentalo nuevamente!"
+        redirect("/restore_password")
+      end
     end
 
     post :register do

@@ -1,0 +1,48 @@
+<h2><%= t('reports.title') %></h2>
+
+<% content_for :additional_css do %>
+    <%= stylesheet_link_tag 'editablegrid-2.0.1' %>
+<% end %>
+
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to tag_icon(:list, pat(:list)), url(:assignments, :index, :course_id => current_course.id) %>
+  </li>
+  <li>
+    <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %>
+  </li>
+  <li class="active">
+    <%= link_to tag_icon(:tasks, pat(:estadísticas)), url(:assignments, :reports, :course_id => current_course.id) %>
+  </li>
+</ul>
+<div class="tabs-content">
+  <table id="reportsGrid" class="table table-bordered table-striped table-hover">
+    <thead>
+    <tr>
+      <th class="header"> <%= t('assignments.name').capitalize %></th>
+      <th class="header"> <%= t('assignments.submitted').capitalize %></th>
+      <th class="header"> <%= t('assignments.pass').capitalize %></th>
+      <th class="header"> <%= t('assignments.fail').capitalize %></th>
+      <th class="header"> <%= t('assignments.average').capitalize %></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @assignments.each do |assignment| %>
+        <tr id="<%= assignment.name.delete(' ') %>" class="list-row">
+          <td id="<%= t('assignments.name').capitalize %>"> <%= assignment.name %> </td>
+          <td id="<%= t('assignments.submitted').capitalize %>" style="text-align:right"> <%= total_solutions_for assignment %> </td>
+          <td id="<%= t('assignments.pass').capitalize %>" style="text-align:right"> <%= passed_for assignment %> </td>
+          <td id="<%= t('assignments.fail').capitalize %>" style="text-align:right"> <%= failed_for assignment %> </td>
+          <td id="<%= t('assignments.average').capitalize %>" style="text-align:right"> <%= average_for assignment %> </td>
+        </tr>
+    <% end %>
+    </tbody>
+
+  </table>
+</div>
+
+<% content_for :additional_js do %>
+    <%= javascript_include_tag 'editablegrid-2.0.1.min.js' %>
+    <!--<%= javascript_include_tag 'assignments_index.js' %> -->
+<% end %>

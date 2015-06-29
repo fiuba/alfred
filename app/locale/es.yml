@@ -39,6 +39,7 @@ es:
     students: 'Alumnos'
     submissions: 'Mis entregas'
     corrections: 'Mis correcciones'
+    teachers: 'Equipo docente'
   solutions:
     delivered_for: 'soluciones entregadas para'
     student: 'Alumno:'
@@ -132,6 +133,8 @@ es:
     grade: 'Nota'
     teacher: 'Docente'
     status: 'Estado'
+  reports:
+    title: 'Estadísticas de trabajos prácticos'
   date:
     abbr_day_names:
     - dom
@@ -239,7 +242,12 @@ es:
     name: Nombre
     deadline: Fecha límite
     course: Curso
+    submitted: Entregados
+    pass: Aprobados
+    fail: Desaprobados
+    average: Promedio
     errors:
+      noassignments: No hay trabajos prácticos creados, por lo tanto no se pueden crear reportes
       deadline_not_chosen: 'Se debe elegir fecha de entrega'
       deadline_passed: 'La fecha de entrega debe ser posterior a hoy'
     delete:

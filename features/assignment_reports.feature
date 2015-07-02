@@ -18,4 +18,5 @@ Feature: Assignment Reports
     Then I should see "1" on "Entregados" for "TP1"
     Then I should see "0" on "Aprobados" for "TP1"
     Then I should see "0" on "Desaprobados" for "TP1"
-    Then I should see "--" on "Promedio" for "TP1"
+    Then I should see "--" on "Promedio-aprobados" for "TP1"
+    Then I should see "--" on "Promedio-general" for "TP1"

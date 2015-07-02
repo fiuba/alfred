@@ -16,9 +16,17 @@ Alfred::App.helpers do
     assignment.solutions.count
   end
 
-  def average_for assignment
+  def approved_average_for assignment
     if passed_for(assignment) > 0
       approved_grades_sum(assignment) / passed_for(assignment)
+    else
+      "--"
+    end
+  end
+
+  def general_average_for assignment
+    if corrected_solutions_for(assignment).count > 0
+      grades_sum(assignment) / corrected_solutions_for(assignment).count
     else
       "--"
     end
@@ -33,7 +41,15 @@ Alfred::App.helpers do
   end
 
   def approved_grades_sum(assignment)
-    solutions_approved_for(assignment).map{ |solution| solution.correction.grade }.reduce(:+) || 0
+    grades_for(solutions_approved_for(assignment))
   end
 
+  def grades_sum(assignment)
+    grades_for(corrected_solutions_for(assignment))
+  end
+
+  private
+  def grades_for(solutions)
+    solutions.map{ |solution| solution.correction.grade }.reduce(:+) || 0
+  end
 end

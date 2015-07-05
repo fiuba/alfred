@@ -2,7 +2,7 @@
     <h2><%= t('menu.teachers') %></h2>
     <% @teachers.each do | teacher |%>
         <div class="well well-lg span4" id="<%= teacher.buid %>" style="width:30%;text-align: center;">
-          <span><%= image_tag gravatar_url_for(teacher.email), class: "img-circle", width: "40px" %></span> <br/><br/>
+          <span><%= image_tag gravatar_url_for(teacher.email), class: "img-circle", width: "80px" %></span> <br/><br/>
           <span style="font-weight: bold"><%= teacher.full_name %></span> <br/>
           <span id="Email"><%= teacher.email %></span>
         </div>

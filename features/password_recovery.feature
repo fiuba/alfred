@@ -3,7 +3,7 @@ Feature: Password recovery
   Background:
     Given the course with teacher and student enrolled
     Given I am on login
-    And I follow "Olvidó su contraseña?"
+    And I follow "¿Olvidó su contraseña?"
     And I fill in "Email" with "Richard@someplace.com"
     And I should receive a reset password email after clicking "Restablecer"
 

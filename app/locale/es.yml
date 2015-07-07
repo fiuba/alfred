@@ -14,7 +14,7 @@ es:
   restore_password: "Restablecer Contraseña"
   restore: "Restablecer"
   password_restored_successfully: "La contraseña ha sido restablecida exitosamente!"
-  forgot_password: "Olvidó su contraseña?"
+  forgot_password: "¿Olvidó su contraseña?"
   email: 'email'
   create_account: 'Crear cuenta'
   account_created: 'Cuenta creada'
@@ -245,7 +245,8 @@ es:
     submitted: Entregados
     pass: Aprobados
     fail: Desaprobados
-    average: Promedio
+    approved_average: Promedio-Aprobados
+    general_average: Promedio-General
     errors:
       noassignments: No hay trabajos prácticos creados, por lo tanto no se pueden crear reportes
       deadline_not_chosen: 'Se debe elegir fecha de entrega'

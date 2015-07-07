@@ -18,3 +18,13 @@ Feature: Students having a profile picture
     And I follow "Ver todas las soluciones" within "TP1"
     And I click on "Ver corrección" for solution 1
     Then I should see an image for "John"
+
+  Scenario: Teacher seeing your profile picture into your profile
+    Given I am logged in as teacher
+    And I follow "Profile"
+    Then I should see an image for "John"
+
+  Scenario: Student seeing your profile picture into your profile
+    Given I am logged in as student
+    And I follow "Profile"
+    Then I should see an image for "Richard"

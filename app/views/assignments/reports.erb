@@ -23,7 +23,8 @@
       <th class="header"> <%= t('assignments.submitted').capitalize %></th>
       <th class="header"> <%= t('assignments.pass').capitalize %></th>
       <th class="header"> <%= t('assignments.fail').capitalize %></th>
-      <th class="header"> <%= t('assignments.average').capitalize %></th>
+      <th class="header"> <%= t('assignments.approved_average').capitalize %></th>
+      <th class="header"> <%= t('assignments.general_average').capitalize %></th>
     </tr>
     </thead>
 
@@ -34,7 +35,8 @@
           <td id="<%= t('assignments.submitted').capitalize %>" style="text-align:right"> <%= total_solutions_for assignment %> </td>
           <td id="<%= t('assignments.pass').capitalize %>" style="text-align:right"> <%= passed_for assignment %> </td>
           <td id="<%= t('assignments.fail').capitalize %>" style="text-align:right"> <%= failed_for assignment %> </td>
-          <td id="<%= t('assignments.average').capitalize %>" style="text-align:right"> <%= average_for assignment %> </td>
+          <td id="<%= t('assignments.approved_average').capitalize %>" style="text-align:right"> <%= approved_average_for assignment %> </td>
+          <td id="<%= t('assignments.general_average').capitalize %>" style="text-align:right"> <%= general_average_for assignment %> </td>
         </tr>
     <% end %>
     </tbody>

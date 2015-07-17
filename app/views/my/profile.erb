@@ -1,6 +1,14 @@
-<h1><%= t(:profile).capitalize %></h1>
+<div class="row col-md-12">
 
-<hr/>
+  <div class="col-md-8" style="margin-bottom: 50px; margin-right: 100px">
+    <%= image_tag gravatar_url, class: "img-circle pull-right", width: "100px" %>
+  </div>
+
+  <div class="col-md-4">
+    <h1><%= t(:profile).capitalize %></h1>
+  </div>
+  <hr/>
+</div>
 
 <% form_for :account, url(:my, :profile), :method => :put, :class => 'form-horizontal' do |f| %>
   <% error = @account.errors.key?(:name) && @account.errors[:name].count > 0 %>

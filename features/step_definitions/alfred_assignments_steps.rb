@@ -61,6 +61,16 @@ And /^I follow "(.*)" for "(.*?)"$/ do |action_name, assignment_name|
   as_teacher_for_assignment( assignment_name, action_name).click
 end
 
+And(/^I fill information for "(.*?)" with template "(.*?)"$/) do |assignment_name, template|
+
+  with_scope( '.form-horizontal' ) do
+    fill_in :assignment_name, with: assignment_name
+    fill_in :assignment_deadline, with: (Date.today + 1)
+    fill_in :assignment_correction_template, with: template
+    select("link")
+  end
+end
+
 When /^I click download assignment file button for "(.*?)"$/ do |assignment_name|
   action = { 
     'teacher' => Proc.new { as_teacher_for_assignment( assignment_name, \
@@ -163,6 +173,31 @@ end
 
 Then /^assignment created should have "(.*?)" set as solution type$/ do |type|
   expect(Assignment.last.solution_type).to eq solution_type(type)
+end
+
+And(/^I click delete button for "(.*?)"$/) do |tp_name|
+  @tp_name = tp_name
+  click_button "Borrar #{@tp_name}"
+end
+
+When(/^I confirm it$/) do
+  within "#delete-#{@tp_name}-assignment-modal" do
+    click_button "Si"
+  end
+end
+
+Then(/^assignment "(.*?)" is deleted$/) do |assignment_name|
+  expect(page).to_not have_content(assignment_name)
+end
+
+When(/^I cancel it$/) do
+  within "#delete-#{@tp_name}-assignment-modal" do
+    click_button "No"
+  end
+end
+
+Then(/^assignment "(.*?)" is not deleted$/) do |assignment_name|
+  expect(page).to have_content(assignment_name)
 end
 
 def solution_type(type)

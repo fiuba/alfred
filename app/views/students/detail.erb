@@ -1,5 +1,5 @@
 <h2>
-	<%= @student.full_name %> (<%= @student.buid %>)
+  <%= image_tag gravatar_url_for(@student.email), class: "img-circle", width: "40px" %> <%= @student.full_name %> (<%= @student.buid %>)
 </h2>
 <p> <%= @student.email %> | <%= t('tag') %> <%= @student.tag %> </p>
 
@@ -15,7 +15,7 @@
 		</div>
   <% end %>
 	
-<table id="studentsGrid" class="table table-bordered table-striped table-hover"">
+<table id="studentsGrid" class="table table-bordered table-striped table-hover">
 	<tr>
 		<th><%= t('assignment').capitalize %></th>
 		<th><%= t('status').capitalize %></th>

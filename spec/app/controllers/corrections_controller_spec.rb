@@ -117,7 +117,7 @@ describe "CorrectionsController" do
 
   describe "edit" do
     it "should render index content" do
-      correction = Factories::Correction.correctsBy( solution, teacher )
+      correction = Factories::Correction.corrects_by( solution, teacher )
       Correction.should_receive(:get).with(correction.id.to_s)
         .and_return(correction)
       Alfred::App.any_instance.should_receive(:render)
@@ -128,7 +128,7 @@ describe "CorrectionsController" do
 
   describe "update" do
     before do
-      @correction = Factories::Correction.correctsBy( solution, teacher )
+      @correction = Factories::Correction.corrects_by( solution, teacher )
 
       @public_comments = "public new comments"
       @private_comments = "private new comments"

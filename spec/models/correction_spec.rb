@@ -107,7 +107,7 @@ describe Correction do
     describe "not duplicated correction" do
       before do
         @correction.save
-        other_solution = Factories::Solution.forBy( assignment,
+        other_solution = Factories::Solution.for_by( assignment,
           Factories::Account.student("Luck", "luck@d.com") )
         @another_correction = Correction.new(
           :teacher => teacher,

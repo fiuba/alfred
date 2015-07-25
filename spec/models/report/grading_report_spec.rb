@@ -6,7 +6,7 @@ describe "GradingReport" do
   before(:each) do
     @assignment = Factories::Assignment.vending_machine
     @author     = Factories::Account.me_as_student
-    @solution   = Factories::Solution.forBy( @assignment, @author )
+    @solution   = Factories::Solution.for_by( @assignment, @author )
     @teacher    = Factories::Account.me_as_teacher
     @correction = Factories::Correction.correctsBy(@solution, @teacher)
     I18n.stub(:t).with('date.formats.default').and_return(date_format)

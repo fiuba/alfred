@@ -11,9 +11,11 @@
   <li>
     <%= link_to tag_icon(:plus, pat(:new)), url(:assignments, :new, :course_id => current_course.id) %>
   </li>
+  <% if FeatureToggler.is_feature_enabled('assignments_stats') %>
   <li>
     <%= link_to tag_icon(:tasks, pat(:estadísticas)), url(:assignments, :reports, :course_id => current_course.id) %>
   </li>
+  <% end %>
 </ul>
 <div class="tabs-content">
   <table id="assigmentsGrid" class="table table-bordered table-striped table-hover">

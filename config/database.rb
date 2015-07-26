@@ -10,7 +10,7 @@
 #
 
 DataMapper.logger = logger
-DataMapper::Logger.new($stdout, :debug)
+DataMapper::Logger.new($stdout, :info)
 DataMapper::Property::String.length(255)
 
 case Padrino.env

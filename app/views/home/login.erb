@@ -19,5 +19,11 @@
              <%= link_to t(:create_account), url(:register) %>
           </div>
         </fieldset>
+
+        <fieldset class="control-group">
+          <div class="login-controls controls">
+            <%= link_to t(:forgot_password), url(:restore, :password), method: :get %>
+          </div>
+        </fieldset>
       </div>
     <% end %>

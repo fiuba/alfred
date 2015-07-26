@@ -29,4 +29,8 @@ class Course
   def students
   	self.accounts.select { |a| a.is_student? }
   end
+
+  def teachers
+    self.accounts.select { |a| a.is_teacher? }
+  end
 end

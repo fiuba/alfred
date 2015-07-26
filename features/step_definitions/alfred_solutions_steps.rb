@@ -70,6 +70,15 @@ Given /^a student submit solution for "(.*?)" with comment "(.*?)"$/ do |tp, com
   step "I upload the solution's file for \"#{tp}\""
 end
 
+And(/^a student submit solution for "(.*?)" with link$/) do |assignment_name|
+  step 'I am logged in as student'
+  step 'I follow "Trabajos prácticos"'
+  step "I click submit solution for \"#{assignment_name}\""
+  step "I fill in link to solution"
+  click_button "Guardar"
+end
+
+
 Then /^solution should have comment: "(.*?)"$/ do |comment|
   expect(Solution.last.comments).to eql(comment)
 end
@@ -100,4 +109,16 @@ Given(/^A overdue solution for "(.*?)" submitted by a student$/) do |assignment_
   overdue = Solution.all.select{|solution| solution.assignment == assignment}.first
   overdue.created_at = assignment.deadline+10
   overdue.save
+end
+
+Then(/^the solution for "(.*?)" is marked as "(.*?)"$/) do |assignment_name, status|
+  within("#status-for-#{assignment_name}") do
+    expect(page).to have_content(status)
+  end
+end
+
+Given(/^I click on "(.*?)" for solution (\d+)$/) do |link, solution_number|
+  with_scope("##{solution_number}") do
+    click_link(link)
+  end
 end

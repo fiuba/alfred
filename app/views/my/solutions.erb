@@ -18,8 +18,10 @@
 		<th><%= t('solutions.test_result') %></th>
 		<th><%= t('actions').capitalize %></th>
 	</tr>
+    <% i = 0 %>
 	<% @solutions.each do |s| %>
-		<tr> 
+	    <% i = i + 1 %>
+		<tr id=<%= i %>>
       <td><%= l s.created_at %></td>
       <% if @assignment.solution_type == 'file' %>
         <td><a href="<%= url_for(:solutions, :download, :assignment_id => @assignment.id, :solution_id => s.id ) %>"><%= s.file %></a></td>

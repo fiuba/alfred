@@ -1,0 +1,19 @@
+<div class="modal fade" id="<%= "delete-#{assignment.name.delete(' ')}-assignment-modal" %>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"> <%= t("assignments.delete.title") %> </h4>
+      </div>
+      <div class="modal-body">
+        <p> <%= t("assignments.delete.confirm") %> </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"> No </button>
+        <%- form_tag url(:assignments, :destroy, :id => assignment.id), method: :delete, class: 'delete-form', style: 'display:inline' do %>
+            <button type='submit' rel='tooltip' class="btn btn-danger"> Si </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

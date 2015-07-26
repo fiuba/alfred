@@ -15,6 +15,7 @@ class Assignment
   property :id, Serial
   property :name, String
   property :test_script, Text
+  property :correction_template, Text
   property :deadline, DateTime
   property :is_optional, Boolean, :default => false
   property :is_blocking, Boolean, :default => false

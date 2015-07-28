@@ -51,6 +51,7 @@ class AssignmentStatistics
   end
 
   def corrected(solutions)
+    return [] if solutions.present? || solutions.empty?
     solutions.select{ |solution| solution.correction.present? }
   end
 

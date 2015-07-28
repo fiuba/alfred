@@ -26,6 +26,13 @@ describe AssignmentStatistics do
       expect(subject.send(:corrected, [solution_1, solution_2, solution_3, solution_4])).to eq [solution_1, solution_2, solution_3]
     end
 
+    context "without solutions" do
+
+      it "should return an empty list of corrected solutions" do
+        expect(subject.send(:corrected, nil)).to eq []
+      end
+
+    end
   end
 
   describe "#highest_rated_solutions" do

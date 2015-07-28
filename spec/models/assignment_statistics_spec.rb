@@ -107,6 +107,46 @@ describe AssignmentStatistics do
     it "should return the total number of solutions" do
       expect(subject.total_solutions).to be 2
     end
+
   end
 
+  describe "average grades" do
+
+    it "should return average for all solutions' grades" do
+      expect(subject.general_average).to eq 9
+    end
+
+    context "no solutions" do
+
+      before :each do
+        assignment.solutions = []
+      end
+
+      it "should return 0 when there are no solutions" do
+        expect(subject.general_average).to eq 0
+      end
+
+      it "should return 0 for approved solutions when there are no solutions" do
+        expect(subject.approved_average).to eq 0
+      end
+
+    end
+
+    context "with one failed solution" do
+
+      let!(:solution_5) { Factories::Solution::for_by assignment, account_3 }
+      let!(:correction_5) { Factories::Correction.corrects_by_with_grade solution_5, teacher, 2 }
+
+      it "should return general average" do
+        expect(subject.general_average).to eq 6.666666666666667
+      end
+
+      it "should return average for approved solutions" do
+        expect(subject.approved_average).to eq 9
+      end
+
+    end
+
+
+  end
 end

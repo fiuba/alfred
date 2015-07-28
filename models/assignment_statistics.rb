@@ -12,6 +12,10 @@ class AssignmentStatistics
     not_approved_solutions.count
   end
 
+  def total_solutions
+    clean_solutions.count
+  end
+
   private
   def solutions_approved
     corrected_solutions.select{ |solution| solution.correction.approved? }

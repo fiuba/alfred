@@ -102,4 +102,11 @@ describe AssignmentStatistics do
 
   end
 
+  describe "#total_solutions" do
+
+    it "should return the total number of solutions" do
+      expect(subject.total_solutions).to be 2
+    end
+  end
+
 end

@@ -1,4 +1,3 @@
-@wip
 Feature: Assignment Reports
   Background:
     Given the course with teacher and student enrolled

@@ -41,6 +41,14 @@ describe AssignmentStatistics do
       expect(subject.send(:highest_rated_solution, [solution_1, solution_2])).to eq solution_1
     end
 
+    context "without solutions" do
+
+      it "should return nothing" do
+        expect(subject.send(:highest_rated_solution, [])).to eq nil
+      end
+
+    end
+
   end
 
   describe "#clean solutions" do
@@ -49,6 +57,17 @@ describe AssignmentStatistics do
       expect(subject.send(:clean_solutions)).to eq [solution_1, solution_3]
     end
 
+    context "without solutions" do
+
+      before :each do
+        assignment.solutions = []
+      end
+
+      it "should return an empty list of solutions" do
+        expect(subject.send(:clean_solutions)).to eq []
+      end
+
+    end
   end
 
   describe "#solutions approved" do
@@ -57,6 +76,17 @@ describe AssignmentStatistics do
       expect(subject.send(:solutions_approved)).to eq [solution_1, solution_3]
     end
 
+    context "without solutions" do
+
+      before :each do
+        assignment.solutions = []
+      end
+
+      it "should return an empty list of solutions" do
+        expect(subject.send(:solutions_approved)).to eq []
+      end
+
+    end
   end
 
   describe "#not approved solutions" do
@@ -68,12 +98,35 @@ describe AssignmentStatistics do
       expect(subject.send(:not_approved_solutions)).to eq [solution_5]
     end
 
+    context "without solutions" do
+
+      before :each do
+        assignment.solutions = []
+      end
+
+      it "should return an empty list of solutions" do
+        expect(subject.send(:not_approved_solutions)).to eq []
+      end
+
+    end
   end
 
   describe "#corrected_solutions" do
 
     it "should return only the corrected solutions" do
       expect(subject.send(:corrected_solutions)).to eq [solution_1, solution_3]
+    end
+
+    context "without solutions" do
+
+      before :each do
+        assignment.solutions = []
+      end
+
+      it "should return an empty list of solutions" do
+        expect(subject.send(:corrected_solutions)).to eq []
+      end
+
     end
 
   end
@@ -115,6 +168,18 @@ describe AssignmentStatistics do
       expect(subject.total_solutions).to be 2
     end
 
+    context "without solutions" do
+
+      before :each do
+        assignment.solutions = []
+      end
+
+      it "should return an empty list of solutions" do
+        expect(subject.total_solutions).to eq 0
+      end
+
+    end
+
   end
 
   describe "average grades" do
@@ -153,7 +218,5 @@ describe AssignmentStatistics do
       end
 
     end
-
-
   end
 end

@@ -8,8 +8,4 @@ Alfred::App.helpers do
     return "--" if average == 0
     average
   end
-
-  def assignment_report assignment
-    AssignmentStatistics.new(assignment)
-  end
 end

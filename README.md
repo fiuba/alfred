@@ -26,6 +26,6 @@ After performing these steps you can use the following users to log into the app
 
 * teacher@test.com, Passw0rd!
 * student@test.com, Passw0rd!
-*
+* admin@test.com, Passw0rd!
 
 Private documentation is available [here](https://drive.google.com/folderview?id=0BwxS5GYrNYTqcjkzUUVxMk1ia2c&usp=sharing).

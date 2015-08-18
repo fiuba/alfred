@@ -5,5 +5,9 @@ module Alfred
 			'[FIUBA-ALGO]'
 		end
 
+		def storage_provider
+			Storage::DropboxGateway.new
+		end
+		
 	end
 end

@@ -10,6 +10,18 @@ module Alfred
     enable :store_location
     set :allow_disabled_csrf, true
 
+    ## set your customizer in the env variable, customizer='Alfred::FiubaCustomizer' 
+    @@customizer = nil
+    def self.customizer
+      return @@customizer unless @@customizer.nil?
+      if ENV['customizer']
+        clazz = ENV['customizer'].split('::').inject(Object){ |o,c| o.const_get c }
+        clazz.new
+      else
+        Alfred::DefaultCustomizer.new
+      end
+    end
+    
     ##
     # Caching support
     #

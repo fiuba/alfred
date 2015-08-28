@@ -49,7 +49,8 @@ end
 #
 Padrino.after_load do
   DataMapper.finalize
-  #Padrino.require_dependencies("#{Padrino.root}/app/mailers/*.rb")
+  Padrino.require_dependencies("#{Padrino.root}/config/*.rb")
+  Padrino.require_dependencies("#{Padrino.root}/customizations/*.rb")
 end
 
 require 'newrelic_rpm' if Padrino.env == :production

@@ -4,7 +4,7 @@ module Storage
 			if PADRINO_ENV=='development'
 				Storage::StubGateway.new
 			else
-				Storage::DropboxGateway.new
+				Alfred::App.customizer.storage_provider
 			end
 		end
 	end

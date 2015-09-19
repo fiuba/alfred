@@ -14,7 +14,7 @@ describe 'Solution DataMapper Integration' do
 			course = Course.new( :name => "AlgoIII", :active => true )
 	    @student = Factories::Account.student
 			@assignment = Factories::Assignment.vending_machine
-			@solution = Factories::Solution.forBy( @assignment, @student )
+			@solution = Factories::Solution.for_by( @assignment, @student )
 		end
 
 		describe "should belongs to student" do
@@ -33,8 +33,8 @@ describe 'Solution DataMapper Integration' do
 
 	  describe "solutions by student for specified assignment" do
 	    before do
-	      @anohter_solution = Factories::Solution.forBy( @assignment, @student )
-	      @final_solution = Factories::Solution.forBy( @assignment, @student )
+	      @anohter_solution = Factories::Solution.for_by( @assignment, @student )
+	      @final_solution = Factories::Solution.for_by( @assignment, @student )
 	    end
 
 	    describe "set of solutions" do

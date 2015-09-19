@@ -6,9 +6,9 @@ describe "GradingReport" do
   before(:each) do
     @assignment = Factories::Assignment.vending_machine
     @author     = Factories::Account.me_as_student
-    @solution   = Factories::Solution.forBy( @assignment, @author )
+    @solution   = Factories::Solution.for_by( @assignment, @author )
     @teacher    = Factories::Account.me_as_teacher
-    @correction = Factories::Correction.correctsBy(@solution, @teacher)
+    @correction = Factories::Correction.corrects_by(@solution, @teacher)
     I18n.stub(:t).with('date.formats.default').and_return(date_format)
     I18n.stub(:t).with('grading_report.course').and_return('Curso')
     I18n.stub(:t).with('grading_report.shift').and_return('Turno')

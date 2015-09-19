@@ -6,6 +6,20 @@ Given /^there are solutions submitted by students$/ do
   step '"TP2" has link solution submitted by student'
 end
 
+And(/^there are solutions submitted by students and corrected by me with grade "(.*?)"$/) do |grade|
+  steps %Q{
+          And   there are solutions submitted by students
+          And   I am logged in as teacher
+          When  I follow "Trabajos prácticos"
+          And   I follow "Correcciones" for "TP1"
+          And   I click "Asignarme a mi" on the last submission
+          And   I go to the homepage
+          And   I follow "Mis correcciones"
+          And   I click "Corregir"
+          And   I fill in correction's information with correction grade "#{grade}"
+        }
+end
+
 Then /^I should see correction entry for "(.*)"$/ do |assignment_name|
   query = ""                                      <<  \
     "//tr"                                        <<  \
@@ -54,10 +68,10 @@ And /^I click "(.*)" on last correction$/ do |action_name|
   as_teacher_for_assignment( 'TP1', action_name ).click
 end
 
-And /^I fill in correction's information$/ do
+And /^I fill in correction's information(?: with correction grade "(.*)")?$/ do |grade|
   fill_in :correction_public_comments, :with => 'Public comment'
   fill_in :correction_private_comments, :with => 'Private comment'
-  fill_in :correction_grade, :with => '8.0'
+  fill_in :correction_grade, :with => (grade || '8.0')
   click_button 'Guardar y notificar'
 end
 

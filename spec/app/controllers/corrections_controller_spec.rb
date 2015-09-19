@@ -53,8 +53,8 @@ describe "CorrectionsController" do
     describe "teacher assings himself correction of a solution" do
       before do
         @author = solution.account
-        @first_solution = Factories::Solution.forBy( assignment, @author )
-        @second_solution = Factories::Solution.forBy( assignment, @author )
+        @first_solution = Factories::Solution.for_by( assignment, @author )
+        @second_solution = Factories::Solution.for_by( assignment, @author )
 
         # It ensures that creation dates are differents
         @second_solution.created_at = @first_solution.created_at + 2
@@ -117,7 +117,7 @@ describe "CorrectionsController" do
 
   describe "edit" do
     it "should render index content" do
-      correction = Factories::Correction.correctsBy( solution, teacher )
+      correction = Factories::Correction.corrects_by( solution, teacher )
       Correction.should_receive(:get).with(correction.id.to_s)
         .and_return(correction)
       Alfred::App.any_instance.should_receive(:render)
@@ -128,7 +128,7 @@ describe "CorrectionsController" do
 
   describe "update" do
     before do
-      @correction = Factories::Correction.correctsBy( solution, teacher )
+      @correction = Factories::Correction.corrects_by( solution, teacher )
 
       @public_comments = "public new comments"
       @private_comments = "private new comments"

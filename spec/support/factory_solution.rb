@@ -16,7 +16,7 @@ module Factories
       new_solution
     end
 
-    def self.forBy( assignment, account = nil)
+    def self.for_by( assignment, account = nil)
       author = account || Factories::Account.student
       file_name = 'solution.st'
 

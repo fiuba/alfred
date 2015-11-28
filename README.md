@@ -10,7 +10,8 @@ After cloning the repository:
 * Run tests: **_bundle exec rake_**
 * Create the database: **_PADRINO_ENV=development bundle exec rake db:migrate_**
 * Populate the database: **_PADRINO_ENV=development bundle exec rake db:seed_**
-* Run the application: **_bundle exec padrino start_**
+* Run the application: **_foreman start_**
+* Browse http://0.0.0.0:5000
 
 Note: the current implementation depends on Dropbox to store assignments files, so the following environment variables must be set:
 * DROPBOX_APP_KEY
@@ -29,3 +30,8 @@ After performing these steps you can use the following users to log into the app
 * admin@test.com, Passw0rd!
 
 Private documentation is available [here](https://drive.google.com/folderview?id=0BwxS5GYrNYTqcjkzUUVxMk1ia2c&usp=sharing).
+
+Using Vagrant
+-------------
+
+A Vagrant configuration is provided for development purpuses, it is based on Ansible and in order to use it please take a look at [this instructions](ansible/README.md).

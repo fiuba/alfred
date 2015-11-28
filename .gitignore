@@ -39,3 +39,5 @@ doc/
 
 # nohup automatic output file
 nohup.out
+ansible/roles
+.vagrant

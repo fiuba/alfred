@@ -14,13 +14,13 @@ PadrinoTasks.init
 
 if ['development', 'test', 'travis'].include?(PADRINO_ENV)
   puts "PADRINO_ENV: #{PADRINO_ENV}"
-	require 'cucumber/rake/task'
+  require 'cucumber/rake/task'
 
-	task :all do
-  ["rake spec", "rake cucumber"].each do |cmd|
-    puts "Starting to run #{cmd}..."
-    system("export DISPLAY=:99.0 && bundle exec #{cmd}")
-    raise "#{cmd} failed!" unless $?.exitstatus == 0
+  task :all do
+    ["rake spec", "rake cucumber"].each do |cmd|
+      puts "Starting to run #{cmd}..."
+      system("export DISPLAY=:99.0 && bundle exec #{cmd}")
+      raise "#{cmd} failed!" unless $?.exitstatus == 0
     end
   end
 
@@ -32,7 +32,6 @@ if ['development', 'test', 'travis'].include?(PADRINO_ENV)
     end
   end
 
-
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:spec_report) do |t|
     t.pattern = "./spec/**/*_spec.rb"
@@ -43,10 +42,11 @@ if ['development', 'test', 'travis'].include?(PADRINO_ENV)
     Rake::Task['db:migrate'].invoke
     task.cucumber_opts = ["features"]
   end
+
   Cucumber::Rake::Task.new(:cucumber_report) do |task|
     Rake::Task['db:migrate'].invoke
     task.cucumber_opts = ['features', '--format html -o reports/cucumber.html']
   end
 
-	task :default => [:all]
+  task :default => [:all]
 end

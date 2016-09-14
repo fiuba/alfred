@@ -37,36 +37,31 @@ gem 'dropbox-sdk', :require => 'dropbox_sdk'
 gem 'padrino', '0.11.1'
 
 group :production do
-	gem 'pg'
-	gem 'dm-postgres-adapter'
-	gem 'newrelic_rpm'
+  gem 'pg'
+  gem 'dm-postgres-adapter'
+  gem 'newrelic_rpm'
 end
 
 group :development, :test do
-	gem 'foreman'
+  gem 'foreman'
   gem 'dotenv'
 end
 
-group :development do
-	gem 'debugger'
-end
-
 group :test do
-	# Guard gem eases running spec automatically
-	gem 'guard'
-	gem 'guard-rspec'
-	gem 'guard-cucumber'
-
-	gem 'simplecov'
-	gem 'dm-sqlite-adapter'
-	gem 'rspec'
-	gem 'rspec_junit_formatter'
-	gem 'capybara'
-	gem 'selenium-webdriver'
-	gem 'cucumber'
-	gem 'rack-test', :require => 'rack/test'
-	gem 'vcr'
-	gem 'webmock'
+# Guard gem eases running spec automatically
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
+  gem 'simplecov'
+  gem 'dm-sqlite-adapter'
+  gem 'rspec'
+  gem 'rspec_junit_formatter'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'cucumber'
+  gem 'rack-test', :require => 'rack/test'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 # Or Padrino Edge

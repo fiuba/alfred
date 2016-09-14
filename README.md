@@ -10,7 +10,7 @@ After cloning the repository:
 * Run tests: **_bundle exec rake_**
 * Create the database: **_PADRINO_ENV=development bundle exec rake db:migrate_**
 * Populate the database: **_PADRINO_ENV=development bundle exec rake db:seed_**
-* Run the application: **_bundle exec padrino start_**
+* Run the application: **_bundle exec padrino start -h 0.0.0.0_**
 
 Note: the current implementation depends on Dropbox to store assignments files, so the following environment variables must be set:
 * DROPBOX_APP_KEY

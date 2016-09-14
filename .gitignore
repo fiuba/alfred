@@ -1,3 +1,4 @@
+.vagrant
 *.my
 .idea
 .DS_Store
